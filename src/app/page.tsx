@@ -12,6 +12,7 @@ import { QiyamTimer } from "@/components/dashboard/qiyam-timer";
 import { MosqueInfo } from "@/components/dashboard/mosque-info";
 import { DashboardSkeleton } from "@/components/dashboard/dashboard-skeleton";
 import { ZakatDrawer } from "@/components/dashboard/zakat-drawer";
+import { KrackedDevsCard } from "@/components/dashboard/kracked-devs-card";
 
 const container = {
   hidden: { opacity: 0 },
@@ -114,23 +115,33 @@ export default function Home() {
         </h3>
         <div className="grid grid-cols-2 gap-3">
           {discoverTiles.map((tile) => (
-            <Card
+            <motion.div
               key={tile.title}
-              onClick={tile.href ? undefined : tile.action}
-              className="h-full border-border/40 hover:border-emerald-500/30 transition-colors bg-gradient-to-br from-card to-black cursor-pointer overflow-hidden group shadow-lg"
+              whileTap={{ scale: 0.98 }}
+              className="h-full"
             >
-              {tile.href ? (
-                <Link href={tile.href} className="block w-full h-full p-4">
-                  <TileContent tile={tile} />
-                </Link>
-              ) : (
-                <div className="p-4 w-full h-full">
-                  <TileContent tile={tile} />
-                </div>
-              )}
-            </Card>
+              <Card
+                onClick={tile.href ? undefined : tile.action}
+                className="h-full border-border/40 hover:border-emerald-500/30 transition-colors bg-gradient-to-br from-card to-black cursor-pointer overflow-hidden group shadow-lg"
+              >
+                {tile.href ? (
+                  <Link href={tile.href} className="block w-full h-full p-4">
+                    <TileContent tile={tile} />
+                  </Link>
+                ) : (
+                  <div className="p-4 w-full h-full">
+                    <TileContent tile={tile} />
+                  </div>
+                )}
+              </Card>
+            </motion.div>
           ))}
         </div>
+      </motion.div>
+
+      {/* KrackedDevs Promo */}
+      <motion.div variants={item}>
+        <KrackedDevsCard />
       </motion.div>
 
       <ZakatDrawer open={zakatOpen} onOpenChange={setZakatOpen} />
@@ -142,9 +153,9 @@ function TileContent({ tile }: { tile: any }) {
   return (
     <>
       <tile.icon className="h-5 w-5 text-emerald-500 mb-2 group-hover:scale-110 transition-transform" />
-      <CardTitle className="text-sm">{tile.title}</CardTitle>
+      <CardTitle className="text-sm font-semibold">{tile.title}</CardTitle>
       <div className="mt-1">
-        <p className="text-[10px] text-muted-foreground text-balance">
+        <p className="text-[10px] text-muted-foreground leading-tight">
           {tile.desc}
         </p>
       </div>

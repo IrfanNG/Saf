@@ -66,7 +66,11 @@ export function LostFoundCard({ item, onMarkReturned, onDelete }: LostFoundCardP
                         </div>
 
                         {isAdmin && (
-                            <div className="flex gap-2 pt-2 border-t border-zinc-800/50">
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: "auto" }}
+                                className="flex gap-2 pt-2 border-t border-zinc-800/50"
+                            >
                                 <Button
                                     size="sm"
                                     variant="outline"
@@ -84,7 +88,7 @@ export function LostFoundCard({ item, onMarkReturned, onDelete }: LostFoundCardP
                                 >
                                     <Trash2 size={14} />
                                 </Button>
-                            </div>
+                            </motion.div>
                         )}
                     </div>
                 </CardContent>

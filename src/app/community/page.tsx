@@ -34,8 +34,9 @@ export default function CommunityPage() {
                     </div>
                     <div className="flex bg-zinc-900 border border-zinc-800 rounded-lg p-1 gap-1">
                         {(["all", "lost", "found"] as const).map((f) => (
-                            <button
+                            <motion.button
                                 key={f}
+                                whileTap={{ scale: 0.95 }}
                                 onClick={() => setFilter(f)}
                                 className={`px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-md transition-all ${filter === f
                                     ? "bg-zinc-800 text-white shadow-sm"
@@ -43,7 +44,7 @@ export default function CommunityPage() {
                                     }`}
                             >
                                 {f}
-                            </button>
+                            </motion.button>
                         ))}
                     </div>
                 </header>
@@ -54,13 +55,24 @@ export default function CommunityPage() {
                         <Loader2 className="w-8 h-8 text-emerald-500 animate-spin" />
                     </div>
                 ) : filteredItems.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center py-32 text-center bg-zinc-900/20 border border-dashed border-zinc-800 rounded-3xl">
-                        <div className="h-16 w-16 bg-zinc-900 flex items-center justify-center rounded-2xl mb-4 border border-zinc-800">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="flex flex-col items-center justify-center py-32 text-center bg-zinc-900/20 border border-dashed border-zinc-800 rounded-3xl relative overflow-hidden"
+                    >
+                        <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent pointer-events-none" />
+                        <motion.div
+                            animate={{ y: [0, -6, 0] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                            className="h-16 w-16 bg-zinc-900 flex items-center justify-center rounded-2xl mb-4 border border-zinc-800 relative z-10 shadow-2xl"
+                        >
                             <Search className="text-zinc-600" />
-                        </div>
-                        <h2 className="text-lg font-medium text-zinc-300">No items found</h2>
-                        <p className="text-zinc-500 text-sm mt-1 max-w-[200px]">Be the first to post an item to help the community.</p>
-                    </div>
+                        </motion.div>
+                        <h2 className="text-lg font-bold text-zinc-100 relative z-10">Nothing here yet</h2>
+                        <p className="text-zinc-500 text-[10px] mt-2 max-w-[220px] relative z-10 leading-relaxed uppercase tracking-[0.15em] font-bold opacity-50">
+                            Be a hero. Post a lost or found item to reunite the community.
+                        </p>
+                    </motion.div>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <AnimatePresence mode="popLayout">

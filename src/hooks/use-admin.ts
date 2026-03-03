@@ -23,20 +23,21 @@ export function useAdmin() {
                 const snap = await getDoc(docRef);
                 if (snap.exists()) {
                     const data = snap.data();
-                    console.log("Firebase: User data located:", data);
+                    console.log("useAdmin: Raw Firestore Data:", data);
                     const role = String(data?.role || "").toLowerCase().trim();
+                    console.log(`useAdmin: Parsed role: "${role}"`);
                     if (role === "admin") {
                         setIsAdmin(true);
                     } else {
-                        console.warn(`Firebase: Role mismatch. Expected 'admin', got '${role}'`);
+                        console.warn(`useAdmin: Role mismatch for UID ${user.uid}. Expected 'admin', got '${role}'`);
                         setIsAdmin(false);
                     }
                 } else {
-                    console.warn(`Firebase: No user document found at collection 'users' with UID '${user.uid}'`);
+                    console.warn(`useAdmin: No user document found for UID ${user.uid} in 'users' collection.`);
                     setIsAdmin(false);
                 }
-            } catch (error) {
-                console.error("Error checking admin status:", error);
+            } catch (error: any) {
+                console.error("useAdmin: Error fetching admin doc:", error?.message || error);
                 setIsAdmin(false);
             } finally {
                 setLoading(false);
