@@ -1,14 +1,17 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, HandHeart, Users2, MoonStar, MapPin } from "lucide-react";
+import { BookOpen, HandHeart, Users2, MoonStar, MapPin, Coins } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import Link from "next/link";
 import { usePrayerTimes } from "@/hooks/use-prayer-times";
 import { useMosqueSettings } from "@/hooks/use-mosque-settings";
 import { HeroCountdown } from "@/components/dashboard/hero-countdown";
 import { QiyamTimer } from "@/components/dashboard/qiyam-timer";
 import { MosqueInfo } from "@/components/dashboard/mosque-info";
 import { DashboardSkeleton } from "@/components/dashboard/dashboard-skeleton";
+import { ZakatDrawer } from "@/components/dashboard/zakat-drawer";
 
 const container = {
   hidden: { opacity: 0 },
@@ -30,14 +33,22 @@ const item = {
 export default function Home() {
   const { nextPrayer, prayerTimes, location, loading: prayerLoading } = usePrayerTimes();
   const { settings, loading: mosqueLoading } = useMosqueSettings();
+  const [zakatOpen, setZakatOpen] = useState(false);
 
   if (prayerLoading && !nextPrayer) {
     return <DashboardSkeleton />;
   }
 
+  const discoverTiles = [
+    { title: "Quran", icon: BookOpen, desc: "Last read Surah Al-Kahf", action: () => { } },
+    { title: "Zakat Fitrah", icon: Coins, desc: "Ramadhan obligation calculator", action: () => setZakatOpen(true) },
+    { title: "Community", icon: Users2, desc: "Lost & Found Board", href: "/community" },
+    { title: "Progress", icon: MoonStar, desc: "12 days streak", action: () => { } },
+  ];
+
   return (
     <motion.main
-      className="flex flex-col p-6 gap-5 overscroll-y-contain"
+      className="flex flex-col p-6 gap-5 overscroll-y-contain pb-24"
       variants={container}
       initial="hidden"
       animate="show"
@@ -93,7 +104,7 @@ export default function Home() {
         <h3 className="font-medium text-muted-foreground text-xs uppercase tracking-[0.2em] mb-3">
           Mosque
         </h3>
-        <MosqueInfo settings={settings} loading={mosqueLoading} />
+        < MosqueInfo settings={settings} loading={mosqueLoading} />
       </motion.div>
 
       {/* Discover */}
@@ -102,29 +113,41 @@ export default function Home() {
           Discover
         </h3>
         <div className="grid grid-cols-2 gap-3">
-          {[
-            { title: "Quran", icon: BookOpen, desc: "Last read Surah Al-Kahf" },
-            { title: "Dua", icon: HandHeart, desc: "Daily collection" },
-            { title: "Community", icon: Users2, desc: "Active discussions" },
-            { title: "Progress", icon: MoonStar, desc: "12 days streak" },
-          ].map((tile) => (
+          {discoverTiles.map((tile) => (
             <Card
               key={tile.title}
-              className="h-full border-border/40 hover:border-emerald-500/30 transition-colors bg-gradient-to-br from-card to-black"
+              onClick={tile.href ? undefined : tile.action}
+              className="h-full border-border/40 hover:border-emerald-500/30 transition-colors bg-gradient-to-br from-card to-black cursor-pointer overflow-hidden group shadow-lg"
             >
-              <CardHeader className="p-4 pb-2">
-                <tile.icon className="h-5 w-5 text-emerald-500 mb-2" />
-                <CardTitle className="text-sm">{tile.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="p-4 pt-0">
-                <p className="text-[10px] text-muted-foreground text-balance">
-                  {tile.desc}
-                </p>
-              </CardContent>
+              {tile.href ? (
+                <Link href={tile.href} className="block w-full h-full p-4">
+                  <TileContent tile={tile} />
+                </Link>
+              ) : (
+                <div className="p-4 w-full h-full">
+                  <TileContent tile={tile} />
+                </div>
+              )}
             </Card>
           ))}
         </div>
       </motion.div>
+
+      <ZakatDrawer open={zakatOpen} onOpenChange={setZakatOpen} />
     </motion.main>
+  );
+}
+
+function TileContent({ tile }: { tile: any }) {
+  return (
+    <>
+      <tile.icon className="h-5 w-5 text-emerald-500 mb-2 group-hover:scale-110 transition-transform" />
+      <CardTitle className="text-sm">{tile.title}</CardTitle>
+      <div className="mt-1">
+        <p className="text-[10px] text-muted-foreground text-balance">
+          {tile.desc}
+        </p>
+      </div>
+    </>
   );
 }
