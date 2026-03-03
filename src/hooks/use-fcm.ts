@@ -19,7 +19,7 @@ export function useFCM() {
         }
 
         if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-            navigator.serviceWorker.register("/firebase-messaging-sw.js", {
+            navigator.serviceWorker.register("/api/messaging-sw", {
                 scope: "/"
             }).then((reg) => {
                 console.log("FCM: SW Registered on mount:", reg.scope);
