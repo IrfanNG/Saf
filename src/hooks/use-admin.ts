@@ -21,9 +21,18 @@ export function useAdmin() {
             try {
                 const docRef = doc(db, "users", user.uid);
                 const snap = await getDoc(docRef);
-                if (snap.exists() && snap.data().role === "admin") {
-                    setIsAdmin(true);
+                if (snap.exists()) {
+                    const data = snap.data();
+                    console.log("Firebase: User data located:", data);
+                    const role = String(data?.role || "").toLowerCase().trim();
+                    if (role === "admin") {
+                        setIsAdmin(true);
+                    } else {
+                        console.warn(`Firebase: Role mismatch. Expected 'admin', got '${role}'`);
+                        setIsAdmin(false);
+                    }
                 } else {
+                    console.warn(`Firebase: No user document found at collection 'users' with UID '${user.uid}'`);
                     setIsAdmin(false);
                 }
             } catch (error) {
