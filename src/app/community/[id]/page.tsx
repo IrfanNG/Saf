@@ -139,8 +139,11 @@ export default function ItemDetailPage() {
                                             return new Intl.DateTimeFormat('en-MY', {
                                                 day: 'numeric',
                                                 month: 'short',
-                                                year: 'numeric'
-                                            }).format(date);
+                                                year: 'numeric',
+                                                hour: 'numeric',
+                                                minute: '2-digit',
+                                                hour12: true
+                                            }).format(date).replace(',', '');
                                         })()
                                     ) : (
                                         "Recently"

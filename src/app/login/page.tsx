@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/auth-context";
 import { motion } from "framer-motion";
-import { Leaf, Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
+import { SafLogo } from "@/components/saf-logo";
 
 export default function LoginPage() {
     const [isSignUp, setIsSignUp] = useState(false);
@@ -60,7 +61,7 @@ export default function LoginPage() {
             className="min-h-screen bg-white flex flex-col items-center justify-center p-6 space-y-8 absolute inset-0 z-50 overflow-hidden"
         >
             <div className="flex flex-col items-center space-y-2">
-                <Leaf className="w-12 h-12 text-[#4D6A53] mb-2" />
+                <SafLogo size={64} className="mb-2 drop-shadow-sm" />
                 <h1 className="text-3xl font-bold tracking-tight text-[#4D6A53]">Saf</h1>
                 <p className="text-[#4D6A53]/70 font-medium text-sm">Your daily companion</p>
             </div>

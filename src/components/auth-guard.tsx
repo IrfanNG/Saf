@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/context/auth-context";
 import { motion, AnimatePresence } from "framer-motion";
-import { Leaf } from "lucide-react";
+import { SafLogo } from "@/components/saf-logo";
 
 export function AuthGuard({ children }: { children: React.ReactNode }) {
     const { user, loading } = useAuth();
@@ -57,7 +57,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
                                     duration: 1.5
                                 }}
                             >
-                                <Leaf className="w-16 h-16 text-[#4D6A53]" />
+                                <SafLogo size={84} className="drop-shadow-md" />
                             </motion.div>
 
                             <motion.h1

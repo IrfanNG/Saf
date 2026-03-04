@@ -28,12 +28,12 @@ export function LostFoundCard({ item }: LostFoundCardProps) {
             onClick={() => router.push(`/community/${item.id}`)}
         >
             <Card className="overflow-hidden border-none shadow-[0_2px_15px_rgba(0,0,0,0.03)] bg-white hover:shadow-md transition-shadow duration-300 group h-full flex flex-col rounded-[2rem]">
-                <div className="relative overflow-hidden bg-[#F4F4F4] h-[160px] sm:h-[180px] flex items-center justify-center p-4">
+                <div className="relative overflow-hidden bg-[#F4F4F4] h-[160px] sm:h-[180px] flex items-center justify-center">
                     {item.imageUrl && item.imageUrl !== "" ? (
                         <img
                             src={item.imageUrl}
                             alt={item.title}
-                            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 mix-blend-multiply drop-shadow-sm"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                     ) : (
                         <div className="w-full h-32 flex items-center justify-center text-slate-400 italic text-xs">

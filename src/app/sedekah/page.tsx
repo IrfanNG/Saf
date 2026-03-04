@@ -128,7 +128,7 @@ export default function SedekahPage() {
                     transition={{ duration: 0.3 }}
                     className="bg-[#4D6250] rounded-[1.6rem] p-6 shadow-sm text-white overflow-hidden relative"
                 >
-                    <div className="flex items-center gap-[1.1rem] mb-9">
+                    <div className="flex items-center gap-[1.1rem]">
                         {/* Mosque Icon placeholder box */}
                         <div className="w-[4.25rem] h-[4.25rem] bg-white/10 rounded-2xl flex flex-col items-center justify-center shrink-0 mix-blend-screen overflow-hidden">
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -152,48 +152,20 @@ export default function SedekahPage() {
                             <p className="text-[9.5px] uppercase tracking-[0.08em] font-bold text-white/60 mt-[0.15rem]">Official Donation Account</p>
                         </div>
                     </div>
-
-                    <div className="space-y-[1.15rem]">
-                        <div className="flex justify-between items-end">
-                            <span className="text-[11px] text-white/60 font-semibold tracking-wide">Bank Name</span>
-                            <span className="text-[14px] font-bold tracking-wide">{settings.bankName}</span>
-                        </div>
-                        <div className="flex justify-between items-end">
-                            <span className="text-[11px] text-white/60 font-semibold tracking-wide">Account Number</span>
-                            <span className="text-[15px] font-bold text-[#E3B13C] tracking-[0.1em] font-mono shadow-inner drop-shadow-sm">{settings.accountNumber}</span>
-                        </div>
-                    </div>
                 </motion.div>
 
-                {/* QR Code Graphic Frame */}
+                {/* QR Code Image */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.1, duration: 0.3 }}
-                    className="w-[90%] mx-auto bg-[#A6BEAA] rounded-[1.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.1)] relative flex items-center justify-center overflow-hidden py-10"
+                    className="w-[90%] max-w-[340px] mx-auto relative flex items-center justify-center overflow-hidden"
                 >
-                    {/* Soft directional shadow simulating folded floor corner if needed */}
-                    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/10 to-transparent" />
-
-                    {/* QR Code Card */}
-                    <div className="bg-white shadow-[0_20px_40px_rgba(0,0,0,0.15)] relative z-10 w-[80%] max-w-[280px] rounded-[1.25rem] flex flex-col items-center p-6 text-center">
-                        {/* Miniature Mosque Icon in frame */}
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="mb-4 opacity-80" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 4C10.5 6 9.5 8 9.5 10H14.5C14.5 8 13.5 6 12 4Z" fill="#4D6250" />
-                            <rect x="8" y="10" width="8" height="6" fill="#4D6250" />
-                            <rect x="4" y="16" width="16" height="2" fill="#4D6250" />
-                        </svg>
-                        <img
-                            src={settings.qrCodeUrl || `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=SedekahAccount${settings.accountNumber}`}
-                            alt="QR Code"
-                            className="w-full aspect-square mix-blend-multiply opacity-95 object-contain"
-                        />
-                        <div className="mt-5 w-full flex flex-col items-center">
-                            <h3 className="text-[11px] sm:text-[13px] font-bold text-[#1A1A1A] tracking-wider truncate mb-2.5">MOSQUE DONATION</h3>
-                            <div className="h-[2px] w-full bg-slate-100 mb-1.5" />
-                            <div className="h-[2px] w-[60%] bg-slate-100" />
-                        </div>
-                    </div>
+                    <img
+                        src={settings.qrCodeUrl || `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=SedekahAccount${settings.accountNumber}`}
+                        alt="QR Code"
+                        className="w-full h-auto object-contain drop-shadow-md rounded-[1rem]"
+                    />
                 </motion.div>
 
                 {/* Instruction */}
@@ -207,17 +179,7 @@ export default function SedekahPage() {
                         <Download size={18} strokeWidth={2.5} />
                         Download QR Code
                     </button>
-                    <button
-                        onClick={handleCopy}
-                        className="w-full h-[4.25rem] bg-[#E9E1D1] hover:bg-[#DCD4C4] text-[#5A413A] rounded-[1.2rem] font-bold text-[14px] flex items-center justify-center gap-2.5 transition-colors shadow-none active:scale-[0.98]"
-                    >
-                        {copied ? <span className="flex items-center gap-2">Copied!</span> : (
-                            <>
-                                <Copy size={16} strokeWidth={2.5} />
-                                Copy Account Number
-                            </>
-                        )}
-                    </button>
+
                 </div>
 
                 {/* Footer Verse block */}
