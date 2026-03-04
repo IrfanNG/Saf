@@ -6,6 +6,7 @@ import { BottomNav } from "@/components/bottom-nav";
 import { PageTransition } from "@/components/page-transition";
 import { AuthProvider } from "@/context/auth-context";
 import { AuthGuard } from "@/components/auth-guard";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,20 +43,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-black text-foreground relative selection:bg-emerald-500/30 font-sans`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-[#F5F2EA] text-[#4A352D] relative selection:bg-emerald-500/30 font-sans`}
       >
-        <AuthProvider>
-          <div className="mx-auto max-w-md bg-black min-h-screen relative overflow-x-hidden pb-24 touch-pan-y">
-            <AuthGuard>
-              <PageTransition>
-                {children}
-              </PageTransition>
-              <BottomNav />
-            </AuthGuard>
-          </div>
-        </AuthProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <AuthProvider>
+            <div className="mx-auto max-w-md min-h-screen relative overflow-x-clip pb-24 touch-pan-y shadow-2xl bg-[#F5F2EA]">
+              <AuthGuard>
+                <PageTransition>
+                  {children}
+                </PageTransition>
+                <BottomNav />
+              </AuthGuard>
+            </div>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

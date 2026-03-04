@@ -35,6 +35,11 @@ export function useLostAndFound() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (!db.app) {
+            setLoading(false);
+            return;
+        }
+
         const q = query(collection(db, "lost_items"), orderBy("postedAt", "desc"));
 
         const unsubscribe = onSnapshot(q, (snapshot) => {

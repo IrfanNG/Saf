@@ -25,7 +25,11 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
             opacity: 1,
             y: 0,
             scale: 1,
-            filter: "blur(0px)"
+            filter: "blur(0px)",
+            transitionEnd: {
+                filter: "none",
+                transform: "none"
+            }
         },
         exit: {
             opacity: 0,

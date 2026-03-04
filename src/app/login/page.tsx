@@ -4,12 +4,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/auth-context";
 import { motion } from "framer-motion";
-import { Leaf } from "lucide-react";
+import { Leaf, Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
     const [isSignUp, setIsSignUp] = useState(false);
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const { signInWithGoogle, signInWithEmail, signUpWithEmail } = useAuth();
@@ -29,9 +32,16 @@ export default function LoginPage() {
         e.preventDefault();
         setLoading(true);
         setError("");
+
+        if (isSignUp && password !== confirmPassword) {
+            setError("Passwords do not match");
+            setLoading(false);
+            return;
+        }
+
         try {
             if (isSignUp) {
-                await signUpWithEmail(email, password);
+                await signUpWithEmail(email, password, username);
             } else {
                 await signInWithEmail(email, password);
             }
@@ -47,18 +57,18 @@ export default function LoginPage() {
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="min-h-screen bg-black flex flex-col items-center justify-center p-6 space-y-8 absolute inset-0 z-50 overflow-hidden"
+            className="min-h-screen bg-white flex flex-col items-center justify-center p-6 space-y-8 absolute inset-0 z-50 overflow-hidden"
         >
             <div className="flex flex-col items-center space-y-2">
-                <Leaf className="w-12 h-12 text-emerald-500 mb-2" />
-                <h1 className="text-3xl font-bold tracking-tight">Saf</h1>
-                <p className="text-muted-foreground text-sm">Your daily companion</p>
+                <Leaf className="w-12 h-12 text-[#4D6A53] mb-2" />
+                <h1 className="text-3xl font-bold tracking-tight text-[#4D6A53]">Saf</h1>
+                <p className="text-[#4D6A53]/70 font-medium text-sm">Your daily companion</p>
             </div>
 
             <div className="w-full max-w-sm space-y-4">
                 <button
                     onClick={handleGoogle}
-                    className="w-full bg-zinc-900 border border-zinc-800 text-white p-3 rounded-lg font-medium hover:bg-zinc-800 transition flex items-center justify-center space-x-2"
+                    className="w-full bg-white border border-slate-200 text-[#1A1A1A] p-3 rounded-lg font-bold hover:bg-slate-50 transition flex items-center justify-center space-x-2 shadow-sm"
                 >
                     <svg className="w-5 h-5" viewBox="0 0 24 24">
                         <path
@@ -83,47 +93,84 @@ export default function LoginPage() {
 
                 <div className="relative">
                     <div className="absolute inset-0 flex items-center">
-                        <span className="w-full border-t border-zinc-800" />
+                        <span className="w-full border-t border-slate-200" />
                     </div>
-                    <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-black px-2 text-zinc-500">Or continue with email</span>
+                    <div className="relative flex justify-center text-xs uppercase font-bold">
+                        <span className="bg-white px-2 text-slate-400">Or continue with email</span>
                     </div>
                 </div>
 
                 <form onSubmit={handleEmailAuth} className="space-y-4">
+                    {isSignUp && (
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            placeholder="Username"
+                            required
+                            className="w-full bg-white border border-slate-200 text-[#1A1A1A] px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4D6A53] placeholder:text-slate-400 shadow-sm font-medium"
+                        />
+                    )}
                     <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email"
                         required
-                        className="w-full bg-zinc-900 border border-zinc-800 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                    />
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Password"
-                        required
-                        className="w-full bg-zinc-900 border border-zinc-800 text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full bg-white border border-slate-200 text-[#1A1A1A] px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4D6A53] placeholder:text-slate-400 shadow-sm font-medium"
                     />
 
-                    {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+                    <div className="relative">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Password"
+                            required
+                            className="w-full bg-white border border-slate-200 text-[#1A1A1A] px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4D6A53] placeholder:text-slate-400 shadow-sm font-medium pr-12"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
+                        >
+                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                    </div>
+
+                    {isSignUp && (
+                        <div className="relative">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                placeholder="Confirm Password"
+                                required
+                                className="w-full bg-white border border-slate-200 text-[#1A1A1A] px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4D6A53] placeholder:text-slate-400 shadow-sm font-medium pr-12"
+                            />
+                        </div>
+                    )}
+
+                    {error && <p className="text-red-500 text-sm text-center font-medium">{error}</p>}
 
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-emerald-600 text-white p-3 rounded-lg font-medium hover:bg-emerald-700 transition disabled:opacity-50"
+                        className="w-full bg-[#4D6A53] text-white p-3 rounded-lg font-bold shadow-sm transition disabled:opacity-50 hover:opacity-90"
                     >
                         {loading ? "Loading..." : isSignUp ? "Sign Up" : "Sign In"}
                     </button>
                 </form>
 
-                <p className="text-center text-sm text-zinc-500">
+                <p className="text-center text-sm font-medium text-slate-500">
                     {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
                     <button
-                        onClick={() => setIsSignUp(!isSignUp)}
-                        className="text-emerald-500 hover:text-emerald-400"
+                        onClick={() => {
+                            setIsSignUp(!isSignUp);
+                            setError("");
+                            setConfirmPassword("");
+                        }}
+                        className="text-[#4D6A53] hover:opacity-80 font-bold"
                     >
                         {isSignUp ? "Sign In" : "Sign Up"}
                     </button>
