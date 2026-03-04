@@ -2,16 +2,15 @@
 
 import { useAuth } from "@/context/auth-context";
 import { useAdmin } from "@/hooks/use-admin";
+import { usePrayerTimes } from "@/hooks/use-prayer-times";
 import { motion } from "framer-motion";
 import {
     User as UserIcon,
-    Palette,
     Shield,
     HelpCircle,
     LogOut,
     ChevronRight,
     ShieldCheck,
-    LogIn as LogOutIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -28,22 +27,16 @@ const item = {
 export default function ProfilePage() {
     const { user, signOut } = useAuth();
     const { isAdmin } = useAdmin();
+    const { location } = usePrayerTimes();
     const router = useRouter();
 
     const menuItems = [
         { icon: UserIcon, label: "Personal Information", iconBg: "#EEF5EF", iconColor: "#4D6A53", href: "/profile/personal-info" },
-        { icon: Palette, label: "App Theme", iconBg: "#FEF5E7", iconColor: "#E09C35", href: "/profile/theme" },
         { icon: Shield, label: "Privacy & Security", iconBg: "#EEEDF8", iconColor: "#6B64C8", href: undefined },
         { icon: HelpCircle, label: "Help Center", iconBg: "#EDF3FB", iconColor: "#4A8ED4", href: undefined },
     ];
 
-    // Streak value (could be fetched from Firestore)
-    const streak = 30;
-    const target = 35; // next badge at 35 days
-    const progress = Math.min(streak / target, 1);
-    const radius = 28;
-    const circumference = 2 * Math.PI * radius;
-    const dashOffset = circumference * (1 - progress);
+
 
     return (
         <motion.main
@@ -87,50 +80,12 @@ export default function ProfilePage() {
                     {user?.displayName || "Ahmad Ibrahim"}
                 </h1>
                 {/* Location */}
-                <p className="text-[11px] font-bold text-[#9AA5AB] uppercase tracking-[0.18em] mt-1">
-                    Kuala Lumpur, Malaysia
+                <p className="text-[11px] font-bold text-[#9AA5AB] uppercase tracking-[0.18em] mt-1 text-center">
+                    {location?.city ? `${location.city}, Malaysia` : "Kuala Lumpur, Malaysia"}
                 </p>
             </motion.div>
 
-            {/* ── DAY STREAK CARD ── */}
-            <motion.div variants={item} className="mx-5 mb-5">
-                <div className="bg-white rounded-[1.5rem] p-5 shadow-[0_2px_16px_rgba(0,0,0,0.05)] flex items-center justify-between">
-                    <div>
-                        <p className="text-[10px] font-bold text-[#9AA5AB] uppercase tracking-[0.12em] mb-1">
-                            Current Progress
-                        </p>
-                        <h2 className="text-[1.3rem] font-bold text-[#1A2420] font-serif leading-tight">
-                            Day Streak
-                        </h2>
-                        <p className="text-[12px] text-[#9AA5AB] font-medium mt-1">
-                            Keep it up! {target - streak} days to next badge.
-                        </p>
-                    </div>
 
-                    {/* Circular Progress */}
-                    <div className="relative flex items-center justify-center w-[72px] h-[72px] shrink-0">
-                        <svg width="72" height="72" className="-rotate-90">
-                            {/* Track */}
-                            <circle
-                                cx="36" cy="36" r={radius}
-                                stroke="#F0F0F0" strokeWidth="6" fill="none"
-                            />
-                            {/* Progress */}
-                            <circle
-                                cx="36" cy="36" r={radius}
-                                stroke="#4D6A53" strokeWidth="6" fill="none"
-                                strokeDasharray={circumference}
-                                strokeDashoffset={dashOffset}
-                                strokeLinecap="round"
-                            />
-                        </svg>
-                        <div className="absolute flex flex-col items-center">
-                            <span className="text-[18px] font-black text-[#1A2420] leading-none">{streak}</span>
-                            <span className="text-[9px] font-bold text-[#9AA5AB] uppercase tracking-wide">days</span>
-                        </div>
-                    </div>
-                </div>
-            </motion.div>
 
             {/* ── MENU ITEMS ── */}
             <motion.div variants={item} className="mx-5 flex flex-col gap-2">

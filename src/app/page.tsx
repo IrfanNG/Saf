@@ -1,9 +1,10 @@
 "use client";
 
-import { BookOpen, Compass, Coins, CalendarDays, Bell, Clock, Sun, ChevronRight, MoonStar, Sunrise, CloudSun, Sunset, Moon, ChevronDown } from "lucide-react";
+import { BookOpen, Compass, Coins, CalendarDays, Bell, Clock, Sun, ChevronRight, MoonStar, Sunrise, CloudSun, Sunset, Moon, ChevronDown, BookMarked } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { usePrayerTimes } from "@/hooks/use-prayer-times";
 import { useMosqueSettings } from "@/hooks/use-mosque-settings";
 import { DashboardSkeleton } from "@/components/dashboard/dashboard-skeleton";
@@ -16,7 +17,7 @@ const container = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.07, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.03, delayChildren: 0.05 },
   },
 };
 
@@ -74,6 +75,7 @@ const getPrayerIcon = (name: string) => {
 };
 
 export default function Home() {
+  const router = useRouter();
   const { nextPrayer, prayerTimes, loading: prayerLoading } = usePrayerTimes();
   const { settings } = useMosqueSettings();
   const { user } = useAuth();
@@ -139,6 +141,7 @@ export default function Home() {
     { title: "Quran", icon: BookOpen, color: "#4D6A53", href: undefined, action: () => { } },
     { title: "Mosque", icon: MoonStar, color: "#4D6A53", href: undefined, action: () => { } },
     { title: "Zakat", icon: Coins, color: "#4D6A53", href: undefined, action: () => setZakatOpen(true) },
+    { title: "Doa", icon: BookMarked, color: "#4D6A53", href: undefined, action: () => router.push("/pustaka-doa") },
   ];
 
   const allPrayers = [
@@ -304,13 +307,13 @@ export default function Home() {
       </motion.div>
 
       {/* ── QUICK TILES ROW ── */}
-      <motion.div variants={item} className="mx-5 mt-2">
-        <div className="flex justify-center gap-8">
+      <motion.div variants={item} className="mx-5 mt-4">
+        <div className="flex justify-center gap-8 pb-4">
           {quickTiles.map((tile) => (
             <button
               key={tile.title}
               onClick={tile.action}
-              className="flex flex-col items-center gap-2 group"
+              className="flex flex-col items-center gap-2 group snap-start shrink-0"
             >
               <div className="h-[3.75rem] w-[3.75rem] rounded-2xl bg-[#EEE9DF] flex items-center justify-center shadow-sm group-hover:bg-[#E4DDD0] transition-colors border border-white/60">
                 <tile.icon size={26} className="text-[#4D6A53]" strokeWidth={2} />
@@ -330,7 +333,6 @@ export default function Home() {
             Daily Inspiration
           </h2>
           <button className="text-[12px] font-bold text-[#9AA5AB] uppercase tracking-wide">
-            VIEW ALL
           </button>
         </div>
 

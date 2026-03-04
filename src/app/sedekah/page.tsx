@@ -170,32 +170,28 @@ export default function SedekahPage() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.1, duration: 0.3 }}
-                    className="w-[90%] mx-auto bg-white rounded-[1.35rem] border border-[#5A413A] shadow-[0_2px_15px_rgba(0,0,0,0.03)] p-1.5 overflow-hidden"
+                    className="w-[90%] mx-auto bg-[#A6BEAA] rounded-[1.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.1)] relative flex items-center justify-center overflow-hidden py-10"
                 >
-                    <div className="aspect-[4/3] w-full bg-[#A6BEAA] rounded-[1rem] relative flex items-center justify-center overflow-hidden">
-                        {/* Soft directional shadow simulating folded floor corner if needed */}
-                        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/10 to-transparent" />
+                    {/* Soft directional shadow simulating folded floor corner if needed */}
+                    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/10 to-transparent" />
 
-                        {/* Wooden Frame */}
-                        <div className="bg-[#D38B42] p-1.5 shadow-[0_20px_40px_rgba(0,0,0,0.15)] relative z-10 w-[45%] aspect-[3/4] rounded-sm transform sm:-translate-y-2">
-                            <div className="w-full h-full bg-white flex flex-col items-center p-3 sm:p-4 text-center">
-                                {/* Miniature Mosque Icon in frame */}
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className="mb-2 opacity-80" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 4C10.5 6 9.5 8 9.5 10H14.5C14.5 8 13.5 6 12 4Z" fill="#4D6250" />
-                                    <rect x="8" y="10" width="8" height="6" fill="#4D6250" />
-                                    <rect x="4" y="16" width="16" height="2" fill="#4D6250" />
-                                </svg>
-                                <img
-                                    src={settings.qrCodeUrl || `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SedekahAccount${settings.accountNumber}`}
-                                    alt="QR Code"
-                                    className="w-[85%] aspect-square mix-blend-multiply opacity-90 object-contain"
-                                />
-                                <div className="mt-3 w-full">
-                                    <h3 className="text-[6px] sm:text-[8px] font-bold text-[#1A1A1A] tracking-wider truncate mb-1.5">MOSQUE DONATION</h3>
-                                    <div className="h-[1px] w-full bg-slate-200 mb-1" />
-                                    <div className="h-[1px] w-[60%] bg-slate-200" />
-                                </div>
-                            </div>
+                    {/* QR Code Card */}
+                    <div className="bg-white shadow-[0_20px_40px_rgba(0,0,0,0.15)] relative z-10 w-[80%] max-w-[280px] rounded-[1.25rem] flex flex-col items-center p-6 text-center">
+                        {/* Miniature Mosque Icon in frame */}
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="mb-4 opacity-80" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 4C10.5 6 9.5 8 9.5 10H14.5C14.5 8 13.5 6 12 4Z" fill="#4D6250" />
+                            <rect x="8" y="10" width="8" height="6" fill="#4D6250" />
+                            <rect x="4" y="16" width="16" height="2" fill="#4D6250" />
+                        </svg>
+                        <img
+                            src={settings.qrCodeUrl || `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=SedekahAccount${settings.accountNumber}`}
+                            alt="QR Code"
+                            className="w-full aspect-square mix-blend-multiply opacity-95 object-contain"
+                        />
+                        <div className="mt-5 w-full flex flex-col items-center">
+                            <h3 className="text-[11px] sm:text-[13px] font-bold text-[#1A1A1A] tracking-wider truncate mb-2.5">MOSQUE DONATION</h3>
+                            <div className="h-[2px] w-full bg-slate-100 mb-1.5" />
+                            <div className="h-[2px] w-[60%] bg-slate-100" />
                         </div>
                     </div>
                 </motion.div>

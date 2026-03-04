@@ -68,25 +68,22 @@ export function PostItemDialog({ open, onOpenChange, onSubmit }: PostItemDialogP
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="bg-[#F1EDE2] border-none sm:max-w-md h-[100dvh] sm:h-[90dvh] overflow-y-auto w-full max-w-none p-5 flex flex-col m-0 rounded-none sm:rounded-[1.75rem] shadow-2xl [&>button]:hidden">
+            <DialogContent className="bg-white border-none sm:max-w-md h-[100dvh] sm:h-[90dvh] overflow-y-auto w-full max-w-none p-5 flex flex-col m-0 rounded-none sm:rounded-[2rem] shadow-2xl [&>button]:hidden">
                 <DialogTitle className="sr-only">Report New Item</DialogTitle>
                 {/* Header */}
                 <header className="flex justify-between items-center mb-6 mt-2 relative">
-                    <button onClick={() => onOpenChange(false)} className="text-[#5A413A] p-1 -ml-1 flex-shrink-0">
-                        <ChevronLeft size={28} strokeWidth={2.5} />
+                    <button onClick={() => onOpenChange(false)} className="text-[#5A413A] p-2 bg-slate-50 rounded-full hover:bg-slate-100 -ml-1 flex-shrink-0 transition-colors">
+                        <ChevronLeft size={24} strokeWidth={2.5} />
                     </button>
 
-                    <h1 className="text-[1.4rem] font-bold tracking-tight text-[#5A413A] font-serif absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-max">
+                    <h1 className="text-[1.5rem] font-bold tracking-tight text-[#5A413A] font-serif absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-max">
                         Report New Item
                     </h1>
 
                     {/* Simulated Avatar overlap with moon indicator */}
                     <div className="relative flex-shrink-0">
-                        <div className="w-8 h-8 rounded-full bg-[#F3BA8E] border-[1.5px] border-[#F1EDE2] shadow-sm overflow-hidden flex items-center justify-center">
-                            <User className="text-white/80" fill="currentColor" size={16} />
-                        </div>
-                        <div className="absolute -bottom-1 -right-1 w-[16px] h-[16px] bg-[#E1DBD0] rounded-full border-[1.5px] border-[#F1EDE2] flex items-center justify-center shadow-sm">
-                            <Moon size={8} className="text-[#415D43] fill-current" />
+                        <div className="w-10 h-10 rounded-full bg-slate-100 border-[1.5px] border-white shadow-sm overflow-hidden flex items-center justify-center">
+                            <User className="text-[#5A413A]/40" fill="currentColor" size={20} />
                         </div>
                     </div>
                 </header>
@@ -102,18 +99,18 @@ export function PostItemDialog({ open, onOpenChange, onSubmit }: PostItemDialogP
                             className="flex-1 flex flex-col gap-6"
                         >
                             {/* Segmented Control */}
-                            <div className="flex bg-[#EBE7DF] rounded-[1.1rem] p-1.5 shadow-[inset_0_2px_5px_rgba(0,0,0,0.02)]">
+                            <div className="flex bg-slate-100 rounded-2xl p-1.5 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
                                 <button
                                     type="button"
                                     onClick={() => setType("found")}
-                                    className={`flex-1 text-[13px] py-[0.65rem] rounded-[0.85rem] transition-all font-bold ${type === 'found' ? 'bg-white text-[#5A413A] shadow-[0_2px_8px_rgba(0,0,0,0.04)]' : 'text-[#8B9699] hover:text-[#5A413A]'}`}
+                                    className={`flex-1 text-[13px] py-[0.7rem] rounded-xl transition-all font-bold ${type === 'found' ? 'bg-white text-[#495C48] shadow-[0_2px_8px_rgba(0,0,0,0.05)]' : 'text-[#7A8A93] hover:text-[#5A413A]'}`}
                                 >
                                     I Found Something
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => setType("lost")}
-                                    className={`flex-1 text-[13px] py-[0.65rem] rounded-[0.85rem] transition-all font-bold ${type === 'lost' ? 'bg-white text-[#5A413A] shadow-[0_2px_8px_rgba(0,0,0,0.04)]' : 'text-[#8B9699] hover:text-[#5A413A]'}`}
+                                    className={`flex-1 text-[13px] py-[0.7rem] rounded-xl transition-all font-bold ${type === 'lost' ? 'bg-white text-[#D26E43] shadow-[0_2px_8px_rgba(0,0,0,0.05)]' : 'text-[#7A8A93] hover:text-[#5A413A]'}`}
                                 >
                                     I Lost Something
                                 </button>
@@ -122,7 +119,7 @@ export function PostItemDialog({ open, onOpenChange, onSubmit }: PostItemDialogP
                             {/* Image Uploader */}
                             <div
                                 onClick={() => fileInputRef.current?.click()}
-                                className="w-full aspect-[2/1] rounded-[2rem] border-[1.5px] border-dashed border-[#BBAA9F] bg-transparent flex flex-col items-center justify-center gap-2.5 cursor-pointer hover:bg-[#EBE7DF]/50 transition-all overflow-hidden relative"
+                                className="w-full aspect-[2/1] rounded-[2rem] border-2 border-dashed border-slate-100 bg-slate-50/50 flex flex-col items-center justify-center gap-2.5 cursor-pointer hover:bg-slate-50 transition-all overflow-hidden relative"
                             >
                                 {preview ? (
                                     <>
@@ -134,19 +131,19 @@ export function PostItemDialog({ open, onOpenChange, onSubmit }: PostItemDialogP
                                                 setImage(null);
                                                 setPreview(null);
                                             }}
-                                            className="absolute top-3 right-3 p-1.5 bg-black/50 backdrop-blur-sm rounded-full text-white hover:bg-red-500 transition-colors"
+                                            className="absolute top-3 right-3 p-2 bg-black/50 backdrop-blur-md rounded-full text-white hover:bg-red-500 transition-colors shadow-lg"
                                         >
                                             <X size={16} strokeWidth={2.5} />
                                         </button>
                                     </>
                                 ) : (
                                     <>
-                                        <div className="h-12 w-12 rounded-full bg-[#E4DFD2] flex items-center justify-center text-[#5A413A] shadow-sm">
-                                            <Camera size={22} strokeWidth={2.5} />
+                                        <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center text-[#5A413A] shadow-sm border border-slate-50">
+                                            <Camera size={26} strokeWidth={2} />
                                         </div>
                                         <div className="text-center space-y-1">
-                                            <p className="text-[13px] font-bold text-[#A68F80]">Upload Photo</p>
-                                            <p className="text-[10px] text-[#A68F80]/70 italic tracking-wide">Clear photo of the item helps identification</p>
+                                            <p className="text-[14px] font-bold text-[#5A413A]">Upload Photo</p>
+                                            <p className="text-[11px] text-[#7A8A93] font-medium italic tracking-wide">Help others identify the item</p>
                                         </div>
                                     </>
                                 )}
@@ -159,23 +156,23 @@ export function PostItemDialog({ open, onOpenChange, onSubmit }: PostItemDialogP
                                 />
                             </div>
 
-                            <div className="space-y-4">
+                            <div className="space-y-5">
                                 {/* Item Name */}
-                                <div className="space-y-1.5 px-0.5">
-                                    <label htmlFor="title" className="text-[10px] uppercase font-bold text-[#A68F80] tracking-[0.1em] pl-1">Item Name</label>
+                                <div className="space-y-2">
+                                    <label htmlFor="title" className="text-[11px] uppercase font-extrabold text-[#7A8A93] tracking-[0.12em] pl-1">Item Name</label>
                                     <input
                                         id="title"
                                         required
                                         placeholder="e.g. Silver Keychain, Leather Wallet"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
-                                        className="w-full h-[3.25rem] rounded-[1rem] bg-[#EBE7DF] border-none px-4 text-[14px] text-[#5A413A] font-medium placeholder:text-[#A68F80]/60 focus:ring-0 focus:outline-none shadow-[inset_0_1px_3px_rgba(0,0,0,0.01)]"
+                                        className="w-full h-[3.5rem] rounded-2xl bg-slate-50/80 border border-slate-100 px-5 text-[14px] text-[#1A1A1A] font-bold placeholder:text-[#7A8A93]/40 focus:ring-2 focus:ring-[#495C48]/5 focus:bg-white focus:outline-none transition-all"
                                     />
                                 </div>
 
                                 {/* Location */}
-                                <div className="space-y-1.5 px-0.5 relative">
-                                    <label htmlFor="location" className="text-[10px] uppercase font-bold text-[#A68F80] tracking-[0.1em] pl-1">Location {type === 'found' ? 'Found' : 'Lost'}</label>
+                                <div className="space-y-2 relative">
+                                    <label htmlFor="location" className="text-[11px] uppercase font-extrabold text-[#7A8A93] tracking-[0.12em] pl-1">Location {type === 'found' ? 'Found' : 'Lost'}</label>
                                     <div className="relative">
                                         <input
                                             id="location"
@@ -183,20 +180,20 @@ export function PostItemDialog({ open, onOpenChange, onSubmit }: PostItemDialogP
                                             placeholder="e.g. Al-Noor Mosque Entrance"
                                             value={location}
                                             onChange={(e) => setLocation(e.target.value)}
-                                            className="w-full h-[3.25rem] rounded-[1rem] bg-[#EBE7DF] border-none pl-4 pr-11 text-[14px] text-[#5A413A] font-medium placeholder:text-[#A68F80]/60 focus:ring-0 focus:outline-none shadow-[inset_0_1px_3px_rgba(0,0,0,0.01)]"
+                                            className="w-full h-[3.5rem] rounded-2xl bg-slate-50/80 border border-slate-100 px-5 pr-12 text-[14px] text-[#1A1A1A] font-bold placeholder:text-[#7A8A93]/40 focus:ring-2 focus:ring-[#495C48]/5 focus:bg-white focus:outline-none transition-all"
                                         />
-                                        <MapPin size={18} strokeWidth={2.5} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A68F80]/70 pointer-events-none" />
+                                        <MapPin size={20} strokeWidth={2.5} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#495C48]/60 pointer-events-none" />
                                     </div>
                                 </div>
 
                                 {/* Description */}
-                                <div className="space-y-1.5 px-0.5">
-                                    <label htmlFor="description" className="text-[10px] uppercase font-bold text-[#A68F80] tracking-[0.1em] pl-1">Item Description</label>
+                                <div className="space-y-2">
+                                    <label htmlFor="description" className="text-[11px] uppercase font-extrabold text-[#7A8A93] tracking-[0.12em] pl-1">Item Description</label>
                                     <textarea
                                         id="description"
                                         required
                                         rows={4}
-                                        className="w-full rounded-[1.25rem] bg-[#EBE7DF] border-none p-4 text-[14px] text-[#5A413A] font-medium placeholder:text-[#A68F80]/60 focus:ring-0 focus:outline-none shadow-[inset_0_1px_3px_rgba(0,0,0,0.01)] resize-none leading-relaxed"
+                                        className="w-full rounded-[1.5rem] bg-slate-50/80 border border-slate-100 p-5 text-[14px] text-[#1A1A1A] font-bold placeholder:text-[#7A8A93]/40 focus:ring-2 focus:ring-[#495C48]/5 focus:bg-white focus:outline-none transition-all resize-none leading-relaxed"
                                         placeholder="Describe distinguishing features, markings, or contents..."
                                         value={description}
                                         onChange={(e) => setDescription(e.target.value)}
@@ -204,11 +201,11 @@ export function PostItemDialog({ open, onOpenChange, onSubmit }: PostItemDialogP
                                 </div>
                             </div>
 
-                            <div className="mt-auto pt-6 pb-2">
+                            <div className="mt-auto pt-8 pb-4">
                                 <Button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full bg-[#D26E43] hover:bg-[#B35238] h-[3.5rem] rounded-2xl text-white font-bold text-[15px] shadow-[0_4px_15px_rgba(210,110,67,0.3)] transition-all flex items-center justify-center gap-2"
+                                    className="w-full bg-[#495C48] hover:bg-[#3D4F3C] h-[4rem] rounded-[1.5rem] text-white font-extrabold text-[16px] shadow-[0_8px_25px_rgba(73,92,72,0.25)] transition-all flex items-center justify-center gap-3 active:scale-[0.98]"
                                 >
                                     {loading ? (
                                         <>
@@ -217,7 +214,7 @@ export function PostItemDialog({ open, onOpenChange, onSubmit }: PostItemDialogP
                                         </>
                                     ) : (
                                         <>
-                                            Submit Report <Send size={16} strokeWidth={2.5} className="mt-0.5" />
+                                            Submit Report <Send size={18} strokeWidth={2.5} className="mt-px" />
                                         </>
                                     )}
                                 </Button>

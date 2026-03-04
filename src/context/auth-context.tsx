@@ -40,7 +40,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                     displayName: currentUser.displayName,
                     photoURL: currentUser.photoURL,
                     role: "user",
-                    streak: 0,
                     createdAt: serverTimestamp(),
                 });
             }
@@ -104,7 +103,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 displayName: username,
                 photoURL: result.user.photoURL,
                 role: "user",
-                streak: 0,
                 createdAt: serverTimestamp(),
             }, { merge: true });
         } else {

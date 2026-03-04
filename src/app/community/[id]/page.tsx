@@ -132,7 +132,20 @@ export default function ItemDetailPage() {
                             </div>
                             <div>
                                 <p className="text-[10px] font-bold text-[#A68F80] uppercase tracking-widest leading-none mb-1">Reported On</p>
-                                <p className="text-[14px] font-bold text-[#5A413A] leading-tight">Mar 04, 2026</p>
+                                <p className="text-[14px] font-bold text-[#5A413A] leading-tight">
+                                    {item.postedAt ? (
+                                        (() => {
+                                            const date = typeof item.postedAt.toDate === 'function' ? item.postedAt.toDate() : new Date(item.postedAt);
+                                            return new Intl.DateTimeFormat('en-MY', {
+                                                day: 'numeric',
+                                                month: 'short',
+                                                year: 'numeric'
+                                            }).format(date);
+                                        })()
+                                    ) : (
+                                        "Recently"
+                                    )}
+                                </p>
                             </div>
                         </div>
 

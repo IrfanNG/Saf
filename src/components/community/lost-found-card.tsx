@@ -74,9 +74,24 @@ export function LostFoundCard({ item }: LostFoundCardProps) {
                         </Button>
 
                         <div className="flex items-center justify-between text-[#7A8A93] opacity-60">
-                            <div className="flex items-center gap-1.5">
-                                <Clock size={12} />
-                                <span className="text-[10px] font-bold uppercase tracking-[0.1em]">Just now</span>
+                            <div className="flex items-center gap-1.5 min-w-0">
+                                <Clock size={12} className="shrink-0" />
+                                <span className="text-[10px] font-bold uppercase tracking-[0.1em] truncate transition-all">
+                                    {item.postedAt ? (
+                                        (() => {
+                                            const date = typeof item.postedAt.toDate === 'function' ? item.postedAt.toDate() : new Date(item.postedAt);
+                                            return new Intl.DateTimeFormat('en-MY', {
+                                                day: 'numeric',
+                                                month: 'short',
+                                                hour: 'numeric',
+                                                minute: '2-digit',
+                                                hour12: true
+                                            }).format(date).replace(',', '');
+                                        })()
+                                    ) : (
+                                        "Just now"
+                                    )}
+                                </span>
                             </div>
                             <ChevronRight size={14} strokeWidth={2.5} />
                         </div>

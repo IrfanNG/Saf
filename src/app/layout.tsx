@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import { BottomNav } from "@/components/bottom-nav";
 import { PageTransition } from "@/components/page-transition";
 import { AuthProvider } from "@/context/auth-context";
 import { AuthGuard } from "@/components/auth-guard";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ClientLayout } from "@/components/client-layout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -49,14 +49,13 @@ export default function RootLayout({
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
-            <div className="mx-auto max-w-md min-h-screen relative overflow-x-clip pb-24 touch-pan-y shadow-2xl bg-[#F5F2EA]">
-              <AuthGuard>
+            <AuthGuard>
+              <ClientLayout>
                 <PageTransition>
                   {children}
                 </PageTransition>
-                <BottomNav />
-              </AuthGuard>
-            </div>
+              </ClientLayout>
+            </AuthGuard>
           </AuthProvider>
         </ThemeProvider>
       </body>
