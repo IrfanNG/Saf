@@ -125,10 +125,10 @@ export default function Home() {
     : null;
 
   const quickTiles = [
-    { title: "Quran", icon: BookOpen, color: "#4D6A53", href: undefined, action: () => { } },
+    { title: "Quran", icon: BookOpen, color: "#4D6A53", href: "/quran", action: () => router.push("/quran") },
     { title: "Mosque", icon: MoonStar, color: "#4D6A53", href: "/mosque", action: () => router.push("/mosque") },
     { title: "Zakat", icon: Coins, color: "#4D6A53", href: undefined, action: () => setZakatOpen(true) },
-    { title: "Doa", icon: BookMarked, color: "#4D6A53", href: undefined, action: () => router.push("/pustaka-doa") },
+    { title: "Doa", icon: BookMarked, color: "#4D6A53", href: "/pustaka-doa", action: () => router.push("/pustaka-doa") },
   ];
 
   const allPrayers = [

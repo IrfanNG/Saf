@@ -26,7 +26,7 @@ export default function MosquePage() {
     const router = useRouter();
 
     const handleOpenMaps = () => {
-        window.open("https://maps.google.com/?q=Masjid+Al-Azim+Melaka", "_blank");
+        window.open("https://www.google.com/maps/place/Al-Azim+Mosque+(State+Mosque)/@2.2152137,102.2599563,17z/data=!4m10!1m2!2m1!1sMasjid+Al-Azim+Melaka!3m6!1s0x31d1efd23656ce25:0xcb02f3ebc56362c0!8m2!3d2.2152137!4d102.262145!15sChVNYXNqaWQgQWwtQXppbSBNZWxha2GSAQZtb3NxdWXgAQA!16zL20vMGJfajZ6?entry=ttu&g_ep=EgoyMDI2MDMwMi4wIKXMDSoASAFQAw%3D%3D", "_blank");
     };
 
     return (

@@ -28,6 +28,7 @@ export function BottomNav() {
   }, [clickedTab]);
 
   const isDetailsPage = pathname.startsWith("/community/") && pathname !== "/community";
+  // Quran pages (/quran and /quran/[id]) are intentionally NOT hidden here to allow easy navigation back to home.
   const hiddenRoutes = ["/profile/personal-info", "/profile/theme", "/login", "/register", "/pustaka-doa", "/mosque"];
 
   if (hiddenRoutes.includes(pathname) || isDetailsPage) {
