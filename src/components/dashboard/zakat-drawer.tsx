@@ -19,7 +19,7 @@ import {
     SelectTrigger,
     SelectValue
 } from "@/components/ui/select";
-import { Coins, ExternalLink, Users, MapPin } from "lucide-react";
+import { Banknote, ExternalLink, Users, MapPin } from "lucide-react";
 
 interface ZakatDrawerProps {
     open: boolean;
@@ -47,7 +47,7 @@ export function ZakatDrawer({ open, onOpenChange }: ZakatDrawerProps) {
                 <div className="flex-1 overflow-y-auto min-h-0">
                     <DrawerHeader className="text-center pt-2">
                         <div className="mx-auto h-14 w-14 rounded-[2rem] bg-[#495C48] flex items-center justify-center text-[#EBE7DF] mb-3 shadow-[0_4px_10px_rgba(73,92,72,0.2)]">
-                            <Coins size={26} strokeWidth={2} />
+                            <Banknote size={26} strokeWidth={2} />
                         </div>
                         <DrawerTitle className="text-[1.35rem] font-bold text-[#3E5345] font-sans tracking-tight mb-0.5">
                             Heritage Zakat Fitrah

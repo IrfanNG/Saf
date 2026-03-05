@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, MapPin, Compass, Coins, CalendarDays, Bell, Clock, Sun, ChevronRight, MoonStar, Sunrise, CloudSun, Sunset, Moon, ChevronDown, BookMarked, Check, Copy, ExternalLink, ShieldCheck } from "lucide-react";
+import { BookOpen, MapPin, Compass, Banknote, CalendarDays, Bell, Clock, Sun, ChevronRight, MoonStar, Sunrise, CloudSun, Sunset, Moon, ChevronDown, BookMarked, Check, Copy, ExternalLink, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -142,7 +142,7 @@ export default function Home() {
   const quickTiles = [
     { title: "Quran", icon: BookOpen, color: "#4D6A53", href: "/quran", action: () => router.push("/quran") },
     { title: "Mosque", icon: MoonStar, color: "#4D6A53", href: "/mosque", action: () => router.push("/mosque") },
-    { title: "Zakat", icon: Coins, color: "#4D6A53", href: undefined, action: () => setZakatOpen(true) },
+    { title: "Zakat", icon: Banknote, color: "#4D6A53", href: undefined, action: () => setZakatOpen(true) },
     { title: "Doa", icon: BookMarked, color: "#4D6A53", href: "/pustaka-doa", action: () => router.push("/pustaka-doa") },
   ];
 
