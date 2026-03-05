@@ -65,7 +65,7 @@ export default function MosquePage() {
                     </h1>
                     <div className="flex items-center gap-1.5 text-white/80">
                         <MapPin size={14} className="text-emerald-400" />
-                        <span className="text-[13px] font-medium tracking-wide">Masjid Negeri Melaka, Melaka</span>
+                        <span className="text-[13px] font-medium tracking-wide">Masjid Negeri Melaka</span>
                     </div>
                 </div>
             </motion.div>
@@ -76,16 +76,16 @@ export default function MosquePage() {
                 <motion.div variants={item} className="grid grid-cols-2 gap-4">
                     {/* Call Card */}
                     <div className="bg-white rounded-2xl p-4 flex flex-col items-center gap-2.5 shadow-sm border border-black/[0.03]">
-                        <div className="w-12 h-12 rounded-2xl bg-[#E8F5E9] flex items-center justify-center">
-                            <Phone size={22} className="text-[#4D6A53]" strokeWidth={2.5} />
+                        <div className="w-12 h-12 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
+                            <Phone size={22} className="text-[#4D6A53]" strokeWidth={2} />
                         </div>
                         <span className="text-[11px] font-bold text-[#5A413A] uppercase tracking-wide font-sans">Call</span>
                     </div>
 
                     {/* Inquiry Card */}
                     <div className="bg-white rounded-2xl p-4 flex flex-col items-center gap-2.5 shadow-sm border border-black/[0.03]">
-                        <div className="w-12 h-12 rounded-2xl bg-[#E3F2FD] flex items-center justify-center">
-                            <MessageCircle size={22} className="text-[#1976D2]" strokeWidth={2.5} />
+                        <div className="w-12 h-12 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
+                            <MessageCircle size={22} className="text-[#4D6A53]" strokeWidth={2} />
                         </div>
                         <span className="text-[11px] font-bold text-[#5A413A] uppercase tracking-wide font-sans">Inquiry</span>
                     </div>
@@ -120,8 +120,8 @@ export default function MosquePage() {
                     {/* Parking Card */}
                     <div className="bg-white rounded-3xl p-5 flex items-center justify-between shadow-sm border border-black/[0.02]">
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-2xl bg-[#F0F4F8] flex items-center justify-center">
-                                <Car size={22} className="text-[#334155]" strokeWidth={2.5} />
+                            <div className="w-12 h-12 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
+                                <Car size={22} className="text-[#4D6A53]" strokeWidth={2} />
                             </div>
                             <div>
                                 <h4 className="text-[15px] font-bold text-[#1E293B] font-serif tracking-tight">Parking Lots</h4>
@@ -159,8 +159,8 @@ export default function MosquePage() {
                     <div className="grid grid-cols-2 gap-3">
                         {/* Main Hall */}
                         <div className="bg-white rounded-3xl p-4 shadow-sm border border-black/[0.02] flex flex-col gap-3">
-                            <div className="w-10 h-10 rounded-2xl bg-[#E8F5E9] flex items-center justify-center">
-                                <Users size={18} className="text-[#2E7D32]" />
+                            <div className="w-10 h-10 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
+                                <Users size={18} className="text-[#4D6A53]" strokeWidth={2} />
                             </div>
                             <div>
                                 <h4 className="text-[14px] font-bold text-[#1A2B22] font-serif">Main Hall</h4>
@@ -170,8 +170,8 @@ export default function MosquePage() {
 
                         {/* Museum */}
                         <div className="bg-white rounded-3xl p-4 shadow-sm border border-black/[0.02] flex flex-col gap-3">
-                            <div className="w-10 h-10 rounded-2xl bg-[#FFF3E0] flex items-center justify-center">
-                                <Library size={18} className="text-[#E65100]" />
+                            <div className="w-10 h-10 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
+                                <Library size={18} className="text-[#4D6A53]" strokeWidth={2} />
                             </div>
                             <div>
                                 <h4 className="text-[14px] font-bold text-[#1A2B22] font-serif">Al-Azim Museum</h4>
@@ -181,8 +181,8 @@ export default function MosquePage() {
 
                         {/* Auditorium */}
                         <div className="bg-white rounded-3xl p-4 shadow-sm border border-black/[0.02] flex flex-col gap-3">
-                            <div className="w-10 h-10 rounded-2xl bg-[#E3F2FD] flex items-center justify-center">
-                                <Mic size={18} className="text-[#1565C0]" />
+                            <div className="w-10 h-10 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
+                                <Mic size={18} className="text-[#4D6A53]" strokeWidth={2} />
                             </div>
                             <div>
                                 <h4 className="text-[14px] font-bold text-[#1A2B22] font-serif">Auditorium</h4>
@@ -192,8 +192,8 @@ export default function MosquePage() {
 
                         {/* Accessibility */}
                         <div className="bg-white rounded-3xl p-4 shadow-sm border border-black/[0.02] flex flex-col gap-3">
-                            <div className="w-10 h-10 rounded-2xl bg-[#F3E5F5] flex items-center justify-center">
-                                <Accessibility size={18} className="text-[#6A1B9A]" />
+                            <div className="w-10 h-10 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
+                                <Accessibility size={18} className="text-[#4D6A53]" strokeWidth={2} />
                             </div>
                             <div>
                                 <h4 className="text-[14px] font-bold text-[#1A2B22] font-serif mb-1.5">Accessibility</h4>
