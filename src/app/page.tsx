@@ -212,7 +212,7 @@ export default function Home() {
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <p className="text-[10px] font-bold text-[#9AA5AB] uppercase tracking-[0.2em]">
-                    Now Reading
+                    Next Prayer
                   </p>
                   <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
                 </div>
