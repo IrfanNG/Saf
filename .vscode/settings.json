@@ -2,5 +2,9 @@
     "css.validate": false,
     "tailwindCSS.includeLanguages": {
         "css": "css"
+    },
+    "css.lint.unknownAtRules": "ignore",
+    "files.associations": {
+        "*.css": "tailwindcss"
     }
 }

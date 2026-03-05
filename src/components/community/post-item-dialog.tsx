@@ -7,7 +7,7 @@ import {
     DialogTitle
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Camera, Loader2, X, ChevronLeft, User, Moon, MapPin, Send, CheckCircle2 } from "lucide-react";
+import { Camera, Loader2, X, ChevronLeft, MapPin, Send, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface PostItemDialogProps {
@@ -80,12 +80,8 @@ export function PostItemDialog({ open, onOpenChange, onSubmit }: PostItemDialogP
                         Report New Item
                     </h1>
 
-                    {/* Simulated Avatar overlap with moon indicator */}
-                    <div className="relative flex-shrink-0">
-                        <div className="w-10 h-10 rounded-full bg-slate-100 border-[1.5px] border-white shadow-sm overflow-hidden flex items-center justify-center">
-                            <User className="text-[#5A413A]/40" fill="currentColor" size={20} />
-                        </div>
-                    </div>
+                    {/* Empty div to maintain spacing if needed, though title is absolute */}
+                    <div className="w-10 h-10 flex-shrink-0" />
                 </header>
 
                 <AnimatePresence mode="wait">
