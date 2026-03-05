@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChevronLeft, Phone, MessageCircle, MapPin, ExternalLink, Info } from "lucide-react";
+import { ChevronLeft, Phone, MessageCircle, MapPin, ExternalLink, Info, Users, Library, Mic, Accessibility, Car, AlertTriangle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -111,6 +111,98 @@ export default function MosquePage() {
                                 Open in Google Maps
                                 <ExternalLink size={14} />
                             </button>
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* ── PARKING & LOGISTICS ── */}
+                <motion.div variants={item} className="space-y-3">
+                    {/* Parking Card */}
+                    <div className="bg-white rounded-3xl p-5 flex items-center justify-between shadow-sm border border-black/[0.02]">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-2xl bg-[#F0F4F8] flex items-center justify-center">
+                                <Car size={22} className="text-[#334155]" strokeWidth={2.5} />
+                            </div>
+                            <div>
+                                <h4 className="text-[15px] font-bold text-[#1E293B] font-serif tracking-tight">Parking Lots</h4>
+                                <p className="text-[13px] text-[#64748B] font-medium font-sans">Ample open space</p>
+                            </div>
+                        </div>
+                        <div className="text-right">
+                            <span className="text-[20px] font-bold text-[#0F172A] font-sans">1500+</span>
+                            <p className="text-[11px] font-bold text-[#94A3B8] uppercase tracking-wide font-sans">Capacity</p>
+                        </div>
+                    </div>
+
+                    {/* Logistics Alert */}
+                    <div className="bg-[#4D7C5F] rounded-3xl p-5 shadow-sm overflow-hidden relative">
+                        {/* Decorative Pattern */}
+                        <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/5 rounded-full blur-xl" />
+
+                        <div className="flex items-start gap-4 relative z-10">
+                            <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center shrink-0">
+                                <AlertTriangle size={20} className="text-white" />
+                            </div>
+                            <div>
+                                <h4 className="text-[14px] font-bold text-white mb-1 tracking-wide font-sans">Ramadan Traffic Alert</h4>
+                                <p className="text-[13px] text-white/85 leading-relaxed font-sans font-medium">
+                                    High traffic during Tarawih. Consider carpooling or arriving 30 mins early. Special wardens on duty.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* ── FACILITY DIRECTORY ── */}
+                <motion.div variants={item} className="flex flex-col gap-3">
+                    <h3 className="text-[14px] font-bold uppercase tracking-[0.1em] text-[#8B5742] ml-2 mt-2 font-sans">Facility Directory</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                        {/* Main Hall */}
+                        <div className="bg-white rounded-3xl p-4 shadow-sm border border-black/[0.02] flex flex-col gap-3">
+                            <div className="w-10 h-10 rounded-2xl bg-[#E8F5E9] flex items-center justify-center">
+                                <Users size={18} className="text-[#2E7D32]" />
+                            </div>
+                            <div>
+                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-serif">Main Hall</h4>
+                                <p className="text-[12px] text-[#6B7280] font-medium font-sans mt-0.5">9.7k Capacity</p>
+                            </div>
+                        </div>
+
+                        {/* Museum */}
+                        <div className="bg-white rounded-3xl p-4 shadow-sm border border-black/[0.02] flex flex-col gap-3">
+                            <div className="w-10 h-10 rounded-2xl bg-[#FFF3E0] flex items-center justify-center">
+                                <Library size={18} className="text-[#E65100]" />
+                            </div>
+                            <div>
+                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-serif">Al-Azim Museum</h4>
+                                <p className="text-[12px] text-[#6B7280] font-medium font-sans mt-0.5">Islamic Heritage</p>
+                            </div>
+                        </div>
+
+                        {/* Auditorium */}
+                        <div className="bg-white rounded-3xl p-4 shadow-sm border border-black/[0.02] flex flex-col gap-3">
+                            <div className="w-10 h-10 rounded-2xl bg-[#E3F2FD] flex items-center justify-center">
+                                <Mic size={18} className="text-[#1565C0]" />
+                            </div>
+                            <div>
+                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-serif">Auditorium</h4>
+                                <p className="text-[12px] text-[#6B7280] font-medium font-sans mt-0.5">Events & Lectures</p>
+                            </div>
+                        </div>
+
+                        {/* Accessibility */}
+                        <div className="bg-white rounded-3xl p-4 shadow-sm border border-black/[0.02] flex flex-col gap-3">
+                            <div className="w-10 h-10 rounded-2xl bg-[#F3E5F5] flex items-center justify-center">
+                                <Accessibility size={18} className="text-[#6A1B9A]" />
+                            </div>
+                            <div>
+                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-serif mb-1.5">Accessibility</h4>
+                                <div className="flex flex-wrap gap-1.5">
+                                    <span className="text-[10px] font-bold bg-slate-50 text-slate-500 px-2 py-0.5 rounded-full border border-slate-100">Ramp</span>
+                                    <span className="text-[10px] font-bold bg-slate-50 text-slate-500 px-2 py-0.5 rounded-full border border-slate-100">Lift</span>
+                                    <span className="text-[10px] font-bold bg-slate-50 text-slate-500 px-2 py-0.5 rounded-full border border-slate-100">OKU Toilet</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </motion.div>
