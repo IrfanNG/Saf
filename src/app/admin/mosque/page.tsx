@@ -80,7 +80,7 @@ export default function AdminMosquePage() {
                 <label className="block">
                     <span className="text-xs text-zinc-500 uppercase tracking-wider">Mosque Name</span>
                     <input
-                        className="w-full mt-1 bg-zinc-900 border border-zinc-800 px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full mt-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 rounded-lg text-sm text-[#4A352D] dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         value={form.mosqueName}
                         onChange={(e) => setForm({ ...form, mosqueName: e.target.value })}
                     />
@@ -89,7 +89,7 @@ export default function AdminMosquePage() {
                 <label className="block">
                     <span className="text-xs text-zinc-500 uppercase tracking-wider">Address</span>
                     <input
-                        className="w-full mt-1 bg-zinc-900 border border-zinc-800 px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full mt-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 rounded-lg text-sm text-[#4A352D] dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         value={form.address}
                         onChange={(e) => setForm({ ...form, address: e.target.value })}
                     />
@@ -98,7 +98,7 @@ export default function AdminMosquePage() {
                 <label className="block">
                     <span className="text-xs text-zinc-500 uppercase tracking-wider">Facilities (comma-separated)</span>
                     <input
-                        className="w-full mt-1 bg-zinc-900 border border-zinc-800 px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full mt-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 rounded-lg text-sm text-[#4A352D] dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         value={facilitiesStr}
                         onChange={(e) => setFacilitiesStr(e.target.value)}
                         placeholder="Wudhu Area, Women's Section, AC"
@@ -108,7 +108,7 @@ export default function AdminMosquePage() {
                 <label className="block">
                     <span className="text-xs text-zinc-500 uppercase tracking-wider">Parking</span>
                     <input
-                        className="w-full mt-1 bg-zinc-900 border border-zinc-800 px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full mt-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 rounded-lg text-sm text-[#4A352D] dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         value={form.parking}
                         onChange={(e) => setForm({ ...form, parking: e.target.value })}
                     />
@@ -117,7 +117,7 @@ export default function AdminMosquePage() {
                 <label className="block">
                     <span className="text-xs text-zinc-500 uppercase tracking-wider">Qiyam Time (HH:MM)</span>
                     <input
-                        className="w-full mt-1 bg-zinc-900 border border-zinc-800 px-4 py-3 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full mt-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-4 py-3 rounded-lg text-sm text-[#4A352D] dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         value={form.qiyamTime}
                         onChange={(e) => setForm({ ...form, qiyamTime: e.target.value })}
                         placeholder="03:30"

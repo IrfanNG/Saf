@@ -1,0 +1,31 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#065F46" /> <!-- Emerald Green Top -->
+      <stop offset="100%" stop-color="#022C22" /> <!-- Deep Forest Green Bottom -->
+    </linearGradient>
+  </defs>
+
+  <!-- Background Squircle Masking -->
+  <rect width="1024" height="1024" rx="230" fill="url(#bg-gradient)" />
+
+  <!-- 
+    The Mark: Four Parallel, Horizontal Lines
+    Total height occupied by lines: 4 lines * 60px height + 3 spaces * 80px = 240 + 240 = 480px.
+    Starting Y = (1024 - 480) / 2 + 30 (half stroke offset) = 542 / 2 + 30 = 271 + 30 = 301.
+    Wait, let's just make it perfectly mathematically centered.
+    Center = 512.
+    Line 1 Y = 512 - 195  = 317
+    Line 2 Y = 512 -  65  = 447
+    Line 3 Y = 512 +  65  = 577
+    Line 4 Y = 512 + 195  = 707
+    Width of lines = 520 (Centered: X1 = 252, X2 = 772)
+  -->
+  <g stroke="#FFFFFF" stroke-width="60" stroke-linecap="round">
+    <line x1="252" y1="317" x2="772" y2="317" />
+    <line x1="252" y1="447" x2="772" y2="447" />
+    <line x1="252" y1="577" x2="772" y2="577" />
+    <line x1="252" y1="707" x2="772" y2="707" />
+  </g>
+</svg>

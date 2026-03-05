@@ -4,9 +4,9 @@ import { LostFoundItem } from "@/hooks/use-lost-found";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useAdmin } from "@/hooks/use-admin";
-import { motion, AnimatePresence } from "framer-motion";
-import { Trash2, CheckCircle, MapPin, Clock } from "lucide-react";
+import { motion } from "framer-motion";
+import { MapPin, Clock, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface LostFoundCardProps {
     item: LostFoundItem;
@@ -14,8 +14,8 @@ interface LostFoundCardProps {
     onDelete: (id: string) => void;
 }
 
-export function LostFoundCard({ item, onMarkReturned, onDelete }: LostFoundCardProps) {
-    const { isAdmin } = useAdmin();
+export function LostFoundCard({ item }: LostFoundCardProps) {
+    const router = useRouter();
 
     return (
         <motion.div
@@ -24,72 +24,77 @@ export function LostFoundCard({ item, onMarkReturned, onDelete }: LostFoundCardP
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ type: "spring", stiffness: 500, damping: 30 }}
+            className="w-full h-full cursor-pointer"
+            onClick={() => router.push(`/community/${item.id}`)}
         >
-            <Card className="overflow-hidden border-zinc-800 bg-zinc-900/40 hover:border-emerald-500/30 transition-colors group h-full flex flex-col">
-                <div className="relative aspect-video overflow-hidden bg-zinc-800">
+            <Card className="overflow-hidden border-none shadow-[0_2px_15px_rgba(0,0,0,0.03)] bg-white hover:shadow-md transition-shadow duration-300 group h-full flex flex-col rounded-[2rem]">
+                <div className="relative overflow-hidden bg-[#F4F4F4] h-[160px] sm:h-[180px] flex items-center justify-center">
                     {item.imageUrl && item.imageUrl !== "" ? (
                         <img
                             src={item.imageUrl}
                             alt={item.title}
-                            onError={(e) => console.error(`Firebase: Image failed for '${item.title}' URL:`, item.imageUrl)}
-                            onLoad={() => console.log(`Firebase: Image loaded for '${item.title}'`)}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                     ) : (
-                        <div className="w-full h-full flex items-center justify-center text-zinc-600 italic text-xs">
-                            No image provided
+                        <div className="w-full h-32 flex items-center justify-center text-slate-400 italic text-xs">
+                            No image
                         </div>
                     )}
 
-                    <div className="absolute top-2 left-2 flex gap-2">
-                        <Badge className={item.type === "lost" ? "bg-red-500/80" : "bg-emerald-500/80"}>
+                    <div className="absolute top-3 left-3 flex gap-2">
+                        <Badge className={`font-bold text-[10px] tracking-[0.05em] px-3 py-1 rounded-xl border-none hover:opacity-90 ${item.type === "found" ? "bg-[#495C48] text-white" : "bg-[#D26E43] text-white"}`}>
                             {item.type.toUpperCase()}
                         </Badge>
                         {item.status === "returned" && (
-                            <Badge variant="outline" className="bg-blue-500/20 text-blue-400 border-blue-500/30">
+                            <Badge variant="outline" className="bg-emerald-50 text-emerald-600 border-none font-bold text-[8px] rounded-xl">
                                 RETURNED
                             </Badge>
                         )}
                     </div>
                 </div>
 
-                <CardContent className="p-4 flex-1 flex flex-col gap-3">
-                    <div>
-                        <h3 className="font-semibold text-zinc-100 line-clamp-1">{item.title}</h3>
-                        <p className="text-xs text-zinc-500 line-clamp-2 mt-1">{item.description}</p>
+                <CardContent className="p-5 flex-1 flex flex-col">
+                    <div className="space-y-1">
+                        <h3 className="font-bold text-[#5A413A] font-sans text-[18px] leading-tight line-clamp-1">{item.title}</h3>
+                        <div className="flex items-start gap-1.5 text-[12px] text-[#7A8A93] font-semibold tracking-wide">
+                            <MapPin size={14} strokeWidth={2.5} className="text-[#495C48] shrink-0 mt-[1px]" />
+                            {item.location ? item.location : "Mosque Vicinity"}
+                        </div>
                     </div>
 
-                    <div className="mt-auto space-y-2">
-                        <div className="flex items-center gap-1.5 text-[10px] text-zinc-500">
-                            <Clock size={12} className="text-emerald-500" />
-                            {item.postedAt?.toDate ? item.postedAt.toDate().toLocaleDateString() : "Just now"}
-                        </div>
+                    <div className="mt-auto pt-6 space-y-4">
+                        <Button
+                            className="w-full h-11 bg-[#F1EDE2] hover:bg-[#EBE7DF] text-[#5A413A] font-bold rounded-xl text-[13px] shadow-none border-none transition-all flex items-center justify-center gap-2"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                router.push(`/community/${item.id}`);
+                            }}
+                        >
+                            View Details <ChevronRight size={14} strokeWidth={2.5} />
+                        </Button>
 
-                        {isAdmin && (
-                            <motion.div
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: "auto" }}
-                                className="flex gap-2 pt-2 border-t border-zinc-800/50"
-                            >
-                                <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="flex-1 h-8 text-[10px] gap-1.5 border-zinc-800 hover:bg-emerald-500/10 hover:text-emerald-500"
-                                    onClick={() => onMarkReturned(item.id, item.status !== "returned")}
-                                >
-                                    <CheckCircle size={14} />
-                                    {item.status === "returned" ? "Undo" : "Returned"}
-                                </Button>
-                                <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="h-8 w-8 p-0 border-zinc-800 hover:bg-red-500/10 hover:text-red-500"
-                                    onClick={() => onDelete(item.id)}
-                                >
-                                    <Trash2 size={14} />
-                                </Button>
-                            </motion.div>
-                        )}
+                        <div className="flex items-center justify-between text-[#7A8A93] opacity-60">
+                            <div className="flex items-center gap-1.5 min-w-0">
+                                <Clock size={12} className="shrink-0" />
+                                <span className="text-[10px] font-bold uppercase tracking-[0.1em] truncate transition-all">
+                                    {item.postedAt ? (
+                                        (() => {
+                                            const date = typeof item.postedAt.toDate === 'function' ? item.postedAt.toDate() : new Date(item.postedAt);
+                                            return new Intl.DateTimeFormat('en-MY', {
+                                                day: 'numeric',
+                                                month: 'short',
+                                                hour: 'numeric',
+                                                minute: '2-digit',
+                                                hour12: true
+                                            }).format(date).replace(',', '');
+                                        })()
+                                    ) : (
+                                        "Just now"
+                                    )}
+                                </span>
+                            </div>
+                            <ChevronRight size={14} strokeWidth={2.5} />
+                        </div>
                     </div>
                 </CardContent>
             </Card>

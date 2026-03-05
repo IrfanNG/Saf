@@ -18,7 +18,7 @@ interface AuthContextType {
     loading: boolean;
     signInWithGoogle: () => Promise<void>;
     signInWithEmail: (e: string, p: string) => Promise<void>;
-    signUpWithEmail: (e: string, p: string) => Promise<void>;
+    signUpWithEmail: (e: string, p: string, username?: string) => Promise<void>;
     signOut: () => Promise<void>;
 }
 
@@ -49,6 +49,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     useEffect(() => {
+        if (!auth.app) {
+            setLoading(false);
+            return;
+        }
+
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             setUser(currentUser);
             if (currentUser) {
@@ -60,22 +65,53 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return () => unsubscribe();
     }, []);
 
+    const checkFirebaseConfig = () => {
+        if (!auth.app) {
+            alert("Firebase is not configured! Please add your Firebase credentials to an .env.local file.");
+            throw new Error("Firebase is not configured");
+        }
+    };
+
     const signInWithGoogle = async () => {
+        checkFirebaseConfig();
         const provider = new GoogleAuthProvider();
         const result = await signInWithPopup(auth, provider);
         await syncUserToFirestore(result.user);
     };
 
     const signInWithEmail = async (e: string, p: string) => {
+        checkFirebaseConfig();
         await signInWithEmailAndPassword(auth, e, p);
     };
 
-    const signUpWithEmail = async (e: string, p: string) => {
+    const signUpWithEmail = async (e: string, p: string, username?: string) => {
+        checkFirebaseConfig();
         const result = await createUserWithEmailAndPassword(auth, e, p);
-        await syncUserToFirestore(result.user);
+
+        if (username) {
+            await import("firebase/auth").then(({ updateProfile }) => {
+                return updateProfile(result.user, { displayName: username });
+            });
+            // Update local user state immediately so UI refresh catches it
+            setUser({ ...result.user, displayName: username } as User);
+
+            // Re-sync explicitly to catch new displayName
+            const docRef = doc(db, "users", result.user.uid);
+            await setDoc(docRef, {
+                uid: result.user.uid,
+                email: result.user.email,
+                displayName: username,
+                photoURL: result.user.photoURL,
+                role: "user",
+                createdAt: serverTimestamp(),
+            }, { merge: true });
+        } else {
+            await syncUserToFirestore(result.user);
+        }
     };
 
     const signOut = async () => {
+        if (!auth.app) return;
         await firebaseSignOut(auth);
     };
 

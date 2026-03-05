@@ -63,44 +63,48 @@ export function QiyamTimer({ qiyamTime, fajrTime, loading }: QiyamTimerProps) {
 
     return (
         <Card
-            className={`border-border/50 bg-card overflow-hidden relative transition-shadow duration-700 ${isActive
-                ? "shadow-[0_0_20px_rgba(16,185,129,0.25)] border-emerald-500/40"
-                : "shadow-sm"
+            className={`bg-[#5A413A] border-none text-white overflow-hidden relative transition-shadow duration-700 rounded-[1.25rem] ${isActive
+                ? "shadow-[0_0_20px_rgba(209,165,79,0.25)] border-[#D1A54F]"
+                : "shadow-md"
                 }`}
         >
             {isActive && (
                 <motion.div
-                    className="absolute inset-0 rounded-xl border-2 border-emerald-500/30"
-                    animate={{ opacity: [0.3, 0.7, 0.3] }}
+                    className="absolute inset-0 rounded-[1.25rem] border border-[#D1A54F]"
+                    animate={{ opacity: [0.1, 0.4, 0.1] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                 />
             )}
-            <CardContent className="p-5 flex items-center gap-4 relative z-10">
-                <div
-                    className={`h-10 w-10 rounded-lg flex items-center justify-center shrink-0 ${isActive
-                        ? "bg-emerald-500/20 text-emerald-400"
-                        : "bg-zinc-900 text-zinc-400"
-                        }`}
-                >
-                    <Moon size={20} />
-                </div>
-                <div className="flex-1 min-w-0">
-                    <p className="text-xs font-medium text-emerald-500 uppercase tracking-widest mb-0.5">
-                        Qiyamullail
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                        {isActive ? (
-                            <span className="text-emerald-400 font-medium">Active Now — Pray tahajjud</span>
-                        ) : (
-                            <>Starts at {qiyamTime} AM</>
-                        )}
-                    </p>
-                </div>
-                <div className="text-right shrink-0">
-                    {!isActive && (
-                        <p className="text-lg font-mono tabular-nums text-foreground">
-                            {remaining}
+            <CardContent className="px-5 py-[0.85rem] flex items-center justify-between gap-3.5 relative z-10">
+                <div className="flex items-center gap-3.5">
+                    <div
+                        className={`h-[2.6rem] w-[2.6rem] rounded-xl flex items-center justify-center shrink-0 ${isActive
+                            ? "bg-[#D4B84F]/20 text-[#D4B84F]"
+                            : "bg-[#6A4D42] text-[#D4B84F]"
+                            }`}
+                    >
+                        <Moon size={18} className={isActive ? "fill-current" : "fill-current"} />
+                    </div>
+                    <div className="flex-1 min-w-0 flex flex-col justify-center translate-y-[-1px]">
+                        <p className="text-[15px] sm:text-[16px] text-white font-medium leading-[1.1] tracking-wide mb-[3px]">
+                            Qiyamullail<br />Starts
                         </p>
+                        <p className="text-[10.5px] text-white/60 leading-[1.15]">
+                            {isActive ? (
+                                <span className="text-[#D4B84F] font-bold">Time for Tahajjud</span>
+                            ) : (
+                                <>Prepare for<br />Tahajjud prayers</>
+                            )}
+                        </p>
+                    </div>
+                </div>
+                <div className="shrink-0 pl-1">
+                    {!isActive && (
+                        <div className="bg-[#6E554C] px-3.5 py-[0.35rem] rounded-[0.8rem] text-center shadow-[inset_0_1px_2px_rgba(255,255,255,0.05)] border border-white/5">
+                            <p className="text-[13px] font-sans font-bold tabular-nums text-white tracking-[0.1em]">
+                                {remaining}
+                            </p>
+                        </div>
                     )}
                 </div>
             </CardContent>

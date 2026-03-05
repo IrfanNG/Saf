@@ -26,6 +26,10 @@ export function useMosqueSettings() {
 
     useEffect(() => {
         const load = async () => {
+            if (!db.app) {
+                setLoading(false);
+                return;
+            }
             try {
                 const snap = await getDoc(doc(db, "mosque_info", "default"));
                 if (snap.exists()) {
