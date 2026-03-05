@@ -4,6 +4,7 @@ import { useAuth } from "@/context/auth-context";
 import { useAdmin } from "@/hooks/use-admin";
 import { usePrayerTimes } from "@/hooks/use-prayer-times";
 import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 import {
     User as UserIcon,
     Shield,
@@ -11,9 +12,17 @@ import {
     LogOut,
     ChevronRight,
     ShieldCheck,
+    Edit2,
+    Calendar,
+    Save
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { updateProfile } from "firebase/auth";
+import { toast } from "sonner";
+
 
 const container = {
     hidden: { opacity: 0 },
@@ -30,13 +39,58 @@ export default function ProfilePage() {
     const { location } = usePrayerTimes();
     const router = useRouter();
 
-    const menuItems = [
-        { icon: UserIcon, label: "Personal Information", iconBg: "#EEF5EF", iconColor: "#4D6A53", href: "/profile/personal-info" },
-        { icon: Shield, label: "Privacy & Security", iconBg: "#EEEDF8", iconColor: "#6B64C8", href: undefined },
-        { icon: HelpCircle, label: "Help Center", iconBg: "#EDF3FB", iconColor: "#4A8ED4", href: undefined },
-    ];
+    const [loading, setLoading] = useState(false);
+    const [fullName, setFullName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [dob, setDob] = useState("");
+    const dateInputRef = useRef<HTMLInputElement>(null);
 
+    // Fetch full profile info
+    useEffect(() => {
+        if (!user) return;
+        setFullName(user.displayName || "");
+        setEmail(user.email || "");
 
+        const fetchExtraData = async () => {
+            try {
+                const docRef = doc(db, "users", user.uid);
+                const snapshot = await getDoc(docRef);
+                if (snapshot.exists()) {
+                    const data = snapshot.data();
+                    setPhone(data.phoneNumber || "");
+                    setDob(data.dateOfBirth || "");
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        };
+
+        fetchExtraData();
+    }, [user]);
+
+    const handleSave = async () => {
+        if (!user) return;
+        setLoading(true);
+        try {
+            if (user.displayName !== fullName) {
+                await updateProfile(user, { displayName: fullName });
+            }
+
+            const docRef = doc(db, "users", user.uid);
+            await updateDoc(docRef, {
+                displayName: fullName,
+                phoneNumber: phone,
+                dateOfBirth: dob
+            });
+            toast.success("Profile updated successfully!");
+        } catch (e) {
+            console.error(e);
+            toast.error("Failed to save changes.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <motion.main
@@ -47,9 +101,7 @@ export default function ProfilePage() {
         >
             {/* ── AVATAR + NAME SECTION ── */}
             <motion.div variants={item} className="flex flex-col items-center pt-16 pb-6 px-6">
-                {/* Diamond avatar */}
                 <div className="relative mb-5">
-                    {/* Diamond shape via rotate trick */}
                     <div
                         className="w-24 h-24 rounded-[1.6rem] overflow-hidden border-4 border-white shadow-lg"
                         style={{ transform: "rotate(45deg)" }}
@@ -68,57 +120,115 @@ export default function ProfilePage() {
                             )}
                         </div>
                     </div>
-
-                    {/* Gold coin badge beneath avatar */}
                     <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-[#D4A017] border-2 border-[#F4F4F6] shadow-sm flex items-center justify-center z-10">
                         <span className="text-white text-[10px] font-black">✦</span>
                     </div>
                 </div>
 
-                {/* Name */}
-                <h1 className="text-[1.6rem] font-bold text-[#5A413A] font-serif tracking-tight mt-2">
-                    {user?.displayName || "Ahmad Ibrahim"}
+                <h1 className="text-[1.6rem] font-bold text-[#5A413A] font-sans tracking-tight mt-2">
+                    {fullName || "Ahmad Ibrahim"}
                 </h1>
-                {/* Location */}
                 <p className="text-[11px] font-bold text-[#9AA5AB] uppercase tracking-[0.18em] mt-1 text-center">
                     {location?.city ? `${location.city}, Malaysia` : "Kuala Lumpur, Malaysia"}
                 </p>
             </motion.div>
 
-
-
-            {/* ── MENU ITEMS ── */}
-            <motion.div variants={item} className="mx-5 flex flex-col gap-2">
-                {menuItems.map((menuItem, idx) => {
-                    const Row = (
-                        <div
-                            key={idx}
-                            className="bg-white rounded-[1.25rem] px-4 py-3.5 flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow"
-                        >
-                            <div className="flex items-center gap-3.5">
-                                <div
-                                    className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0"
-                                    style={{ backgroundColor: menuItem.iconBg }}
-                                >
-                                    <menuItem.icon size={20} strokeWidth={2} style={{ color: menuItem.iconColor }} />
-                                </div>
-                                <span className="font-semibold text-[15px] text-[#1A2420]">{menuItem.label}</span>
-                            </div>
-                            <ChevronRight size={18} className="text-[#C8C4BE]" strokeWidth={2.5} />
+            {/* ── PERSONAL INFORMATION FORM ── */}
+            <motion.div variants={item} className="mx-5 space-y-5 px-1">
+                <div className="space-y-4">
+                    {/* Full Name */}
+                    <div className="flex flex-col gap-1.5">
+                        <label className="text-[10px] font-bold text-[#4D6A53] uppercase tracking-[0.15em] ml-1">Full Name</label>
+                        <div className="relative">
+                            <input
+                                type="text"
+                                value={fullName}
+                                onChange={(e) => setFullName(e.target.value)}
+                                className="w-full bg-white border-none shadow-sm text-[#1A2B22] px-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#4D6A53]/20 font-bold text-[15px] transition-all"
+                                placeholder="Muhaimin"
+                            />
                         </div>
-                    );
+                    </div>
 
-                    return menuItem.href ? (
-                        <Link key={idx} href={menuItem.href}>{Row}</Link>
-                    ) : (
-                        <div key={idx}>{Row}</div>
-                    );
-                })}
+                    {/* Email */}
+                    <div className="flex flex-col gap-1.5 opacity-70">
+                        <label className="text-[10px] font-bold text-[#4D6A53] uppercase tracking-[0.15em] ml-1">Email Address</label>
+                        <input
+                            type="email"
+                            value={email}
+                            disabled
+                            className="w-full bg-white border-none shadow-sm text-[#1A2B22] cursor-not-allowed px-5 py-4 rounded-2xl focus:outline-none font-bold text-[15px]"
+                        />
+                    </div>
 
-                {/* Admin row */}
+                    {/* Phone Number */}
+                    <div className="flex flex-col gap-1.5">
+                        <label className="text-[10px] font-bold text-[#4D6A53] uppercase tracking-[0.15em] ml-1">Phone Number</label>
+                        <input
+                            type="tel"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            className="w-full bg-white border-none shadow-sm text-[#1A2B22] px-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#4D6A53]/20 font-bold text-[15px] transition-all"
+                            placeholder="+60 12-345 6789"
+                        />
+                    </div>
+
+                    {/* Date Of Birth */}
+                    <div className="flex flex-col gap-1.5">
+                        <label className="text-[10px] font-bold text-[#4D6A53] uppercase tracking-[0.15em] ml-1">Date of Birth</label>
+                        <div className="relative">
+                            <input
+                                type="text"
+                                value={dob}
+                                onChange={(e) => setDob(e.target.value)}
+                                className="w-full bg-white border-none shadow-sm text-[#1A2B22] px-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#4D6A53]/20 font-bold text-[15px] transition-all pr-12"
+                                placeholder="12 May 1992"
+                            />
+                            <div
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#4D6A53] cursor-pointer hover:opacity-70 transition-opacity"
+                                onClick={() => {
+                                    try {
+                                        dateInputRef.current?.showPicker();
+                                    } catch (e) { }
+                                }}
+                            >
+                                <Calendar size={18} strokeWidth={2.5} />
+                                <input
+                                    ref={dateInputRef}
+                                    type="date"
+                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                    onChange={(e) => {
+                                        if (e.target.value) {
+                                            const date = new Date(e.target.value);
+                                            setDob(date.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }));
+                                        }
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Save Button */}
+                <button
+                    onClick={handleSave}
+                    disabled={loading}
+                    className="w-full bg-[#1A2420] text-white py-4 rounded-[1.25rem] font-bold shadow-lg transition-all disabled:opacity-50 hover:bg-[#25352c] active:scale-[0.98] text-[14px] tracking-wide flex items-center justify-center gap-2"
+                >
+                    {loading ? "SAVING..." : (
+                        <>
+                            <Save size={18} />
+                            SAVE PROFILE
+                        </>
+                    )}
+                </button>
+            </motion.div>
+
+            {/* ── ADMIN SECTION ── */}
+            <motion.div variants={item} className="mx-5 mt-6 border-t border-slate-200 pt-6">
                 {isAdmin && (
                     <Link href="/admin/mosque">
-                        <div className="bg-white rounded-[1.25rem] px-4 py-3.5 flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow">
+                        <div className="bg-white rounded-[1.25rem] px-4 py-3.5 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow border border-slate-50">
                             <div className="flex items-center gap-3.5">
                                 <div className="h-10 w-10 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
                                     <ShieldCheck size={20} strokeWidth={2} className="text-emerald-600" />
@@ -132,16 +242,14 @@ export default function ProfilePage() {
             </motion.div>
 
             {/* ── LOG OUT ── */}
-            <motion.div variants={item} className="mx-5 mt-8">
-                <div className="bg-white rounded-[1.25rem] shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
-                    <button
-                        onClick={signOut}
-                        className="w-full flex items-center justify-center gap-2 py-4 text-[#E04B4B] font-bold text-[14px] tracking-wide hover:bg-red-50 rounded-[1.25rem] transition-colors"
-                    >
-                        <LogOut size={17} strokeWidth={2.5} />
-                        LOG OUT
-                    </button>
-                </div>
+            <motion.div variants={item} className="mx-5 mt-6">
+                <button
+                    onClick={signOut}
+                    className="w-full flex items-center justify-center gap-2 py-4 text-[#E04B4B] font-bold text-[14px] tracking-wide bg-white hover:bg-red-50 rounded-[1.25rem] transition-colors shadow-sm"
+                >
+                    <LogOut size={17} strokeWidth={2.5} />
+                    LOG OUT
+                </button>
             </motion.div>
         </motion.main>
     );

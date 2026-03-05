@@ -101,7 +101,7 @@ export function QiyamTimer({ qiyamTime, fajrTime, loading }: QiyamTimerProps) {
                 <div className="shrink-0 pl-1">
                     {!isActive && (
                         <div className="bg-[#6E554C] px-3.5 py-[0.35rem] rounded-[0.8rem] text-center shadow-[inset_0_1px_2px_rgba(255,255,255,0.05)] border border-white/5">
-                            <p className="text-[13px] font-mono font-bold tabular-nums text-white tracking-[0.1em]">
+                            <p className="text-[13px] font-sans font-bold tabular-nums text-white tracking-[0.1em]">
                                 {remaining}
                             </p>
                         </div>

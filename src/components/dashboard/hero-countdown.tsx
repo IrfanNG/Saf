@@ -75,7 +75,7 @@ export function HeroCountdown({ nextPrayer, loading, location, prayerTimes }: He
                     {/* Middle Row */}
                     <div className="flex justify-between items-start">
                         <motion.h2
-                            className="text-[3.25rem] font-bold tracking-tight text-white leading-none font-serif mt-1"
+                            className="text-[3.25rem] font-bold tracking-tight text-white leading-none font-sans mt-1"
                             animate={isUrgent ? { scale: [1, 1.02, 1] } : {}}
                             transition={isUrgent ? { duration: 2, repeat: Infinity } : {}}
                         >

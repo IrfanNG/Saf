@@ -144,7 +144,7 @@ export default function SurahReadingScreen() {
                     </button>
 
                     <div className="flex flex-col items-center">
-                        <h1 className="text-[18px] font-bold text-[#1A2420] font-serif leading-none mb-1">
+                        <h1 className="text-[18px] font-bold text-[#1A2420] font-sans leading-none mb-1">
                             {surahData.englishName}
                         </h1>
                         <p className="text-[12px] font-bold text-[#9AA5AB] font-sans uppercase tracking-widest">
@@ -159,7 +159,7 @@ export default function SurahReadingScreen() {
             {/* ── BISMILLAH HEADER ── */}
             {surahData.number !== 1 && surahData.number !== 9 && (
                 <motion.div variants={item} className="flex justify-center pt-8 pb-4">
-                    <h2 className="text-[28px] text-[#1A2420] font-serif font-bold text-center leading-relaxed">
+                    <h2 className="text-[28px] text-[#1A2420] font-sans font-bold text-center leading-relaxed">
                         بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
                     </h2>
                 </motion.div>
@@ -204,7 +204,7 @@ export default function SurahReadingScreen() {
                                 <p
                                     className="text-[26px] !leading-[1.8] text-[#1A2420]"
                                     dir="rtl"
-                                    style={{ fontFamily: "'Traditional Arabic', serif", wordSpacing: "0.2em" }}
+                                    style={{ fontFamily: "var(--font-geist-sans), sans-serif", wordSpacing: "0.2em" }}
                                 >
                                     {cleanedArabic}
                                 </p>

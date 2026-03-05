@@ -60,7 +60,7 @@ export default function MosquePage() {
 
                 {/* Title & Location */}
                 <div className="absolute bottom-8 left-6 right-6 z-20">
-                    <h1 className="text-white text-[2.2rem] font-bold font-serif leading-tight tracking-tight mb-1">
+                    <h1 className="text-white text-[2.5rem] font-bold font-sans leading-tight tracking-tight mb-1">
                         Masjid Al-Azim
                     </h1>
                     <div className="flex items-center gap-1.5 text-white/80">
@@ -117,9 +117,9 @@ export default function MosquePage() {
                             </div>
                         </div>
                         <div className="flex-1">
-                            <h3 className="text-[17px] font-bold text-[#1A2B22] mb-1 font-serif tracking-tight">Location Address</h3>
+                            <h3 className="text-[17px] font-bold text-[#1A2B22] mb-1 font-sans tracking-tight">Location Address</h3>
                             <p className="text-[13px] text-[#9AA5AB] leading-relaxed font-sans font-medium">
-                                Jl. Bukit Palah, Kampung Bukit Palah, 75400 Malacca.
+                                Jalan Bukit Palah, 75400 Melaka.
                             </p>
                             <button
                                 onClick={handleOpenMaps}
@@ -141,7 +141,7 @@ export default function MosquePage() {
                                 <Car size={22} className="text-[#4D6A53]" strokeWidth={2} />
                             </div>
                             <div>
-                                <h4 className="text-[15px] font-bold text-[#1E293B] font-serif tracking-tight">Parking Lots</h4>
+                                <h4 className="text-[15px] font-bold text-[#1E293B] font-sans tracking-tight">Parking Lots</h4>
                                 <p className="text-[13px] text-[#64748B] font-medium font-sans">Ample open space</p>
                             </div>
                         </div>
@@ -180,7 +180,7 @@ export default function MosquePage() {
                                 <Users size={18} className="text-[#4D6A53]" strokeWidth={2} />
                             </div>
                             <div>
-                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-serif">Main Hall</h4>
+                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-sans">Main Hall</h4>
                                 <p className="text-[12px] text-[#6B7280] font-medium font-sans mt-0.5">9.7k Capacity</p>
                             </div>
                         </div>
@@ -191,7 +191,7 @@ export default function MosquePage() {
                                 <Library size={18} className="text-[#4D6A53]" strokeWidth={2} />
                             </div>
                             <div>
-                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-serif">Al-Azim Museum</h4>
+                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-sans">Al-Azim Museum</h4>
                                 <p className="text-[12px] text-[#6B7280] font-medium font-sans mt-0.5">Islamic Heritage</p>
                             </div>
                         </div>
@@ -202,7 +202,7 @@ export default function MosquePage() {
                                 <Mic size={18} className="text-[#4D6A53]" strokeWidth={2} />
                             </div>
                             <div>
-                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-serif">Auditorium</h4>
+                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-sans">Auditorium</h4>
                                 <p className="text-[12px] text-[#6B7280] font-medium font-sans mt-0.5">Events & Lectures</p>
                             </div>
                         </div>
@@ -213,7 +213,7 @@ export default function MosquePage() {
                                 <Accessibility size={18} className="text-[#4D6A53]" strokeWidth={2} />
                             </div>
                             <div>
-                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-serif mb-1.5">Accessibility</h4>
+                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-sans mb-1.5">Accessibility</h4>
                                 <div className="flex flex-wrap gap-1.5">
                                     <span className="text-[10px] font-bold bg-slate-50 text-slate-500 px-2 py-0.5 rounded-full border border-slate-100">Ramp</span>
                                     <span className="text-[10px] font-bold bg-slate-50 text-slate-500 px-2 py-0.5 rounded-full border border-slate-100">Lift</span>

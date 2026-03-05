@@ -10,6 +10,8 @@ import { PostCard } from "@/components/community/post-card";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Search, Filter, Loader2, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DeleteConfirmDialog } from "@/components/ui/custom-delete-dialog";
+
 
 export default function CommunityPage() {
     const [activeTab, setActiveTab] = useState<"feed" | "lost-found">("feed");
@@ -23,6 +25,26 @@ export default function CommunityPage() {
     // Feed data
     const { posts, loading: feedLoading, addPost, toggleLike, deletePost } = usePosts();
     const [isPostDialogOpen, setIsPostDialogOpen] = useState(false);
+
+    // Deletion states
+    const [deleteConfig, setDeleteConfig] = useState<{
+        open: boolean;
+        id: string;
+        type: "post" | "item";
+    }>({ open: false, id: "", type: "post" });
+
+    const openDeleteDialog = (id: string, type: "post" | "item") => {
+        setDeleteConfig({ open: true, id, type });
+    };
+
+    const confirmDelete = () => {
+        if (deleteConfig.type === "post") {
+            deletePost(deleteConfig.id);
+        } else {
+            deleteItem(deleteConfig.id);
+        }
+        setDeleteConfig({ ...deleteConfig, open: false });
+    };
 
     const filteredItems = items.filter(item => {
         if (filter === "all") return true;
@@ -38,7 +60,7 @@ export default function CommunityPage() {
                         <p className="text-[10px] font-bold text-[#7D8F82] uppercase tracking-[0.15em] mb-1 pl-0.5">
                             Saf
                         </p>
-                        <h1 className="text-[1.8rem] font-bold tracking-tight text-[#5A413A] font-serif leading-none">
+                        <h1 className="text-[1.8rem] font-bold tracking-tight text-[#5A413A] font-sans leading-none">
                             Community
                         </h1>
                     </div>
@@ -89,7 +111,7 @@ export default function CommunityPage() {
                                             key={post.id}
                                             post={post}
                                             onLike={toggleLike}
-                                            onDelete={deletePost}
+                                            onDelete={(id) => openDeleteDialog(id, "post")}
                                         />
                                     ))}
                                 </div>
@@ -174,7 +196,7 @@ export default function CommunityPage() {
                                                 key={item.id}
                                                 item={item}
                                                 onMarkReturned={markReturned}
-                                                onDelete={deleteItem}
+                                                onDelete={(id) => openDeleteDialog(id, "item")}
                                             />
                                         ))}
                                     </AnimatePresence>
@@ -205,6 +227,18 @@ export default function CommunityPage() {
                 open={isPostDialogOpen}
                 onOpenChange={setIsPostDialogOpen}
                 onSubmit={addPost}
+            />
+
+            <DeleteConfirmDialog
+                open={deleteConfig.open}
+                onOpenChange={(open) => setDeleteConfig({ ...deleteConfig, open })}
+                onConfirm={confirmDelete}
+                title={deleteConfig.type === "post" ? "Delete Post?" : "Delete Item?"}
+                description={
+                    deleteConfig.type === "post"
+                        ? "Are you sure you want to delete this post? This cannot be undone."
+                        : "Are you sure you want to delete this item? This cannot be undone."
+                }
             />
         </main>
     );

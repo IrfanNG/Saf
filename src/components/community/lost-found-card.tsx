@@ -55,7 +55,7 @@ export function LostFoundCard({ item }: LostFoundCardProps) {
 
                 <CardContent className="p-5 flex-1 flex flex-col">
                     <div className="space-y-1">
-                        <h3 className="font-bold text-[#5A413A] font-serif text-[18px] leading-tight line-clamp-1">{item.title}</h3>
+                        <h3 className="font-bold text-[#5A413A] font-sans text-[18px] leading-tight line-clamp-1">{item.title}</h3>
                         <div className="flex items-start gap-1.5 text-[12px] text-[#7A8A93] font-semibold tracking-wide">
                             <MapPin size={14} strokeWidth={2.5} className="text-[#495C48] shrink-0 mt-[1px]" />
                             {item.location ? item.location : "Mosque Vicinity"}

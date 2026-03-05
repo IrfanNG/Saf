@@ -16,6 +16,8 @@ import {
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "@/lib/firebase";
 import { useAuth } from "@/context/auth-context";
+import { toast } from "sonner";
+
 
 export interface LostFoundItem {
     id: string;
@@ -110,20 +112,18 @@ export function useLostAndFound() {
             console.log(`Firebase: Item ${id} marked as ${isReturned ? "returned" : "active"}`);
         } catch (error) {
             console.error("Firebase: Failed to update item status:", error);
-            alert("Error: You might not have permission to modify this item.");
+            toast.error("Error: You might not have permission to modify this item.");
         }
     };
 
     const deleteItem = async (id: string) => {
-        if (!confirm("Are you sure you want to delete this item?")) return;
-
         try {
             const docRef = doc(db, "lost_items", id);
             await deleteDoc(docRef);
-            console.log(`Firebase: Item ${id} deleted`);
+            toast.success("Item deleted");
         } catch (error) {
             console.error("Firebase: Failed to delete item:", error);
-            alert("Error: You might not have permission to delete this item.");
+            toast.error("Error: You might not have permission to delete this item.");
         }
     };
 

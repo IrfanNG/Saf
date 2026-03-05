@@ -18,6 +18,8 @@ import {
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "@/lib/firebase";
 import { useAuth } from "@/context/auth-context";
+import { toast } from "sonner";
+
 
 export interface CommunityPost {
     id: string;
@@ -122,11 +124,12 @@ export function usePosts() {
     };
 
     const deletePost = async (id: string) => {
-        if (!confirm("Delete this post?")) return;
         try {
             await deleteDoc(doc(db, "community_posts", id));
+            toast.success("Post deleted");
         } catch (error) {
             console.error("Delete failed:", error);
+            toast.error("Failed to delete post");
         }
     };
 

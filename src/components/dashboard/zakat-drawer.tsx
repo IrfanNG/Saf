@@ -49,7 +49,7 @@ export function ZakatDrawer({ open, onOpenChange }: ZakatDrawerProps) {
                         <div className="mx-auto h-14 w-14 rounded-[2rem] bg-[#495C48] flex items-center justify-center text-[#EBE7DF] mb-3 shadow-[0_4px_10px_rgba(73,92,72,0.2)]">
                             <Coins size={26} strokeWidth={2} />
                         </div>
-                        <DrawerTitle className="text-[1.35rem] font-bold text-[#3E5345] font-serif tracking-tight mb-0.5">
+                        <DrawerTitle className="text-[1.35rem] font-bold text-[#3E5345] font-sans tracking-tight mb-0.5">
                             Heritage Zakat Fitrah
                         </DrawerTitle>
                         <DrawerDescription className="text-[#3E5345]/70 font-medium text-[12px]">
@@ -103,7 +103,7 @@ export function ZakatDrawer({ open, onOpenChange }: ZakatDrawerProps) {
                             <p className="text-[#7D8F82] font-semibold text-[10px] uppercase tracking-[0.2em] mb-1.5">
                                 Total Amount
                             </p>
-                            <h3 className="text-[2.5rem] font-bold font-serif tracking-tight text-[#C36946] flex justify-center items-baseline gap-2">
+                            <h3 className="text-[2.5rem] font-bold font-sans tracking-tight text-[#C36946] flex justify-center items-baseline gap-2">
                                 <span className="text-[1.25rem] font-bold tracking-tight">RM</span>
                                 <span>{total.toFixed(2)}</span>
                             </h3>

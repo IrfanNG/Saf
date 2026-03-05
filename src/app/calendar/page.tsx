@@ -7,6 +7,8 @@ import { useAdmin } from "@/hooks/use-admin";
 import { useActivities, Activity } from "@/hooks/use-activities";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
+import { DeleteConfirmDialog } from "@/components/ui/custom-delete-dialog";
+
 
 export default function CalendarPage() {
     // Current "local real-time" date processing
@@ -29,6 +31,9 @@ export default function CalendarPage() {
 
     const [joiningId, setJoiningId] = useState<string | null>(null);
     const [joinedIds, setJoinedIds] = useState<Set<string>>(new Set());
+
+    // Deletion states
+    const [deleteConfig, setDeleteConfig] = useState<{ open: boolean, id: string }>({ open: false, id: "" });
 
     const handleJoin = async (act: Activity) => {
         if (!user) {
@@ -124,6 +129,13 @@ export default function CalendarPage() {
         setIsFormOpen(true);
     };
 
+    const confirmDelete = async () => {
+        if (deleteConfig.id) {
+            await deleteActivity(deleteConfig.id);
+        }
+        setDeleteConfig({ open: false, id: "" });
+    };
+
     return (
         <main className="flex min-h-screen flex-col bg-[#F4F4F6] text-[#1A1A1A] pb-32">
             {/* Top White Container covering Title and Calendar */}
@@ -134,7 +146,7 @@ export default function CalendarPage() {
                         <p className="text-[10px] font-bold text-[#7D8F82] uppercase tracking-[0.15em] mb-1 pl-0.5">
                             Saf
                         </p>
-                        <h1 className="text-[1.8rem] font-bold tracking-tight text-[#5A413A] font-serif leading-none">
+                        <h1 className="text-[1.8rem] font-bold tracking-tight text-[#5A413A] font-sans leading-none">
                             Event
                         </h1>
                     </div>
@@ -146,7 +158,7 @@ export default function CalendarPage() {
                         <button onClick={prevWeek} className="p-1.5 bg-white/10 hover:bg-white/20 rounded-full transition text-white/70 hover:text-white">
                             <ChevronLeft size={16} />
                         </button>
-                        <h2 className="text-[17px] font-semibold tracking-[0.15em] font-serif text-white uppercase">
+                        <h2 className="text-[17px] font-semibold tracking-[0.15em] font-sans text-white uppercase">
                             {monthName}
                         </h2>
                         <button onClick={nextWeek} className="p-1.5 bg-white/10 hover:bg-white/20 rounded-full transition text-white/70 hover:text-white">
@@ -264,7 +276,7 @@ export default function CalendarPage() {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, scale: 0.95 }}
-                                    className="bg-[#F8F5EE] border border-white/50 rounded-[1.2rem] p-3 flex gap-4 shadow-[0_2px_15px_rgba(0,0,0,0.03)] relative overflow-hidden group"
+                                    className="bg-white border border-white/50 rounded-[1.2rem] p-3 flex gap-4 shadow-[0_2px_15px_rgba(0,0,0,0.03)] relative overflow-hidden group"
                                 >
                                     <div className="relative w-24 h-[6.5rem] shrink-0 rounded-xl overflow-hidden shadow-sm bg-slate-200">
                                         {act.image ? (
@@ -329,7 +341,7 @@ export default function CalendarPage() {
                                             <button onClick={() => handleEdit(act)} className="p-1.5 text-[#A68F80] hover:text-[#415D43] hover:bg-slate-50 rounded-md transition">
                                                 <Edit size={14} />
                                             </button>
-                                            <button onClick={() => deleteActivity(act.id)} className="p-1.5 text-[#A68F80] hover:text-red-500 hover:bg-slate-50 rounded-md transition">
+                                            <button onClick={() => setDeleteConfig({ open: true, id: act.id })} className="p-1.5 text-[#A68F80] hover:text-red-500 hover:bg-slate-50 rounded-md transition">
                                                 <Trash2 size={14} />
                                             </button>
                                         </div>
@@ -341,69 +353,75 @@ export default function CalendarPage() {
             </div>
 
             {/* Admin Add/Edit Form Overlay */}
-            {
-                isFormOpen && (
-                    <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm p-6 flex flex-col items-center justify-center">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="bg-white w-full max-w-sm rounded-[2rem] p-6 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto"
-                        >
-                            <h3 className="text-xl font-bold mb-4">{editingId ? "Edit" : "New"} Activity</h3>
-                            <form onSubmit={handleSave} className="space-y-4">
-                                <div>
-                                    <label className="text-xs font-bold text-slate-500 mb-1 block">Title</label>
-                                    <input required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} className="w-full border rounded-xl px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-[#EB6F39]/50 focus:border-[#EB6F39]" />
+            {isFormOpen && (
+                <div className="fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm p-6 flex flex-col items-center justify-center">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="bg-white w-full max-w-sm rounded-[2rem] p-6 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto"
+                    >
+                        <h3 className="text-xl font-bold mb-4">{editingId ? "Edit" : "New"} Activity</h3>
+                        <form onSubmit={handleSave} className="space-y-4">
+                            <div>
+                                <label className="text-xs font-bold text-slate-500 mb-1 block">Title</label>
+                                <input required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} className="w-full border rounded-xl px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-[#415D43]/20 focus:border-[#415D43]" />
+                            </div>
+                            <div>
+                                <label className="text-xs font-bold text-slate-500 mb-1 block">Activity Type</label>
+                                <select
+                                    required
+                                    value={formData.type}
+                                    onChange={e => setFormData({ ...formData, type: e.target.value })}
+                                    className="w-full border rounded-xl px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-[#415D43]/20 focus:border-[#415D43] bg-white"
+                                >
+                                    <option value="event">Event</option>
+                                    <option value="class">Class</option>
+                                    <option value="talk">Talk / Lecture</option>
+                                    <option value="community">Community Service</option>
+                                </select>
+                            </div>
+                            <div className="flex gap-3">
+                                <div className="flex-1">
+                                    <label className="text-xs font-bold text-slate-500 mb-1 block">Date (YYYY-MM-DD)</label>
+                                    <input required type="date" value={formData.dateISO} onChange={e => setFormData({ ...formData, dateISO: e.target.value })} className="w-full border rounded-xl px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-[#415D43]/20 focus:border-[#415D43]" />
                                 </div>
-                                <div>
-                                    <label className="text-xs font-bold text-slate-500 mb-1 block">Activity Type</label>
-                                    <select
-                                        required
-                                        value={formData.type}
-                                        onChange={e => setFormData({ ...formData, type: e.target.value })}
-                                        className="w-full border rounded-xl px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-[#EB6F39]/50 focus:border-[#EB6F39] bg-white"
-                                    >
-                                        <option value="event">Event</option>
-                                        <option value="class">Class</option>
-                                        <option value="talk">Talk / Lecture</option>
-                                        <option value="community">Community Service</option>
-                                    </select>
+                                <div className="flex-1">
+                                    <label className="text-xs font-bold text-slate-500 mb-1 block">Time Slot</label>
+                                    <input required value={formData.timeSlot} onChange={e => setFormData({ ...formData, timeSlot: e.target.value })} className="w-full border rounded-xl px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-[#415D43]/20 focus:border-[#415D43]" />
                                 </div>
-                                <div className="flex gap-3">
-                                    <div className="flex-1">
-                                        <label className="text-xs font-bold text-slate-500 mb-1 block">Date (YYYY-MM-DD)</label>
-                                        <input required type="date" value={formData.dateISO} onChange={e => setFormData({ ...formData, dateISO: e.target.value })} className="w-full border rounded-xl px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-[#EB6F39]/50 focus:border-[#EB6F39]" />
-                                    </div>
-                                    <div className="flex-1">
-                                        <label className="text-xs font-bold text-slate-500 mb-1 block">Time Slot</label>
-                                        <input required value={formData.timeSlot} onChange={e => setFormData({ ...formData, timeSlot: e.target.value })} className="w-full border rounded-xl px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-[#EB6F39]/50 focus:border-[#EB6F39]" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="text-xs font-bold text-slate-500 mb-1 block">Location / Mosque</label>
-                                    <input required value={formData.location} onChange={e => setFormData({ ...formData, location: e.target.value })} className="w-full border rounded-xl px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-[#EB6F39]/50 focus:border-[#EB6F39]" />
-                                </div>
-                                <div>
-                                    <label className="text-xs font-bold text-slate-500 mb-1 block">Description</label>
-                                    <textarea required rows={3} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full border rounded-xl px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-[#EB6F39]/50 focus:border-[#EB6F39] resize-none" placeholder="Activity details..." />
-                                </div>
-                                <div>
-                                    <label className="text-xs font-bold text-slate-500 mb-1 block">Image URL (Optional)</label>
-                                    <input value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} className="w-full border rounded-xl px-4 py-2 font-medium text-xs focus:outline-none focus:ring-2 focus:ring-[#EB6F39]/50 focus:border-[#EB6F39]" />
-                                </div>
-                                <div className="flex gap-3 pt-2">
-                                    <button type="button" onClick={() => setIsFormOpen(false)} className="flex-1 border text-slate-500 font-bold p-3 rounded-xl hover:bg-slate-50 transition">
-                                        Cancel
-                                    </button>
-                                    <button type="submit" className="flex-1 bg-[#EB6F39] text-white font-bold p-3 rounded-xl hover:bg-[#E25C22] shadow-[0_4px_10px_rgba(235,111,57,0.3)] transition active:scale-95">
-                                        Save
-                                    </button>
-                                </div>
-                            </form>
-                        </motion.div>
-                    </div>
-                )
-            }
+                            </div>
+                            <div>
+                                <label className="text-xs font-bold text-slate-500 mb-1 block">Location / Mosque</label>
+                                <input required value={formData.location} onChange={e => setFormData({ ...formData, location: e.target.value })} className="w-full border rounded-xl px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-[#415D43]/20 focus:border-[#415D43]" />
+                            </div>
+                            <div>
+                                <label className="text-xs font-bold text-slate-500 mb-1 block">Description</label>
+                                <textarea required rows={3} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full border rounded-xl px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-[#415D43]/20 focus:border-[#415D43] resize-none" placeholder="Activity details..." />
+                            </div>
+                            <div>
+                                <label className="text-xs font-bold text-slate-500 mb-1 block">Image URL (Optional)</label>
+                                <input value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} className="w-full border rounded-xl px-4 py-2 font-medium text-xs focus:outline-none focus:ring-2 focus:ring-[#415D43]/20 focus:border-[#415D43]" />
+                            </div>
+                            <div className="flex gap-3 pt-2">
+                                <button type="button" onClick={() => setIsFormOpen(false)} className="flex-1 border text-slate-500 font-bold p-3 rounded-xl hover:bg-slate-50 transition">
+                                    Cancel
+                                </button>
+                                <button type="submit" className="flex-1 bg-[#415D43] text-white font-bold p-3 rounded-xl hover:bg-[#324834] shadow-[0_4px_10px_rgba(65,93,67,0.3)] transition active:scale-95">
+                                    Save
+                                </button>
+                            </div>
+                        </form>
+                    </motion.div>
+                </div>
+            )}
+
+            <DeleteConfirmDialog
+                open={deleteConfig.open}
+                onOpenChange={(open) => setDeleteConfig({ ...deleteConfig, open })}
+                onConfirm={confirmDelete}
+                title="Delete Activity?"
+                description="Are you sure you want to delete this activity? This will remove it from the calendar."
+            />
         </main >
     );
 }

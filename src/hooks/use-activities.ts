@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { collection, query, orderBy, onSnapshot, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, where, setDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { toast } from "sonner";
+
 
 export interface Activity {
     id: string;
@@ -87,8 +89,10 @@ export function useActivities(selectedDateISO?: string | null) {
         if (!db) return;
         try {
             await deleteDoc(doc(db, "activities", id));
+            toast.success("Activity deleted");
         } catch (err: any) {
             console.error("Delete failed:", err);
+            toast.error("Failed to delete activity");
             throw err;
         }
     };

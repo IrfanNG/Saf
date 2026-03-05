@@ -7,6 +7,8 @@ import { AuthProvider } from "@/context/auth-context";
 import { AuthGuard } from "@/components/auth-guard";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClientLayout } from "@/components/client-layout";
+import { Toaster } from "@/components/ui/sonner";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,6 +58,7 @@ export default function RootLayout({
                 </PageTransition>
               </ClientLayout>
             </AuthGuard>
+            <Toaster position="top-center" expand={true} richColors closeButton />
           </AuthProvider>
         </ThemeProvider>
       </body>

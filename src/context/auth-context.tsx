@@ -12,6 +12,8 @@ import {
 } from "firebase/auth";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
+import { toast } from "sonner";
+
 
 interface AuthContextType {
     user: User | null;
@@ -67,7 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const checkFirebaseConfig = () => {
         if (!auth.app) {
-            alert("Firebase is not configured! Please add your Firebase credentials to an .env.local file.");
+            toast.error("Firebase is not configured! Please add your Firebase credentials to an .env.local file.");
             throw new Error("Firebase is not configured");
         }
     };

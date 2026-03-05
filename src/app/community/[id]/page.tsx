@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useAdmin } from "@/hooks/use-admin";
 import { MapPin, LayoutList, Calendar, ChevronLeft, Share2, MessageSquare, Phone, Clock, Loader2, CheckCircle, Trash2 } from "lucide-react";
+import { DeleteConfirmDialog } from "@/components/ui/custom-delete-dialog";
+
 
 export default function ItemDetailPage() {
     const { id } = useParams();
@@ -18,6 +20,8 @@ export default function ItemDetailPage() {
 
     const [item, setItem] = useState<LostFoundItem | null>(null);
     const [loading, setLoading] = useState(true);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
 
     const handleMarkReturned = async () => {
         if (!item) return;
@@ -27,6 +31,11 @@ export default function ItemDetailPage() {
     };
 
     const handleDelete = async () => {
+        if (!item) return;
+        setIsDeleteDialogOpen(true);
+    };
+
+    const confirmDelete = async () => {
         if (!item) return;
         await deleteItem(item.id);
         router.push("/community");
@@ -76,7 +85,7 @@ export default function ItemDetailPage() {
                 <button onClick={() => router.back()} className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#5A413A] shadow-sm">
                     <ChevronLeft size={20} strokeWidth={2.5} />
                 </button>
-                <h2 className="text-[1.1rem] font-bold text-[#5A413A] font-serif">Item Details</h2>
+                <h2 className="text-[1.1rem] font-bold text-[#5A413A] font-sans">Item Details</h2>
                 <button className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#5A413A] shadow-sm">
                     <Share2 size={18} strokeWidth={2} />
                 </button>
@@ -99,7 +108,7 @@ export default function ItemDetailPage() {
                             <Badge className={`w-fit font-bold text-[9px] tracking-[0.05em] px-3 py-1 rounded-lg border-none ${item.type === 'found' ? 'bg-[#4D6A53] text-white' : 'bg-[#D26E43] text-white'}`}>
                                 {item.type.toUpperCase()}
                             </Badge>
-                            <h1 className="text-2xl font-bold text-[#5A413A] font-serif tracking-tight">{item.title}</h1>
+                            <h1 className="text-2xl font-bold text-[#5A413A] font-sans tracking-tight">{item.title}</h1>
                         </div>
                     </div>
 
@@ -190,6 +199,14 @@ export default function ItemDetailPage() {
 
 
             </div>
+
+            <DeleteConfirmDialog
+                open={isDeleteDialogOpen}
+                onOpenChange={setIsDeleteDialogOpen}
+                onConfirm={confirmDelete}
+                title="Delete Item?"
+                description="Are you sure you want to delete this reported item? This action is permanent."
+            />
         </main>
     );
 }

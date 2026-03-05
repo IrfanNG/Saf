@@ -5,6 +5,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { X, Image as ImageIcon, Loader2, Camera } from "lucide-react";
+import { toast } from "sonner";
+
 
 interface CreatePostDialogProps {
     open: boolean;
@@ -22,7 +24,7 @@ export function CreatePostDialog({ open, onOpenChange, onSubmit }: CreatePostDia
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(e.target.files || []);
         if (files.length + images.length > 4) {
-            alert("Max 4 images allowed");
+            toast.error("Max 4 images allowed");
             return;
         }
 

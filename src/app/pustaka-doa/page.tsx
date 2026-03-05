@@ -100,7 +100,7 @@ export default function PustakaDoaPage() {
                                         <p className="text-[10px] font-bold text-[#4D6A53] uppercase tracking-[0.14em] mb-1">
                                             Interactive Series
                                         </p>
-                                        <h3 className="text-[1.3rem] font-bold text-[#1A2B22] font-serif leading-tight">
+                                        <h3 className="text-[1.3rem] font-bold text-[#1A2B22] font-sans leading-tight">
                                             Tahlil & Doa Selamat
                                         </h3>
                                         <p className="text-[12px] text-[#5A655F] mt-1 font-medium">
