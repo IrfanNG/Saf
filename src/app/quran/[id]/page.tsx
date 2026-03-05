@@ -111,7 +111,7 @@ export default function SurahReadingScreen() {
 
     if (loading) {
         return (
-            <div className="flex flex-col min-h-screen bg-[#F5F5F0] justify-center items-center">
+            <div className="flex flex-col min-h-screen bg-gray-50 justify-center items-center">
                 <Loader2 className="animate-spin text-[#4D6A53] w-10 h-10" />
             </div>
         );
@@ -119,22 +119,22 @@ export default function SurahReadingScreen() {
 
     if (!surahData) {
         return (
-            <div className="flex flex-col min-h-screen bg-[#F5F5F0] justify-center items-center px-5 text-center">
+            <div className="flex flex-col min-h-screen bg-gray-50 justify-center items-center px-5 text-center">
                 <p className="text-[#1A2420] font-bold">Surah not found.</p>
-                <button onClick={() => router.back()} className="mt-4 text-[#4D6A53] font-bold">Go Back</button>
+                <button onClick={() => router.push('/quran')} className="mt-4 text-[#4D6A53] font-bold">Go Back</button>
             </div>
         );
     }
 
     return (
         <motion.main
-            className="flex flex-col bg-[#F5F5F0] min-h-screen font-sans pb-28"
+            className="flex flex-col bg-gray-50 min-h-screen font-sans pb-6"
             variants={container}
             initial="hidden"
             animate="show"
         >
             {/* ── HEADER ── */}
-            <div className="sticky top-0 z-40 bg-[#F5F5F0]/95 backdrop-blur-md border-b border-black/[0.03]">
+            <div className="sticky top-0 z-40 bg-gray-50/95 backdrop-blur-md border-b border-black/[0.03]">
                 <div className="flex items-center justify-between px-5 py-4">
                     <button
                         onClick={() => router.push("/quran")}
@@ -221,8 +221,6 @@ export default function SurahReadingScreen() {
                 })}
             </div>
 
-            {/* Bottom Padding for Nav */}
-            <div className="h-12" />
         </motion.main>
     );
 }

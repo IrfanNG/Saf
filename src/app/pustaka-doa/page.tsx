@@ -43,7 +43,7 @@ export default function PustakaDoaPage() {
                         <ChevronLeft size={22} className="text-[#1A2B22]" strokeWidth={2.5} />
                     </Link>
                     <h1 className="text-[1.5rem] font-bold text-[#1A2B22] font-serif tracking-tight">
-                        Pustaka Doa
+                        Doa's Library
                     </h1>
                 </div>
 

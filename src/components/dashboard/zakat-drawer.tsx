@@ -40,7 +40,7 @@ export function ZakatDrawer({ open, onOpenChange }: ZakatDrawerProps) {
 
     return (
         <Drawer open={open} onOpenChange={onOpenChange}>
-            <DrawerContent className="bg-[#EBE7DF] border-none max-w-md mx-auto shadow-2xl max-h-[96dvh] flex flex-col">
+            <DrawerContent className="bg-gray-50 border-none max-w-md mx-auto shadow-2xl max-h-[96dvh] flex flex-col">
                 {/* Thin Gray Slide Handle */}
                 <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-[#D1CCBF] my-4" />
 
@@ -90,7 +90,7 @@ export function ZakatDrawer({ open, onOpenChange }: ZakatDrawerProps) {
                                         <SelectItem
                                             key={r.value}
                                             value={r.value.toString()}
-                                            className="focus:bg-[#EBE7DF] focus:text-[#3E5345] data-[state=checked]:text-[#3E5345] text-[#3E5345]"
+                                            className="focus:bg-gray-100 focus:text-[#3E5345] data-[state=checked]:text-[#3E5345] text-[#3E5345]"
                                         >
                                             {r.label} - RM {r.value}
                                         </SelectItem>

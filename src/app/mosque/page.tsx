@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChevronLeft, Phone, MessageCircle, MapPin, ExternalLink, Info, Users, Library, Mic, Accessibility, Car, AlertTriangle } from "lucide-react";
+import { ChevronLeft, Phone, MessageCircle, MapPin, ExternalLink, Info, Users, Library, Mic, Accessibility, Car, AlertTriangle, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -40,7 +40,7 @@ export default function MosquePage() {
             <motion.div variants={item} className="relative w-full h-[320px] overflow-hidden">
                 {/* Background Image */}
                 <img
-                    src="/masjid1.jpg"
+                    src="/masjidhall.jpeg"
                     alt="Masjid Al-Azim"
                     className="absolute inset-0 w-full h-full object-cover"
                 />
@@ -73,22 +73,39 @@ export default function MosquePage() {
             <div className="px-5 -mt-6 z-30 space-y-5">
 
                 {/* ── CONTACT CARDS ── */}
-                <motion.div variants={item} className="grid grid-cols-2 gap-4">
+                <motion.div variants={item} className="grid grid-cols-3 gap-3">
                     {/* Call Card */}
-                    <div className="bg-white rounded-2xl p-4 flex flex-col items-center gap-2.5 shadow-sm border border-black/[0.03]">
+                    <button
+                        onClick={() => window.location.href = 'tel:+6062839166'}
+                        className="bg-white rounded-2xl p-4 flex flex-col items-center gap-2.5 shadow-sm border border-black/[0.03] active:scale-95 transition-all"
+                    >
                         <div className="w-12 h-12 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
                             <Phone size={22} className="text-[#4D6A53]" strokeWidth={2} />
                         </div>
-                        <span className="text-[11px] font-bold text-[#5A413A] uppercase tracking-wide font-sans">Call</span>
-                    </div>
+                        <span className="text-[11px] font-bold text-[#5A413A] uppercase tracking-wide font-sans text-center">Call</span>
+                    </button>
 
                     {/* Inquiry Card */}
-                    <div className="bg-white rounded-2xl p-4 flex flex-col items-center gap-2.5 shadow-sm border border-black/[0.03]">
+                    <button
+                        onClick={() => window.open('https://wa.me/6062839166', '_blank')}
+                        className="bg-white rounded-2xl p-4 flex flex-col items-center gap-2.5 shadow-sm border border-black/[0.03] active:scale-95 transition-all"
+                    >
                         <div className="w-12 h-12 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
                             <MessageCircle size={22} className="text-[#4D6A53]" strokeWidth={2} />
                         </div>
-                        <span className="text-[11px] font-bold text-[#5A413A] uppercase tracking-wide font-sans">Inquiry</span>
-                    </div>
+                        <span className="text-[11px] font-bold text-[#5A413A] uppercase tracking-wide font-sans text-center">Inquiry</span>
+                    </button>
+
+                    {/* Review Card */}
+                    <button
+                        onClick={() => window.open('https://www.google.com/search?q=masjid+al+azim+negeri+melaka&rlz=1C1BNSD_enMY1013MY1013&oq=ma&gs_lcrp=EgZjaHJvbWUqDggBEEUYJxg7GIAEGIoFMgYIABBFGDkyDggBEEUYJxg7GIAEGIoFMgYIAhBFGDsyBggDEEUYOzIGCAQQRRg7MgYIBRBFGD0yBggGEEUYPDIGCAcQRRg80gEIMjY1N2owajeoAgCwAgA&sourceid=chrome&ie=UTF-8#wptab=si:AL3DRZGwdZTY6cvmDUM2_gY4Th5_S1_Qi6Xh0IePMjnAeypTRb3g1Rip4e8WWLpnPpJVBH3JVls3qImH72eU_TgEJtcu7Dm0XYZARnBbMe-z7oh9P84TCDs0w7xskqLUQaJDGzFpEDs4', '_blank')}
+                        className="bg-white rounded-2xl p-4 flex flex-col items-center gap-2.5 shadow-sm border border-black/[0.03] active:scale-95 transition-all"
+                    >
+                        <div className="w-12 h-12 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
+                            <Star size={22} className="text-[#4D6A53]" strokeWidth={2} />
+                        </div>
+                        <span className="text-[11px] font-bold text-[#5A413A] uppercase tracking-wide font-sans text-center">Review</span>
+                    </button>
                 </motion.div>
 
                 {/* ── ADDRESS CARD ── */}

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect, useMemo } from "react";
-import { ChevronRight, Search, BookOpen, Loader2 } from "lucide-react";
+import { ChevronRight, Search, BookOpen, Loader2, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -80,16 +80,27 @@ export default function QuranScreen() {
     }, [searchQuery, surahs]);
 
     return (
-        <div className="flex flex-col pb-28 bg-[#F5F5F0] min-h-screen font-sans">
+        <div className="flex flex-col pb-6 bg-gray-50 min-h-screen font-sans">
             {/* Header Section */}
-            <div className="px-5 pt-12 pb-4 sticky top-0 bg-[#F5F5F0]/95 backdrop-blur-md z-30 border-b border-black/[0.03]">
-                <motion.h1
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-[1.75rem] font-bold text-[#1A2420] font-serif leading-tight tracking-tight mb-4"
-                >
-                    Al-Quran
-                </motion.h1>
+            <div className="px-5 pt-12 pb-4 sticky top-0 bg-gray-50/95 backdrop-blur-md z-30 border-b border-black/[0.03]">
+                <div className="flex items-center justify-between mb-4">
+                    <button
+                        onClick={() => router.push('/')}
+                        className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm border border-black/[0.03] text-[#1A2420]"
+                    >
+                        <ChevronLeft size={22} strokeWidth={2.5} />
+                    </button>
+
+                    <motion.h1
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-[1.75rem] font-bold text-[#1A2420] font-serif leading-tight tracking-tight"
+                    >
+                        Al-Quran
+                    </motion.h1>
+
+                    <div className="w-10 opacity-0" /> {/* Spacer for centering */}
+                </div>
 
                 {/* Search Bar */}
                 <motion.div
@@ -191,7 +202,6 @@ export default function QuranScreen() {
                 )}
             </div>
 
-            <div className="h-12" />
         </div>
     );
 }

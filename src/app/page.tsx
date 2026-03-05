@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, Compass, Coins, CalendarDays, Bell, Clock, Sun, ChevronRight, MoonStar, Sunrise, CloudSun, Sunset, Moon, ChevronDown, BookMarked } from "lucide-react";
+import { BookOpen, MapPin, Compass, Coins, CalendarDays, Bell, Clock, Sun, ChevronRight, MoonStar, Sunrise, CloudSun, Sunset, Moon, ChevronDown, BookMarked } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -14,6 +14,7 @@ import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useDailyHadiths } from "@/hooks/use-daily-hadiths";
+import { useUpcomingActivities } from "@/hooks/use-activities";
 
 const container = {
   hidden: { opacity: 0 },
@@ -32,23 +33,6 @@ const item = {
   },
 };
 
-
-
-const mosqueEvents = [
-  {
-    id: 1,
-    day: "THIS SATURDAY",
-    title: "Weekend Tafsir Circle: Surah Al-Kahf",
-    time: "10:00 AM – 12:00 PM",
-  },
-  {
-    id: 2,
-    day: "THIS SUNDAY",
-    title: "Fiqh of Prayer – Special Session",
-    time: "08:30 AM – 10:00 AM",
-  },
-];
-
 const getPrayerIcon = (name: string) => {
   switch (name) {
     case "Fajr": return Sunrise;
@@ -60,6 +44,17 @@ const getPrayerIcon = (name: string) => {
   }
 };
 
+const formatDateLabel = (dateISO: string) => {
+  const today = new Date().toISOString().split('T')[0];
+  const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+
+  if (dateISO === today) return "TODAY";
+  if (dateISO === tomorrow) return "TOMORROW";
+
+  const d = new Date(dateISO);
+  return d.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
+};
+
 export default function Home() {
   const router = useRouter();
   const { nextPrayer, prayerTimes, loading: prayerLoading } = usePrayerTimes();
@@ -69,6 +64,7 @@ export default function Home() {
   const [qiyamRemaining, setQiyamRemaining] = useState<string>("...");
   const [prayersExpanded, setPrayersExpanded] = useState(false);
   const { hadiths, loading: hadithsLoading, error: hadithsError } = useDailyHadiths();
+  const { activities: upcomingEvents, loading: eventsLoading } = useUpcomingActivities(2);
 
   useEffect(() => {
     const updateQiyam = () => {
@@ -167,6 +163,10 @@ export default function Home() {
             <h1 className="text-white text-[1.75rem] font-bold font-serif leading-tight tracking-tight">
               {user?.displayName?.split(" ")[0] ?? "Ahmad Ibrahim"}
             </h1>
+            <div className="flex items-center gap-1 mt-1 text-white/75">
+              <MapPin size={10} strokeWidth={2.5} className="fill-white/10" />
+              <span className="text-[9px] font-bold tracking-[0.08em] uppercase">Masjid Al-Azim, Melaka</span>
+            </div>
           </div>
           <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center mt-1">
             <Bell size={18} className="text-white" strokeWidth={2} />
@@ -314,8 +314,8 @@ export default function Home() {
       </motion.div>
 
       {/* ── DAILY INSPIRATION ── */}
-      <motion.div variants={item} className="mx-5 mt-8">
-        <div className="flex items-center justify-between mb-0">
+      <motion.div variants={item} className="mt-8">
+        <div className="flex items-center justify-between mb-0 px-5">
           <h2 className="text-[1.25rem] font-bold text-[#1A2420] font-serif">
             Daily Inspiration
           </h2>
@@ -324,7 +324,7 @@ export default function Home() {
         </div>
 
         {/* Hadith card row - horizontally scrollable */}
-        <div className="flex gap-4 overflow-x-auto py-2 scrollbar-none snap-x snap-mandatory">
+        <div className="flex gap-4 overflow-x-auto py-2 px-5 scroll-px-5 scrollbar-none snap-x snap-mandatory">
           {hadithsLoading ? (
             // Skeleton loading state
             Array.from({ length: 3 }).map((_, i) => (
@@ -393,35 +393,52 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col gap-3">
-          {mosqueEvents.map((event) => (
-            <div
-              key={event.id}
-              className="bg-white rounded-[1.25rem] p-4 flex items-center gap-4 shadow-[0_2px_12px_rgba(0,0,0,0.05)]"
-            >
-              {/* Thumbnail placeholder */}
-              <div className="h-14 w-14 rounded-xl bg-[#F0EDE7] flex items-center justify-center shrink-0 border border-[#E8E3DB]">
-                <BookOpen size={20} className="text-[#9AA5AB]" strokeWidth={1.5} />
-              </div>
-
-              {/* Event info */}
-              <div className="flex-1 min-w-0">
-                <p className="text-[10px] font-bold text-[#9AA5AB] uppercase tracking-[0.1em] mb-0.5">
-                  {event.day}
-                </p>
-                <h3 className="text-[14px] font-bold text-[#1A2420] leading-snug line-clamp-2">
-                  {event.title}
-                </h3>
-                <div className="flex items-center gap-1 mt-1.5">
-                  <Clock size={11} className="text-[#9AA5AB]" strokeWidth={2} />
-                  <span className="text-[11px] text-[#9AA5AB] font-semibold">
-                    {event.time}
-                  </span>
-                </div>
-              </div>
-
-              <ChevronRight size={16} className="text-[#C8C4BE] shrink-0" strokeWidth={2.5} />
+          {eventsLoading ? (
+            [1, 2].map(i => (
+              <div key={i} className="h-24 bg-white/60 animate-pulse rounded-[1.25rem] px-4" />
+            ))
+          ) : upcomingEvents.length === 0 ? (
+            <div className="bg-white/40 border border-dashed border-slate-200 rounded-[1.25rem] p-8 text-center">
+              <p className="text-[13px] text-slate-400 font-medium">No upcoming events scheduled.</p>
             </div>
-          ))}
+          ) : (
+            upcomingEvents.map((event) => (
+              <div
+                key={event.id}
+                onClick={() => router.push(`/calendar?date=${event.dateISO}`)}
+                className="bg-white rounded-[1.25rem] p-4 flex items-center gap-4 shadow-[0_2px_12px_rgba(0,0,0,0.05)] cursor-pointer active:scale-[0.98] transition-all"
+              >
+                {/* Thumbnail */}
+                <div className="h-14 w-14 rounded-xl overflow-hidden shrink-0 border border-[#E8E3DB] bg-slate-100">
+                  {event.image ? (
+                    <img src={event.image} alt="" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-[#F0EDE7]">
+                      <BookOpen size={20} className="text-[#9AA5AB]" strokeWidth={1.5} />
+                    </div>
+                  )}
+                </div>
+
+                {/* Event info */}
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] font-bold text-[#CDA066] uppercase tracking-[0.1em] mb-0.5">
+                    {formatDateLabel(event.dateISO)}
+                  </p>
+                  <h3 className="text-[14px] font-bold text-[#1A2420] leading-snug line-clamp-2">
+                    {event.title}
+                  </h3>
+                  <div className="flex items-center gap-1 mt-1.5">
+                    <Clock size={11} className="text-[#9AA5AB]" strokeWidth={2} />
+                    <span className="text-[11px] text-[#9AA5AB] font-semibold">
+                      {event.timeSlot}
+                    </span>
+                  </div>
+                </div>
+
+                <ChevronRight size={16} className="text-[#C8C4BE] shrink-0" strokeWidth={2.5} />
+              </div>
+            ))
+          )}
         </div>
       </motion.div>
 
