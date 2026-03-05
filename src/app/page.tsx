@@ -12,6 +12,8 @@ import { ZakatDrawer } from "@/components/dashboard/zakat-drawer";
 import { useAuth } from "@/context/auth-context";
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useDailyHadiths } from "@/hooks/use-daily-hadiths";
 
 const container = {
   hidden: { opacity: 0 },
@@ -30,23 +32,7 @@ const item = {
   },
 };
 
-const hadithQuotes = [
-  {
-    text: "\"The best among you are those who have the best manners and character.\"",
-    source: "HADITH OF THE DAY",
-    color: "#7A4A3A",
-  },
-  {
-    text: "\"Kindness is a mark of faith, and whoever has not kindness has not faith.\"",
-    source: "HADITH OF THE DAY",
-    color: "#4D6A53",
-  },
-  {
-    text: "\"Speak good or remain silent.\"",
-    source: "HADITH OF THE DAY",
-    color: "#5A4070",
-  },
-];
+
 
 const mosqueEvents = [
   {
@@ -82,6 +68,7 @@ export default function Home() {
   const [zakatOpen, setZakatOpen] = useState(false);
   const [qiyamRemaining, setQiyamRemaining] = useState<string>("...");
   const [prayersExpanded, setPrayersExpanded] = useState(false);
+  const { hadiths, loading: hadithsLoading, error: hadithsError } = useDailyHadiths();
 
   useEffect(() => {
     const updateQiyam = () => {
@@ -338,38 +325,59 @@ export default function Home() {
 
         {/* Hadith card row - horizontally scrollable */}
         <div className="flex gap-4 overflow-x-auto py-2 scrollbar-none snap-x snap-mandatory">
-          {hadithQuotes.map((quote, i) => (
-            <div
-              key={i}
-              className="shrink-0 snap-start w-[75%]"
-              style={{ color: quote.color }}
-            >
-              {/* Arch-shaped card: large top radius for the arch look */}
-              <div
-                className="relative flex flex-col items-center px-5 pt-6 pb-6"
-                style={{
-                  backgroundColor: quote.color,
-                  borderRadius: "50% 50% 1.5rem 1.5rem / 30% 30% 1.5rem 1.5rem",
-                  minHeight: "210px",
-                }}
-              >
-                {/* Quotation bubble */}
-                <div className="w-10 h-10 shrink-0 rounded-full bg-[rgba(255,255,255,0.18)] border border-white/20 flex items-center justify-center shadow-sm mb-2">
-                  <span className="text-white text-[22px] font-serif font-bold leading-none mt-1">"</span>
-                </div>
-
-                {/* Quote text */}
-                <p className="text-white text-[14px] italic font-semibold leading-relaxed text-center mt-2 flex-1">
-                  {quote.text}
-                </p>
-
-                {/* Source label */}
-                <p className="text-white/50 text-[10px] font-bold tracking-[0.18em] uppercase mt-5 text-center">
-                  {quote.source}
-                </p>
+          {hadithsLoading ? (
+            // Skeleton loading state
+            Array.from({ length: 3 }).map((_, i) => (
+              <div key={`skel-${i}`} className="shrink-0 snap-start w-[75%]">
+                <Skeleton
+                  className="w-full"
+                  style={{
+                    borderRadius: "50% 50% 1.5rem 1.5rem / 30% 30% 1.5rem 1.5rem",
+                    minHeight: "210px"
+                  }}
+                />
               </div>
+            ))
+          ) : hadithsError || !hadiths ? (
+            // Error state
+            <div className="w-full bg-red-50 text-red-800 p-4 rounded-xl text-sm border border-red-100 flex items-center justify-center min-h-[100px]">
+              Failed to load Daily Inspiration.
             </div>
-          ))}
+          ) : (
+            // Data state
+            hadiths.map((quote) => (
+              <div
+                key={quote.id}
+                className="shrink-0 snap-start w-[75%]"
+                style={{ color: quote.color }}
+              >
+                {/* Arch-shaped card: large top radius for the arch look */}
+                <div
+                  className="relative flex flex-col items-center px-5 pt-6 pb-6"
+                  style={{
+                    backgroundColor: quote.color,
+                    borderRadius: "50% 50% 1.5rem 1.5rem / 30% 30% 1.5rem 1.5rem",
+                    minHeight: "210px",
+                  }}
+                >
+                  {/* Quotation bubble */}
+                  <div className="w-10 h-10 shrink-0 rounded-full bg-[rgba(255,255,255,0.18)] border border-white/20 flex items-center justify-center shadow-sm mb-2">
+                    <span className="text-white text-[22px] font-serif font-bold leading-none mt-1">"</span>
+                  </div>
+
+                  {/* Quote text */}
+                  <p className="text-white text-[14px] italic font-semibold leading-relaxed text-center mt-2 flex-1 line-clamp-4">
+                    {quote.text}
+                  </p>
+
+                  {/* Source label */}
+                  <p className="text-white/50 text-[10px] font-bold tracking-[0.18em] uppercase mt-5 text-center">
+                    {quote.source}
+                  </p>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </motion.div>
 
