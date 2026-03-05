@@ -28,7 +28,7 @@ export function BottomNav() {
   }, [clickedTab]);
 
   const isDetailsPage = pathname.startsWith("/community/") && pathname !== "/community";
-  const hiddenRoutes = ["/profile/personal-info", "/profile/theme", "/login", "/register", "/pustaka-doa"];
+  const hiddenRoutes = ["/profile/personal-info", "/profile/theme", "/login", "/register", "/pustaka-doa", "/mosque"];
 
   if (hiddenRoutes.includes(pathname) || isDetailsPage) {
     return null;

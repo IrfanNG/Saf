@@ -126,7 +126,7 @@ export default function Home() {
 
   const quickTiles = [
     { title: "Quran", icon: BookOpen, color: "#4D6A53", href: undefined, action: () => { } },
-    { title: "Mosque", icon: MoonStar, color: "#4D6A53", href: undefined, action: () => { } },
+    { title: "Mosque", icon: MoonStar, color: "#4D6A53", href: "/mosque", action: () => router.push("/mosque") },
     { title: "Zakat", icon: Coins, color: "#4D6A53", href: undefined, action: () => setZakatOpen(true) },
     { title: "Doa", icon: BookMarked, color: "#4D6A53", href: undefined, action: () => router.push("/pustaka-doa") },
   ];
