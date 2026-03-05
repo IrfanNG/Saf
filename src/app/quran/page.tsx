@@ -86,7 +86,7 @@ export default function QuranScreen() {
                 <motion.h1
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-[1.75rem] font-bold text-[#1A2420] font-serif leading-tight tracking-tight mb-4"
+                    className="text-[1.75rem] font-bold text-[#1A2420] font-sans leading-tight tracking-tight mb-4"
                 >
                     Al-Quran
                 </motion.h1>
@@ -123,7 +123,7 @@ export default function QuranScreen() {
                         <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-4">
                             <BookOpen size={32} className="text-red-400" />
                         </div>
-                        <h3 className="text-[16px] font-bold text-[#1A2420] font-serif mb-1">Failed to load</h3>
+                        <h3 className="text-[16px] font-bold text-[#1A2420] font-sans mb-1">Failed to load</h3>
                         <p className="text-[13px] font-medium text-[#9AA5AB] font-sans px-8">
                             {error}. Please check your connection and try again.
                         </p>
@@ -156,7 +156,7 @@ export default function QuranScreen() {
                                     {/* Surah Info */}
                                     <div className="flex-1 min-w-0">
                                         <div className="flex justify-between items-start mb-0.5">
-                                            <h3 className="text-[15px] font-bold text-[#1A2420] font-serif leading-snug">
+                                            <h3 className="text-[15px] font-bold text-[#1A2420] font-sans leading-snug">
                                                 {surah.englishName}
                                             </h3>
                                             <span className="text-[18px] font-bold text-[#4D6A53] leading-none text-right">
@@ -183,7 +183,7 @@ export default function QuranScreen() {
                 ) : (
                     <div className="flex flex-col items-center justify-center py-20 text-center">
                         <BookOpen size={48} className="text-[#C8C4BE] mb-4" strokeWidth={1} />
-                        <h3 className="text-[16px] font-bold text-[#1A2420] font-serif mb-1">No Surah found</h3>
+                        <h3 className="text-[16px] font-bold text-[#1A2420] font-sans mb-1">No Surah found</h3>
                         <p className="text-[13px] font-medium text-[#9AA5AB] font-sans">
                             Try adjusting your search criteria
                         </p>

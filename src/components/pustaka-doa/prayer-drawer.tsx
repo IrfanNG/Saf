@@ -43,7 +43,7 @@ export function PrayerDrawer({ prayer, open, onOpenChange }: PrayerDrawerProps) 
                             {prayer.category}
                         </p>
                     </div>
-                    <DrawerTitle className="text-[1.5rem] font-bold text-[#1A2B22] font-serif leading-tight">
+                    <DrawerTitle className="text-[1.5rem] font-bold text-[#1A2B22] font-sans leading-tight">
                         {prayer.title}
                     </DrawerTitle>
                 </DrawerHeader>
@@ -51,7 +51,7 @@ export function PrayerDrawer({ prayer, open, onOpenChange }: PrayerDrawerProps) 
                 <div className="px-8 py-6 space-y-8 overflow-y-auto max-h-[60vh] scrollbar-none">
                     {/* Arabic Text */}
                     <div className="text-center">
-                        <p className="text-[2rem] font-serif leading-[1.6] text-[#1A2B22] dir-rtl">
+                        <p className="text-[2rem] font-sans leading-[1.6] text-[#1A2B22] dir-rtl">
                             {prayer.arabic}
                         </p>
                     </div>

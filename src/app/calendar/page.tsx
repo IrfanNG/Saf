@@ -83,7 +83,7 @@ export default function CalendarPage() {
                         <p className="text-[10px] font-bold text-[#7D8F82] uppercase tracking-[0.15em] mb-1 pl-0.5">
                             Saf
                         </p>
-                        <h1 className="text-[1.8rem] font-bold tracking-tight text-[#5A413A] font-serif leading-none">
+                        <h1 className="text-[1.8rem] font-bold tracking-tight text-[#5A413A] font-sans leading-none">
                             Event
                         </h1>
                     </div>
@@ -95,7 +95,7 @@ export default function CalendarPage() {
                         <button onClick={prevWeek} className="p-1.5 bg-white/10 hover:bg-white/20 rounded-full transition text-white/70 hover:text-white">
                             <ChevronLeft size={16} />
                         </button>
-                        <h2 className="text-[17px] font-semibold tracking-[0.15em] font-serif text-white uppercase">
+                        <h2 className="text-[17px] font-semibold tracking-[0.15em] font-sans text-white uppercase">
                             {monthName}
                         </h2>
                         <button onClick={nextWeek} className="p-1.5 bg-white/10 hover:bg-white/20 rounded-full transition text-white/70 hover:text-white">
@@ -137,7 +137,7 @@ export default function CalendarPage() {
 
             {/* Activities Title */}
             <div className="flex justify-between items-end px-6 mt-8 mb-5">
-                <h3 className="text-[16px] font-bold tracking-widest text-[#415D43] font-serif uppercase">Mosque Activities</h3>
+                <h3 className="text-[16px] font-bold tracking-widest text-[#415D43] font-sans uppercase">Mosque Activities</h3>
                 <div className="flex items-center gap-3">
                     {isAdmin && (
                         <button
@@ -191,7 +191,7 @@ export default function CalendarPage() {
                                     <p className="text-[9px] font-bold text-[#CDA066] uppercase tracking-[0.15em] mb-1">
                                         {act.timeSlot}
                                     </p>
-                                    <h4 className="font-semibold text-[1.05rem] leading-tight text-[#5A413A] font-serif tracking-tight mb-[0.15rem]">
+                                    <h4 className="font-semibold text-[1.05rem] leading-tight text-[#5A413A] font-sans tracking-tight mb-[0.15rem]">
                                         {act.title}
                                     </h4>
                                     <div className="flex items-center gap-1.5 text-[#A68F80] mb-3">

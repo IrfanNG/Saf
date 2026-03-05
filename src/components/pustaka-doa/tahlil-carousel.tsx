@@ -73,13 +73,13 @@ export function TahlilCarousel({ steps, onBack }: TahlilCarouselProps) {
                             <Quote size={24} className="text-white" fill="white" />
                         </div>
 
-                        <h3 className="text-[1.25rem] font-bold text-[#1A2B22] font-serif mb-10 pt-4 px-2 leading-tight">
+                        <h3 className="text-[1.25rem] font-bold text-[#1A2B22] font-sans mb-10 pt-4 px-2 leading-tight">
                             {steps[currentStep].title}
                         </h3>
 
                         {/* Arabic Content Area - High visibility */}
                         <div className="w-full bg-[#fdfdfd] rounded-[2rem] p-6 mb-8 border border-[#F8F9F8]">
-                            <p className="text-[1.85rem] font-serif leading-[1.8] text-[#1A2B22] dir-rtl">
+                            <p className="text-[1.85rem] font-sans leading-[1.8] text-[#1A2B22] dir-rtl">
                                 {steps[currentStep].arabic}
                             </p>
                         </div>

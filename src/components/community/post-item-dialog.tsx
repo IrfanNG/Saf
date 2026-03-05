@@ -76,7 +76,7 @@ export function PostItemDialog({ open, onOpenChange, onSubmit }: PostItemDialogP
                         <ChevronLeft size={24} strokeWidth={2.5} />
                     </button>
 
-                    <h1 className="text-[1.5rem] font-bold tracking-tight text-[#5A413A] font-serif absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-max">
+                    <h1 className="text-[1.5rem] font-bold tracking-tight text-[#5A413A] font-sans absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-max">
                         Report New Item
                     </h1>
 
@@ -240,7 +240,7 @@ export function PostItemDialog({ open, onOpenChange, onSubmit }: PostItemDialogP
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 }}
-                                className="text-[1.6rem] font-bold text-[#5A413A] font-serif mb-2"
+                                className="text-[1.6rem] font-bold text-[#5A413A] font-sans mb-2"
                             >
                                 Report Submitted
                             </motion.h2>

@@ -28,7 +28,7 @@ export default function CommunityPage() {
                         <p className="text-[10px] font-bold text-[#7D8F82] uppercase tracking-[0.15em] mb-1 pl-0.5">
                             Saf
                         </p>
-                        <h1 className="text-[1.8rem] font-bold tracking-tight text-[#5A413A] font-serif leading-none">
+                        <h1 className="text-[1.8rem] font-bold tracking-tight text-[#5A413A] font-sans leading-none">
                             Community
                         </h1>
                     </div>

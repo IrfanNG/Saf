@@ -76,7 +76,7 @@ export default function ProfilePage() {
                 </div>
 
                 {/* Name */}
-                <h1 className="text-[1.6rem] font-bold text-[#5A413A] font-serif tracking-tight mt-2">
+                <h1 className="text-[1.6rem] font-bold text-[#5A413A] font-sans tracking-tight mt-2">
                     {user?.displayName || "Ahmad Ibrahim"}
                 </h1>
                 {/* Location */}

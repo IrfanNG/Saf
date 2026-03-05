@@ -103,7 +103,7 @@ export default function SedekahPage() {
                     <p className="text-[10px] font-bold text-[#7D8F82] uppercase tracking-[0.15em] mb-1 pl-0.5">
                         Saf
                     </p>
-                    <h1 className="text-[1.8rem] font-bold tracking-tight text-[#5A413A] font-serif leading-none">
+                    <h1 className="text-[1.8rem] font-bold tracking-tight text-[#5A413A] font-sans leading-none">
                         Sedekah
                     </h1>
                 </div>
@@ -148,7 +148,7 @@ export default function SedekahPage() {
                             </svg>
                         </div>
                         <div className="flex flex-col justify-center translate-y-[-2px]">
-                            <h2 className="text-[1.35rem] font-bold font-serif leading-tight">Masjid Al-Azim</h2>
+                            <h2 className="text-[1.35rem] font-bold font-sans leading-tight">Masjid Al-Azim</h2>
                             <p className="text-[9.5px] uppercase tracking-[0.08em] font-bold text-white/60 mt-[0.15rem]">Official Donation Account</p>
                         </div>
                     </div>
@@ -189,7 +189,7 @@ export default function SedekahPage() {
                     transition={{ delay: 0.2, duration: 0.3 }}
                     className="bg-white/40 rounded-[1.5rem] p-6 text-center border border-white/60 mb-8"
                 >
-                    <p className="text-[12px] text-[#5A413A] italic font-serif leading-[1.8] mb-[0.85rem] px-2 font-medium">
+                    <p className="text-[12px] text-[#5A413A] italic font-sans leading-[1.8] mb-[0.85rem] px-2 font-medium">
                         "The example of those who spend their wealth in the way of Allah is like a seed [of grain] which grows seven spikes..."
                     </p>
                     <p className="text-[10px] uppercase font-bold text-[#8A958C] tracking-widest">
@@ -225,7 +225,7 @@ export default function SedekahPage() {
                                 <X size={16} strokeWidth={3} />
                             </button>
 
-                            <h3 className="text-[1.4rem] font-bold text-[#5A413A] font-serif mb-6 mt-2">Edit Account Details</h3>
+                            <h3 className="text-[1.4rem] font-bold text-[#5A413A] font-sans mb-6 mt-2">Edit Account Details</h3>
 
                             <div className="space-y-5">
                                 <div className="space-y-1.5">
