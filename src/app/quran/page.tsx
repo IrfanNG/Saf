@@ -94,7 +94,7 @@ export default function QuranScreen() {
                     <motion.h1
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-[1.75rem] font-bold text-[#1A2420] font-serif leading-tight tracking-tight"
+                        className="text-[1.75rem] font-bold text-[#1A2420] font-sans leading-tight tracking-tight"
                     >
                         Al-Quran
                     </motion.h1>

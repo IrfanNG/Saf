@@ -9,6 +9,7 @@ import { usePrayerTimes } from "@/hooks/use-prayer-times";
 import { useMosqueSettings } from "@/hooks/use-mosque-settings";
 import { DashboardSkeleton } from "@/components/dashboard/dashboard-skeleton";
 import { ZakatDrawer } from "@/components/dashboard/zakat-drawer";
+import { SafLogo } from "@/components/saf-logo";
 import { useAuth } from "@/context/auth-context";
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
@@ -141,7 +142,7 @@ export default function Home() {
 
   const quickTiles = [
     { title: "Quran", icon: BookOpen, color: "#4D6A53", href: "/quran", action: () => router.push("/quran") },
-    { title: "Mosque", icon: MoonStar, color: "#4D6A53", href: "/mosque", action: () => router.push("/mosque") },
+    { title: "Mosque", icon: (props: any) => <SafLogo size={props.size || 24} className={props.className} />, color: "#4D6A53", href: "/mosque", action: () => router.push("/mosque") },
     { title: "Zakat", icon: Banknote, color: "#4D6A53", href: undefined, action: () => setZakatOpen(true) },
     { title: "Doa", icon: BookMarked, color: "#4D6A53", href: "/pustaka-doa", action: () => router.push("/pustaka-doa") },
   ];
@@ -182,7 +183,7 @@ export default function Home() {
             <p className="text-white/75 text-[12px] font-semibold tracking-wide">
               Assalamu'alaikum
             </p>
-            <h1 className="text-white text-[1.75rem] font-bold font-serif leading-tight tracking-tight">
+            <h1 className="text-white text-[1.75rem] font-bold font-sans leading-tight tracking-tight">
               {user?.displayName?.split(" ")[0] ?? "Ahmad Ibrahim"}
             </h1>
             <div className="flex items-center gap-1 mt-1 text-white/75">
@@ -351,7 +352,7 @@ export default function Home() {
       {/* ── DAILY INSPIRATION ── */}
       <motion.div variants={item} className="mt-8">
         <div className="flex items-center justify-between mb-0 px-5">
-          <h2 className="text-[1.25rem] font-bold text-[#1A2420] font-serif">
+          <h2 className="text-[1.25rem] font-bold text-[#1A2420] font-sans">
             Daily Inspiration
           </h2>
           <button className="text-[12px] font-bold text-[#9AA5AB] uppercase tracking-wide">

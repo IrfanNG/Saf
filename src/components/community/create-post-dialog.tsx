@@ -73,7 +73,7 @@ export function CreatePostDialog({ open, onOpenChange, onSubmit }: CreatePostDia
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[425px] rounded-[2rem] p-6">
                 <DialogHeader>
-                    <DialogTitle className="text-xl font-bold text-[#5A413A] font-serif">Create Post</DialogTitle>
+                    <DialogTitle className="text-xl font-bold text-[#5A413A] font-sans">Create Post</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4 mt-2">
                     <Textarea

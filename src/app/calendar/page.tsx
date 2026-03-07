@@ -201,7 +201,7 @@ export default function CalendarPage() {
             {/* Activities Title */}
             <div className="flex justify-between items-end px-6 mt-8 mb-5">
                 <div className="flex flex-col">
-                    <h3 className="text-[16px] font-bold tracking-widest text-[#415D43] font-serif uppercase">
+                    <h3 className="text-[16px] font-bold tracking-widest text-[#415D43] font-sans uppercase">
                         {isShowingAll ? "Mosque Activities" : "Daily Activities"}
                     </h3>
                     {!isShowingAll && (
@@ -304,7 +304,7 @@ export default function CalendarPage() {
                                             <CalendarDays size={8} className="text-[#415D43]" />
                                             <span className="text-[8px] font-bold text-[#415D43] uppercase">{act.dateISO}</span>
                                         </div>
-                                        <h4 className="font-semibold text-[1.05rem] leading-tight text-[#5A413A] font-serif tracking-tight mb-[0.15rem]">
+                                        <h4 className="font-semibold text-[1.05rem] leading-tight text-[#5A413A] font-sans tracking-tight mb-[0.15rem]">
                                             {act.title}
                                         </h4>
                                         <div className="flex items-center gap-1.5 text-[#A68F80] mb-3">

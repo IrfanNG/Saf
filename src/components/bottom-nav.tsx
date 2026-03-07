@@ -3,12 +3,13 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Home, Calendar, Users, User, HandCoins } from "lucide-react";
+import { SafLogo } from "@/components/saf-logo";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 const tabs = [
-  { name: "Home", href: "/", icon: Home },
+  { name: "Home", href: "/", icon: (props: any) => <SafLogo size={props.size || 22} className={props.className} /> },
   { name: "Event", href: "/calendar", icon: Calendar },
   { name: "Sedekah", href: "/sedekah", icon: HandCoins },
   { name: "Community", href: "/community", icon: Users },

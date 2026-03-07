@@ -24,7 +24,7 @@ export default function ParticipantsPage() {
         return (
             <div className="flex flex-col items-center justify-center min-h-screen bg-[#F4F4F6] p-6 text-center">
                 <ShieldX className="w-16 h-16 text-red-500/40 mb-4" />
-                <h1 className="text-2xl font-bold text-[#5A413A] font-serif mb-2">Access Denied</h1>
+                <h1 className="text-2xl font-bold text-[#5A413A] font-sans mb-2">Access Denied</h1>
                 <p className="text-slate-500 mb-6">You need admin privileges to view this list.</p>
                 <button
                     onClick={() => router.back()}
@@ -47,7 +47,7 @@ export default function ParticipantsPage() {
                     >
                         <ChevronLeft size={20} />
                     </button>
-                    <h1 className="text-xl font-bold text-[#5A413A] font-serif">Participants List</h1>
+                    <h1 className="text-xl font-bold text-[#5A413A] font-sans">Participants List</h1>
                 </div>
                 <div className="bg-[#415D43]/5 rounded-2xl p-4 flex items-center justify-between border border-[#415D43]/10">
                     <div className="flex items-center gap-3">

@@ -18,57 +18,28 @@ export function SafLogo({ className, size = 48 }: SafLogoProps) {
             xmlns="http://www.w3.org/2000/svg"
             className={cn("flex-shrink-0", className)}
         >
-            {/* 
-        Mosque Silhouette Outline 
-        - Stroke: Green (#064E3B), 2px
-        - Fill: Transparent
-      */}
-            <g stroke="#064E3B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none">
+            {/* The "Perfect Match" Onion Dome from reference image */}
+            <g stroke="#415D43" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                {/* 1. Main Outer Onion Shape (More bulgy at the bottom) */}
+                <path d="M 20 86 C 12 78, 8 60, 15 42 C 22 24, 45 22, 50 12 C 55 22, 78 24, 85 42 C 92 60, 88 78, 80 86" />
 
-                {/* === MAIN BUILDING / DOME === */}
-                {/* Tier 1 (Bottom, Widest) */}
-                <path d="M 35 75 L 40 62 L 85 62 L 90 75 Z" />
+                {/* 2. The Curved Base Line ("Smile" base) */}
+                <path d="M 20 86 C 35 78, 65 78, 80 86" />
 
-                {/* Tier 2 (Middle) */}
-                <path d="M 45 62 L 50 48 L 75 48 L 80 62 Z" />
+                {/* 3. Left Interior Detail Line (Hand-drawn shadow look) */}
+                <path d="M 28 80 C 24 72, 22 60, 26 48 C 30 36, 42 32, 48 24" />
 
-                {/* Tier 3 (Top) */}
-                <path d="M 52 48 L 57 32 L 68 32 L 73 48 Z" />
+                {/* 4. Small Right Detail Notch */}
+                <path d="M 78 72 Q 76 60, 78 52" />
 
-                {/* Top Dome (Onion shape via bezier) */}
-                <path d="M 57 32 C 57 26, 62.5 25, 62.5 20 C 62.5 25, 68 26, 68 32" />
+                {/* 5. Finial Stalk (Neck) */}
+                <path d="M 50 12 V 8" />
 
-                {/* Crescent Finial on Main Dome */}
-                <path d="M 62.5 20 L 62.5 12" />
-                <path d="M 62.5 10 C 64 10, 65 11, 65 12.5 C 65 11.5, 64.5 10.5, 63.5 10.5" />
+                {/* 6. Crescent Moon (Facing left/up) */}
+                <path d="M 51 0 C 42 0, 42 10, 51 10 C 47 10, 47 0, 51 0 Z" fill="#415D43" strokeWidth="0" />
 
-                {/* Horizontal Seams (separating tiers) */}
-                <line x1="40" y1="62" x2="85" y2="62" />
-                <line x1="50" y1="48" x2="75" y2="48" />
-                <line x1="57" y1="32" x2="68" y2="32" />
-
-                {/* Foundation Base Line */}
-                <line x1="10" y1="75" x2="90" y2="75" />
-
-                {/* === MINARET (Left Side) === */}
-                {/* Main Tower Base */}
-                <path d="M 16 75 L 18 45 L 28 45 L 30 75 Z" />
-
-                {/* Balcony 1 (Lower) */}
-                <path d="M 14 45 L 32 45 L 30 40 L 16 40 Z" />
-
-                {/* Upper Tower Section */}
-                <path d="M 18 40 L 20 25 L 26 25 L 28 40 Z" />
-
-                {/* Balcony 2 (Upper) */}
-                <path d="M 17 25 L 29 25 L 27 20 L 19 20 Z" />
-
-                {/* Minaret Dome / Roof */}
-                <path d="M 19 20 L 23 12 L 27 20 Z" />
-
-                {/* Finial on Minaret */}
-                <line x1="23" y1="12" x2="23" y2="8" />
-
+                {/* 7. Star (Small, five-pointed) */}
+                <path d="M 52 4 L 53 4 L 52.4 4.8 L 52.6 5.5 L 52 5.1 L 51.4 5.5 L 51.6 4.8 L 51 4 L 52 4 Z" fill="#415D43" strokeWidth="0" />
             </g>
         </svg>
     );
