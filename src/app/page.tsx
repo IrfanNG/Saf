@@ -67,7 +67,7 @@ export default function Home() {
   const [qiyamRemaining, setQiyamRemaining] = useState<string>("...");
   const [prayersExpanded, setPrayersExpanded] = useState(false);
   const { hadiths, loading: hadithsLoading, error: hadithsError } = useDailyHadiths();
-  const { activities: upcomingEvents, loading: eventsLoading } = useUpcomingActivities(2);
+  const { activities: upcomingEvents, loading: eventsLoading } = useUpcomingActivities(3);
   const [copied, setCopied] = useState(false);
 
 
@@ -422,13 +422,10 @@ export default function Home() {
 
       <motion.div variants={item} className="mt-12 px-6">
         <div className="flex items-center justify-between mb-5">
-          <div className="space-y-1">
-            <h2 className="text-[0.75rem] font-medium text-slate-500 font-sans tracking-[0.15em] uppercase">
+          <div className="flex flex-col mb-0">
+            <h2 className="text-[1.25rem] font-bold text-[#1A2420] font-sans">
               Mosque Events
             </h2>
-            <p className="text-[10px] text-slate-400/60 font-sans italic uppercase tracking-[0.05em]">
-              Community Gatherings
-            </p>
           </div>
           <Link href="/calendar" className="text-[9px] font-medium text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1.5 rounded-full border border-slate-100 hover:bg-slate-100 transition-colors">
             VIEW ALL
@@ -437,8 +434,8 @@ export default function Home() {
 
         <div className="flex flex-col gap-3">
           {eventsLoading ? (
-            [1, 2].map(i => (
-              <div key={i} className="h-24 bg-white/60 animate-pulse rounded-[1.25rem] px-4" />
+            [1, 2, 3].map(i => (
+              <div key={i} className="h-28 bg-white/60 animate-pulse rounded-[1.25rem] px-4" />
             ))
           ) : upcomingEvents.length === 0 ? (
             <div className="bg-white/40 border border-dashed border-slate-200 rounded-[1.25rem] p-8 text-center">
@@ -449,17 +446,30 @@ export default function Home() {
               <div
                 key={event.id}
                 onClick={() => router.push(`/calendar?date=${event.dateISO}`)}
-                className="bg-white rounded-[1.25rem] p-4 flex items-center gap-4 shadow-[0_2px_12px_rgba(0,0,0,0.05)] cursor-pointer active:scale-[0.98] transition-all"
+                className="bg-white rounded-[1.25rem] p-4 flex items-center gap-4 shadow-[0_2px_12px_rgba(0,0,0,0.05)] cursor-pointer active:scale-[0.98] transition-all h-28"
               >
                 {/* Thumbnail */}
                 <div className="h-14 w-14 rounded-xl overflow-hidden shrink-0 border border-[#E8E3DB] bg-slate-100">
-                  {event.image ? (
-                    <img src={event.image} alt="" className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-[#F0EDE7]">
-                      <BookOpen size={20} className="text-[#9AA5AB]" strokeWidth={1.5} />
-                    </div>
-                  )}
+                  {(() => {
+                    const defaultImage =
+                      event.type === 'event' ? '/event.avif' :
+                        event.type === 'community' ? '/community.jpg' :
+                          event.type === 'talk' ? '/talk.jpeg' :
+                            event.type === 'class' ? '/alquran.jpg' :
+                              null;
+
+                    const displayImage = event.image || defaultImage;
+
+                    if (displayImage) {
+                      return <img src={displayImage} alt="" className="w-full h-full object-cover" />;
+                    }
+
+                    return (
+                      <div className="w-full h-full flex items-center justify-center bg-[#F0EDE7]">
+                        <BookOpen size={20} className="text-[#9AA5AB]" strokeWidth={1.5} />
+                      </div>
+                    );
+                  })()}
                 </div>
 
                 {/* Event info */}
