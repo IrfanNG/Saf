@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "saf-mosque-community-pwa"
+  },
+  "targets": {
+    "saf-mosque-community-pwa": {
+      "hosting": {
+        "main": [
+          "saf-mosque-community-pwa"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
