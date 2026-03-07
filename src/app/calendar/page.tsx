@@ -69,10 +69,10 @@ export default function CalendarPage() {
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [formData, setFormData] = useState({
-        title: "Quran Tajweed Class",
-        timeSlot: "AFTER MAGHRIB",
-        location: "Al-Noor Mosque",
-        image: "https://images.unsplash.com/photo-1585036156171-384164a8c675?q=80&w=200&h=200&fit=crop",
+        title: "",
+        timeSlot: "",
+        location: "",
+        image: "",
         description: "",
         type: "event",
         dateISO: selectedDateISO
@@ -219,7 +219,7 @@ export default function CalendarPage() {
                                     title: "",
                                     timeSlot: "",
                                     location: "",
-                                    image: "https://images.unsplash.com/photo-1585036156171-384164a8c675?q=80&w=200&h=200&fit=crop",
+                                    image: "",
                                     description: "",
                                     type: "event",
                                     dateISO: selectedDateISO
@@ -279,13 +279,26 @@ export default function CalendarPage() {
                                     className="bg-white border border-white/50 rounded-[1.2rem] p-3 flex gap-4 shadow-[0_2px_15px_rgba(0,0,0,0.03)] relative overflow-hidden group"
                                 >
                                     <div className="relative w-24 h-[6.5rem] shrink-0 rounded-xl overflow-hidden shadow-sm bg-slate-200">
-                                        {act.image ? (
-                                            <img
-                                                src={act.image}
-                                                alt={act.title}
-                                                className="w-full h-full object-cover"
-                                            />
-                                        ) : null}
+                                        {(() => {
+                                            const defaultImage =
+                                                act.type === 'event' ? '/event.avif' :
+                                                    act.type === 'community' ? '/community.jpg' :
+                                                        act.type === 'talk' ? '/talk.jpeg' :
+                                                            act.type === 'class' ? '/alquran.jpg' :
+                                                                null;
+
+                                            const displayImage = act.image || defaultImage;
+
+                                            if (displayImage) {
+                                                return <img src={displayImage} alt="" className="w-full h-full object-cover" />;
+                                            }
+
+                                            return (
+                                                <div className="w-full h-full flex items-center justify-center bg-[#F0EDE7]">
+                                                    <CalendarDays size={20} className="text-[#9AA5AB]" strokeWidth={1.5} />
+                                                </div>
+                                            );
+                                        })()}
                                     </div>
                                     <div className="flex-1 min-w-0 py-1 flex flex-col items-start pr-1">
                                         <div className="flex items-center gap-2 mb-1 w-full flex-wrap">
@@ -398,10 +411,7 @@ export default function CalendarPage() {
                                 <label className="text-xs font-bold text-slate-500 mb-1 block">Description</label>
                                 <textarea required rows={3} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full border rounded-xl px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-[#415D43]/20 focus:border-[#415D43] resize-none" placeholder="Activity details..." />
                             </div>
-                            <div>
-                                <label className="text-xs font-bold text-slate-500 mb-1 block">Image URL (Optional)</label>
-                                <input value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} className="w-full border rounded-xl px-4 py-2 font-medium text-xs focus:outline-none focus:ring-2 focus:ring-[#415D43]/20 focus:border-[#415D43]" />
-                            </div>
+
                             <div className="flex gap-3 pt-2">
                                 <button type="button" onClick={() => setIsFormOpen(false)} className="flex-1 border text-slate-500 font-bold p-3 rounded-xl hover:bg-slate-50 transition">
                                     Cancel
