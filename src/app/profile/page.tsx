@@ -5,6 +5,7 @@ import { useAdmin } from "@/hooks/use-admin";
 import { usePrayerTimes } from "@/hooks/use-prayer-times";
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
+import { sendTestNotification } from "@/app/actions/notifications";
 import {
     User as UserIcon,
     Shield,
@@ -14,7 +15,8 @@ import {
     ShieldCheck,
     Edit2,
     Calendar,
-    Save
+    Save,
+    Bell
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -89,6 +91,24 @@ export default function ProfilePage() {
             toast.error("Failed to save changes.");
         } finally {
             setLoading(false);
+        }
+    };
+
+    const [sendingTest, setSendingTest] = useState(false);
+
+    const handleTestNotification = async () => {
+        setSendingTest(true);
+        try {
+            const result = await sendTestNotification();
+            if (result.success) {
+                toast.success("Notification sent! 🔔 Check your device.");
+            } else {
+                toast.error(`OneSignal: ${result.error}`);
+            }
+        } catch (e: any) {
+            toast.error("Failed to trigger notification.");
+        } finally {
+            setSendingTest(false);
         }
     };
 
@@ -224,8 +244,30 @@ export default function ProfilePage() {
                 </button>
             </motion.div>
 
-            {/* ── ADMIN SECTION ── */}
-            <motion.div variants={item} className="mx-5 mt-6 border-t border-slate-200 pt-6">
+            {/* ── ADMIN/DEVELOPER SECTION ── */}
+            <motion.div variants={item} className="mx-5 mt-6 border-t border-slate-200 pt-6 space-y-4">
+                {(isAdmin || process.env.NODE_ENV === "development") && (
+                    <button
+                        onClick={handleTestNotification}
+                        disabled={sendingTest}
+                        className="w-full bg-white rounded-[1.25rem] px-4 py-3.5 flex items-center justify-between shadow-sm hover:shadow-md transition-all border border-slate-50 disabled:opacity-50"
+                    >
+                        <div className="flex items-center gap-3.5">
+                            <div className="h-10 w-10 rounded-xl bg-orange-100 flex items-center justify-center shrink-0">
+                                <Bell size={20} strokeWidth={2} className="text-orange-600" />
+                            </div>
+                            <span className="font-semibold text-[15px] text-[#1A2420]">
+                                {sendingTest ? "Sending..." : "Test Notification"}
+                            </span>
+                        </div>
+                        {!sendingTest && (
+                            <div className="bg-orange-50 text-orange-600 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">
+                                Dev tool
+                            </div>
+                        )}
+                    </button>
+                )}
+
                 {isAdmin && (
                     <Link href="/admin/mosque">
                         <div className="bg-white rounded-[1.25rem] px-4 py-3.5 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow border border-slate-50">
