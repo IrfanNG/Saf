@@ -36,7 +36,7 @@ export function CommentsDialog({ postId, postAuthor, open, onOpenChange }: Comme
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="fixed bottom-0 left-0 right-0 sm:left-auto sm:right-auto sm:top-1/2 sm:-translate-y-1/2 sm:max-w-md w-full h-[85dvh] sm:h-[70dvh] rounded-t-[2.5rem] sm:rounded-[2.5rem] bg-white border-none p-0 flex flex-col m-0 overflow-hidden shadow-2xl">
+            <DialogContent className="fixed bottom-0 top-auto left-0 right-0 translate-x-0 translate-y-0 sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:max-w-md w-full h-[85dvh] sm:h-[70dvh] rounded-t-[2.5rem] sm:rounded-[2.5rem] bg-white border-none p-0 flex flex-col m-0 overflow-hidden shadow-2xl [&>button]:hidden">
                 <DialogTitle className="sr-only">Comments on post by {postAuthor}</DialogTitle>
 
                 {/* Header */}
