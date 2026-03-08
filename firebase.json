@@ -9,6 +9,18 @@
     "site": "saf-mosque-community-pwa",
     "webApp": "1:817451590426:web:978d2bc8e426ecc1bec2a3"
   },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ]
+    }
+  ],
   "apphosting": [
     {
       "backendId": "saf-backend",
