@@ -69,40 +69,53 @@ export function useLostAndFound() {
     ) => {
         let imageUrl = "";
 
-        // 1. Generate ID first
-        const newDocRef = doc(collection(db, "lost_items"));
+        // 1. Generate document reference first to get ID
+        const itemsCollection = collection(db, "lost_items");
+        const newDocRef = doc(itemsCollection);
         const itemId = newDocRef.id;
-        console.log("Firebase: Starting post creation for ID:", itemId);
 
         // 2. Upload image if exists
         if (imageFile) {
+            const uploadToast = toast.loading("Saving your report with image...");
             try {
-                // Generate a more unique name just in case
-                const extension = imageFile.name.split('.').pop();
-                const fileName = `item_${Date.now()}.${extension}`;
-                const storageRef = ref(storage, `lost_items/${itemId}/${fileName}`);
+                // Simplified more reliable storage path
+                const timestamp = Date.now();
+                const extension = imageFile.name.includes('.') ? imageFile.name.split('.').pop() : 'jpg';
+                const fileName = `${itemId}_${timestamp}.${extension}`;
+                const storageRef = ref(storage, `lost_items/${fileName}`);
 
-                console.log("Firebase: Uploading image to storage:", fileName);
+                console.log("Firebase: Uploading to", `lost_items/${fileName}`);
                 const snapshot = await uploadBytes(storageRef, imageFile);
                 imageUrl = await getDownloadURL(snapshot.ref);
-                console.log("Firebase: Image upload success. URL:", imageUrl);
-            } catch (error) {
+
+                if (!imageUrl) throw new Error("Could not get download URL");
+
+                console.log("Firebase: Upload success:", imageUrl);
+                toast.success("Image uploaded", { id: uploadToast });
+            } catch (error: any) {
                 console.error("Firebase Storage Error:", error);
+                toast.error(`Image failed: ${error.message || 'Unknown error'}`, { id: uploadToast });
+                // We'll continue without the image if it fails, as per current design
             }
         }
 
         // 3. Create document
         const finalData = {
             ...data,
-            imageUrl,
+            imageUrl: imageUrl || "", // Ensure it's at least an empty string
             status: "active",
             postedAt: serverTimestamp(),
             postedBy: user?.uid || "anonymous"
         };
 
-        console.log("Firebase: Saving doc to Firestore:", finalData);
-        await setDoc(newDocRef, finalData);
-        console.log("Firebase: Post created successfully!");
+        try {
+            await setDoc(newDocRef, finalData);
+            toast.success("Item reported successfully!");
+        } catch (error: any) {
+            console.error("Firestore Save Error:", error);
+            toast.error("Failed to save report: " + (error.message || "Storage issue"));
+            throw error;
+        }
     };
 
     const markReturned = async (id: string, isReturned: boolean = true) => {

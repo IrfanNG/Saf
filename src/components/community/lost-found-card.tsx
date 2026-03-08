@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { MapPin, Clock, ChevronRight } from "lucide-react";
+import { MapPin, Clock, ChevronRight, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface LostFoundCardProps {
@@ -36,8 +36,11 @@ export function LostFoundCard({ item }: LostFoundCardProps) {
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                     ) : (
-                        <div className="w-full h-32 flex items-center justify-center text-slate-400 italic text-xs">
-                            No image
+                        <div className="w-full h-full flex flex-col items-center justify-center text-[#A68F80]/40 gap-2 bg-[#F8F5EE]">
+                            <div className="w-10 h-10 rounded-full bg-white/50 flex items-center justify-center">
+                                <Search size={18} strokeWidth={2} />
+                            </div>
+                            <span className="italic text-[11px] font-medium">No image provided</span>
                         </div>
                     )}
 
