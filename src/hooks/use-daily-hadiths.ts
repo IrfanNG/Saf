@@ -41,8 +41,8 @@ export function useDailyHadiths() {
 
                 for (let i = 0; i < 3; i++) {
                     const hadithNumber = indices[i];
-                    // Append timestamp as cache buster just in case
-                    const url = `https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/eng-bukhari/${hadithNumber}.min.json?t=${seedString}`;
+                    // Switching to ind-bukhari for Malay/Indonesian content
+                    const url = `https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/ind-bukhari/${hadithNumber}.min.json?t=${seedString}`;
 
                     const response = await fetch(url, { cache: 'no-store' });
 
@@ -54,8 +54,22 @@ export function useDailyHadiths() {
                     const hadithData = data.hadiths[0];
                     let text = hadithData.text;
 
-                    // Cleaning text
-                    text = text.replace(/^Narrated.*?:\\s*/i, "");
+                    // Cleaning Indonesian preambles and extracting quoted speech if possible
+                    // Often starts with "Telah menceritakan... bersabda: "
+                    if (text.includes('bersabda: "')) {
+                        const parts = text.split('bersabda: "');
+                        if (parts.length > 1) {
+                            text = parts[1].replace(/"$/, '');
+                        }
+                    } else if (text.includes('berkata: "')) {
+                        const parts = text.split('berkata: "');
+                        if (parts.length > 1) {
+                            text = parts[1].replace(/"$/, '');
+                        }
+                    }
+
+                    // Remove bracketed names if they clutter the start
+                    text = text.replace(/^\[.*?\]\s*/, "");
                     text = text.replace(/^"|"$/g, "");
 
                     if (text.length > MAX_LENGTH) {
