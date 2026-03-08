@@ -11,7 +11,7 @@ export interface Hadith {
 
 const COLORS = ["#7A4A3A", "#4D6A53", "#5A4070"];
 const TOTAL_BUKHARI_HADITHS = 7000; // Safe upper bound for Sahih Bukhari
-const MAX_LENGTH = 200; // characters
+const MAX_LENGTH = 120; // characters
 
 export function useDailyHadiths() {
     const [hadiths, setHadiths] = useState<Hadith[]>([]);

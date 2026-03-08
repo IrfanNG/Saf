@@ -368,9 +368,9 @@ export default function Home() {
             Array.from({ length: 3 }).map((_, i) => (
               <div key={`skel-${i}`} className="shrink-0 snap-center w-[240px] xs:w-[280px]">
                 <Skeleton
-                  className="w-full h-[240px] min-h-[240px]"
+                  className="w-full h-[220px] min-h-[220px]"
                   style={{
-                    borderRadius: "140px 140px 2rem 2rem",
+                    borderRadius: "120px 120px 2rem 2rem",
                   }}
                 />
               </div>
@@ -389,24 +389,24 @@ export default function Home() {
               >
                 {/* Arch-shaped card: Mihrab-inspired design */}
                 <div
-                  className="relative flex flex-col items-center px-6 pt-10 pb-8 shadow-xl"
+                  className="relative flex flex-col items-center px-6 pt-8 pb-6 shadow-xl"
                   style={{
                     backgroundColor: quote.color,
-                    borderRadius: "140px 140px 2.5rem 2.5rem / 120px 120px 2.5rem 2.5rem",
-                    minHeight: "260px",
+                    borderRadius: "120px 120px 2.5rem 2.5rem / 100px 100px 2.5rem 2.5rem",
+                    minHeight: "220px",
                     height: "100%",
-                    boxShadow: `0 20px 40px -15px ${quote.color}40`,
+                    boxShadow: `0 16px 32px -12px ${quote.color}50`,
                   }}
                 >
 
                   {/* Quotation bubble */}
-                  <div className="w-12 h-12 shrink-0 rounded-full bg-white/15 border border-white/20 flex items-center justify-center shadow-lg mb-4 backdrop-blur-sm">
-                    <span className="text-white text-[28px] font-sans font-bold leading-none mt-1">"</span>
+                  <div className="w-10 h-10 shrink-0 rounded-full bg-white/15 border border-white/20 flex items-center justify-center shadow-lg mb-3 backdrop-blur-sm">
+                    <span className="text-white text-[24px] font-sans font-bold leading-none mt-1">"</span>
                   </div>
 
                   {/* Quote text */}
                   <div className="flex-1 flex flex-col items-center justify-center overflow-hidden">
-                    <p className="text-white text-[15px] font-medium font-sans italic leading-relaxed text-center px-1 opacity-90 line-clamp-6">
+                    <p className="text-white text-[14px] font-medium font-sans italic leading-relaxed text-center px-1 opacity-90 line-clamp-4">
                       {quote.text}
                     </p>
                     {quote.isLong && (
