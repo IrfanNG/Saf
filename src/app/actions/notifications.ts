@@ -19,7 +19,9 @@ export async function sendTestNotification() {
                 contents: {
                     en: "Saf push notifications are now active. Ready for Ramadhan? 🌙",
                 },
-                included_segments: ["Subscribed Users"],
+                included_segments: ["Subscribed Users", "Total Subscriptions"],
+                priority: 10, // High priority for instant delivery
+                ttl: 3600, // Time to live 1 hour
                 // Target: we could use include_external_user_ids or just All for testing
                 // But normally "self-push" would be to the current user.
                 // For a simple 'Test Notification' button that confirms everything is working, 
