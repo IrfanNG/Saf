@@ -412,9 +412,9 @@ export default function Home() {
                     {quote.isLong && (
                       <button
                         onClick={() => setSelectedHadith(quote)}
-                        className="mt-2 text-[10px] font-bold text-white/80 underline decoration-white/30 underline-offset-4 uppercase tracking-widest hover:text-white transition-colors"
+                        className="mt-4 px-4 py-1.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-[10px] font-bold text-white uppercase tracking-widest transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
                       >
-                        Baca Lagi
+                        Baca Lagi <ChevronRight size={12} strokeWidth={3} />
                       </button>
                     )}
                   </div>
