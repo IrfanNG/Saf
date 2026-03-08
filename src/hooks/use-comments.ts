@@ -40,8 +40,7 @@ export function useComments(postId: string) {
 
         const q = query(
             collection(db, "post_comments"),
-            where("postId", "==", postId),
-            orderBy("createdAt", "asc")
+            where("postId", "==", postId)
         );
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -49,7 +48,11 @@ export function useComments(postId: string) {
                 id: doc.id,
                 ...doc.data()
             })) as PostComment[];
-            setComments(data);
+            // Sort manually if needed, but for now just get the data
+            setComments(data.sort((a, b) => (a.createdAt?.seconds || 0) - (b.createdAt?.seconds || 0)));
+            setLoading(false);
+        }, (err) => {
+            console.error("Comments subscription error:", err);
             setLoading(false);
         });
 
