@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { ChevronLeft, Bookmark, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
 
 interface Ayah {
@@ -136,12 +137,12 @@ export default function SurahReadingScreen() {
             {/* ── HEADER ── */}
             <div className="sticky top-0 z-40 bg-gray-50/95 backdrop-blur-md border-b border-black/[0.03]">
                 <div className="flex items-center justify-between px-5 py-4">
-                    <button
-                        onClick={() => router.push("/quran")}
-                        className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm border border-black/[0.03] text-[#1A2420]"
+                    <Link
+                        href="/quran"
+                        className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-sm border border-black/[0.03] text-[#1A2420] active:bg-gray-100 transition-colors touch-manipulation"
                     >
                         <ChevronLeft size={22} strokeWidth={2.5} />
-                    </button>
+                    </Link>
 
                     <div className="flex flex-col items-center">
                         <h1 className="text-[18px] font-bold text-[#1A2420] font-sans leading-none mb-1">

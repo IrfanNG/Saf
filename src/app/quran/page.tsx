@@ -84,12 +84,12 @@ export default function QuranScreen() {
             {/* Header Section */}
             <div className="px-5 pt-12 pb-4 sticky top-0 bg-gray-50/95 backdrop-blur-md z-30 border-b border-black/[0.03]">
                 <div className="flex items-center justify-between mb-4">
-                    <button
-                        onClick={() => router.push('/')}
-                        className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm border border-black/[0.03] text-[#1A2420]"
+                    <Link
+                        href="/"
+                        className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-sm border border-black/[0.03] text-[#1A2420] active:bg-gray-100 transition-colors"
                     >
                         <ChevronLeft size={22} strokeWidth={2.5} />
-                    </button>
+                    </Link>
 
                     <motion.h1
                         initial={{ opacity: 0, y: -10 }}
@@ -99,7 +99,7 @@ export default function QuranScreen() {
                         Al-Quran
                     </motion.h1>
 
-                    <div className="w-10 opacity-0" /> {/* Spacer for centering */}
+                    <div className="w-11 opacity-0" /> {/* Spacer for centering */}
                 </div>
 
                 {/* Search Bar */}
@@ -148,7 +148,7 @@ export default function QuranScreen() {
                 ) : filteredSurahs.length > 0 ? (
                     <motion.div
                         key={searchQuery === "" ? "all" : "filtered"}
-                        className="flex flex-col gap-3"
+                        className="flex flex-col gap-3 pb-8"
                         variants={container}
                         initial="hidden"
                         animate="show"
@@ -157,7 +157,7 @@ export default function QuranScreen() {
                             <motion.div variants={item} key={surah.number}>
                                 <Link
                                     href={`/quran/${surah.number}`}
-                                    className="bg-white rounded-[1.25rem] p-4 flex items-center gap-4 shadow-[0_2px_12px_rgba(0,0,0,0.05)] active:scale-[0.98] transition-transform border border-black/[0.01]"
+                                    className="bg-white rounded-[1.25rem] p-4 flex items-center gap-4 shadow-[0_2px_12px_rgba(0,0,0,0.05)] active:bg-gray-50 transition-colors border border-black/[0.01] touch-manipulation"
                                 >
                                     {/* Number / Icon */}
                                     <div className="h-14 w-14 rounded-xl bg-[#F0EDE7] flex flex-col items-center justify-center shrink-0 border border-[#E8E3DB]">
