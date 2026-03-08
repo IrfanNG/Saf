@@ -15,8 +15,17 @@ const firebaseConfig = {
 const app = firebaseConfig.apiKey
     ? (!getApps().length ? initializeApp(firebaseConfig) : getApp())
     : ({} as any);
+
 const auth = firebaseConfig.apiKey ? getAuth(app) : ({} as any);
 const db = firebaseConfig.apiKey ? getFirestore(app) : ({} as any);
-const storage = firebaseConfig.apiKey ? getStorage(app) : ({} as any);
+
+// Explicitly pass the bucket to avoid "no default bucket" error if config is delayed or partially missing
+const storage = firebaseConfig.apiKey
+    ? getStorage(app, firebaseConfig.storageBucket || undefined)
+    : ({} as any);
+
+if (typeof window !== "undefined" && !firebaseConfig.storageBucket) {
+    console.warn("Firebase Storage: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET is missing! Image uploads will fail on Vercel.");
+}
 
 export { app, auth, db, storage };
