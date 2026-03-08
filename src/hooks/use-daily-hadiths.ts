@@ -26,9 +26,8 @@ export function useDailyHadiths() {
 
                 // Deterministic daily seed based on UTC date
                 const today = new Date();
-                // Adding a manual salt (+1) to force a change from previous "daily" attempt
                 const seedString = `${today.getUTCFullYear()}${today.getUTCMonth()}${today.getUTCDate()}`;
-                const seed = parseInt(seedString) + 1;
+                const seed = parseInt(seedString);
 
                 // Fetch 3 non-consecutive hadiths to make them feel more varied
                 const fetchedHadiths: Hadith[] = [];
