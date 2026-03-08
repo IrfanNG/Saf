@@ -164,7 +164,7 @@ export default function Home() {
       animate="show"
     >
       {/* ── HERO HEADER ── */}
-      <motion.div variants={item} className="relative w-full h-[280px] overflow-hidden">
+      <motion.div variants={item} className="relative w-full h-[32vh] min-h-[220px] max-h-[320px] overflow-hidden">
         {/* Mosque background image */}
         <img
           src="/masjid4.jpeg"
@@ -183,7 +183,7 @@ export default function Home() {
             <p className="text-white/75 text-[12px] font-semibold tracking-wide">
               Assalamu'alaikum
             </p>
-            <h1 className="text-white text-[1.75rem] font-bold font-sans leading-tight tracking-tight">
+            <h1 className="text-white text-[1.5rem] xs:text-[1.75rem] font-bold font-sans leading-tight tracking-tight mt-0.5">
               {user?.displayName?.split(" ")[0] ?? "Ahmad Ibrahim"}
             </h1>
             <div className="flex items-center gap-1 mt-1 text-white/75">
@@ -198,7 +198,7 @@ export default function Home() {
       <motion.div variants={item} className="-mt-14 z-20 relative w-full">
         <div className="flex gap-4 overflow-x-auto px-5 pb-4 pt-1 scrollbar-none snap-x snap-mandatory items-start">
           {/* Next Prayer Card */}
-          <div className="bg-white/95 backdrop-blur-sm rounded-[2rem] shadow-[0_12px_48px_rgba(0,0,0,0.08)] shrink-0 snap-center w-[calc(100vw-3rem)] overflow-hidden transition-all duration-300 border border-white/50">
+          <div className="bg-white/95 backdrop-blur-sm rounded-[2rem] shadow-[0_12px_48px_rgba(0,0,0,0.08)] shrink-0 snap-center w-[85%] sm:w-[90%] overflow-hidden transition-all duration-300 border border-white/50">
             <div
               className="p-5 flex items-center gap-5 cursor-pointer active:bg-black/5 transition-colors"
               onClick={() => setPrayersExpanded(!prayersExpanded)}
@@ -217,7 +217,7 @@ export default function Home() {
                   </p>
                   <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
                 </div>
-                <h2 className="text-[2rem] font-bold text-[#1A2B22] font-sans leading-none flex items-center gap-2 tracking-tight">
+                <h2 className="text-[1.5rem] xs:text-[2rem] font-bold text-[#1A2B22] font-sans leading-none flex items-center gap-2 tracking-tight">
                   {prayerDisplayName}
                   <ChevronDown
                     size={22}
@@ -281,7 +281,7 @@ export default function Home() {
           </div>
 
           {/* Qiyamullail Card */}
-          <div className="bg-[#1A2B22] rounded-[2rem] shadow-[0_12px_48px_rgba(0,0,0,0.15)] shrink-0 snap-center w-[calc(100vw-3rem)] overflow-hidden transition-all duration-300 border border-white/5 h-[fit-content]">
+          <div className="bg-[#1A2B22] rounded-[2rem] shadow-[0_12px_48px_rgba(0,0,0,0.15)] shrink-0 snap-center w-[85%] sm:w-[90%] overflow-hidden transition-all duration-300 border border-white/5[fit-content] h-auto">
             <div className="p-5 flex items-center gap-5">
               {/* Moon icon bubble with dark glow */}
               <div className="h-16 w-16 rounded-[1.25rem] bg-white/10 flex items-center justify-center shrink-0 border border-white/10 shadow-lg relative overflow-hidden group">
@@ -296,7 +296,7 @@ export default function Home() {
                     Ramadhan Special
                   </p>
                 </div>
-                <h2 className="text-[2rem] font-bold text-white font-sans leading-none tracking-tight">
+                <h2 className="text-[1.5rem] xs:text-[2rem] font-bold text-white font-sans leading-none tracking-tight">
                   Qiyamullail
                 </h2>
                 <div className="flex items-center gap-2 mt-1.5 opacity-40">
@@ -364,9 +364,9 @@ export default function Home() {
           {hadithsLoading ? (
             // Skeleton loading state
             Array.from({ length: 3 }).map((_, i) => (
-              <div key={`skel-${i}`} className="shrink-0 snap-center w-[280px]">
+              <div key={`skel-${i}`} className="shrink-0 snap-center w-[240px] xs:w-[280px]">
                 <Skeleton
-                  className="w-full h-[240px]"
+                  className="w-full h-[240px] min-h-[240px]"
                   style={{
                     borderRadius: "140px 140px 2rem 2rem",
                   }}
@@ -383,7 +383,7 @@ export default function Home() {
             hadiths.map((quote) => (
               <div
                 key={quote.id}
-                className="shrink-0 snap-center w-[280px]"
+                className="shrink-0 snap-center w-[240px] xs:w-[280px]"
               >
                 {/* Arch-shaped card: Mihrab-inspired design */}
                 <div
@@ -392,6 +392,7 @@ export default function Home() {
                     backgroundColor: quote.color,
                     borderRadius: "140px 140px 2.5rem 2.5rem / 120px 120px 2.5rem 2.5rem",
                     minHeight: "260px",
+                    height: "100%",
                     boxShadow: `0 20px 40px -15px ${quote.color}40`,
                   }}
                 >
@@ -446,7 +447,7 @@ export default function Home() {
               <div
                 key={event.id}
                 onClick={() => router.push(`/calendar?date=${event.dateISO}`)}
-                className="bg-white rounded-[1.25rem] p-4 flex items-center gap-4 shadow-[0_2px_12px_rgba(0,0,0,0.05)] cursor-pointer active:scale-[0.98] transition-all h-28"
+                className="bg-white rounded-[1.25rem] p-4 flex items-center gap-4 shadow-[0_2px_12px_rgba(0,0,0,0.05)] cursor-pointer active:scale-[0.98] transition-all min-h-[7rem] h-auto"
               >
                 {/* Thumbnail */}
                 <div className="h-14 w-14 rounded-xl overflow-hidden shrink-0 border border-[#E8E3DB] bg-slate-100">

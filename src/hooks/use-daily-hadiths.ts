@@ -24,22 +24,28 @@ export function useDailyHadiths() {
                 setLoading(true);
                 setError(null);
 
-                // Calculate a deterministic offset based on the current date
-                // Math.floor(Date.now() / 86400000) gives the number of days since epoch
-                const todayOffset = Math.floor(Date.now() / 86400000);
+                // Deterministic daily seed based on UTC date
+                const today = new Date();
+                // Adding a manual salt (+1) to force a change from previous "daily" attempt
+                const seedString = `${today.getUTCFullYear()}${today.getUTCMonth()}${today.getUTCDate()}`;
+                const seed = parseInt(seedString) + 1;
 
-                // We'll fetch 3 consecutive hadiths, using todayOffset to pick the starting number
-                // Modulo ensures we stay within the valid bounds of Sahih Bukhari (mostly 1-7000)
-                // Adding 1 because hadith numbers are 1-indexed
-                const startNumber = (todayOffset % (TOTAL_BUKHARI_HADITHS - 3)) + 1;
-
+                // Fetch 3 non-consecutive hadiths to make them feel more varied
                 const fetchedHadiths: Hadith[] = [];
+                const indices = [0, 1, 2].map(i => {
+                    // Simple deterministic salt
+                    const salt = (seed + (i * 1337)) * 1103515245 + 12345;
+                    return (Math.abs(salt) % (TOTAL_BUKHARI_HADITHS - 100)) + 1;
+                });
+
+                console.log("Saf Debug: Selecting hadith indices for today:", indices);
 
                 for (let i = 0; i < 3; i++) {
-                    const hadithNumber = startNumber + i;
-                    const url = `https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/eng-bukhari/${hadithNumber}.min.json`;
+                    const hadithNumber = indices[i];
+                    // Append timestamp as cache buster just in case
+                    const url = `https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/eng-bukhari/${hadithNumber}.min.json?t=${seedString}`;
 
-                    const response = await fetch(url);
+                    const response = await fetch(url, { cache: 'no-store' });
 
                     if (!response.ok) {
                         throw new Error(`Failed to fetch hadith ${hadithNumber}`);
@@ -47,15 +53,13 @@ export function useDailyHadiths() {
 
                     const data = await response.json();
                     const hadithData = data.hadiths[0];
-
                     let text = hadithData.text;
 
-                    // Truncate if too long, and remove leading/trailing quotes often present in API
-                    text = text.replace(/^Narrated.*?:\\s*/i, ""); // Sometimes starts with Narrated xyz:...
-                    text = text.replace(/^"|"$/g, ""); // Remove outer quotes if present
+                    // Cleaning text
+                    text = text.replace(/^Narrated.*?:\\s*/i, "");
+                    text = text.replace(/^"|"$/g, "");
 
                     if (text.length > MAX_LENGTH) {
-                        // Find a good breaking point (space) before MAX_LENGTH
                         const truncated = text.slice(0, MAX_LENGTH);
                         const lastSpaceIndex = truncated.lastIndexOf(" ");
                         text = (lastSpaceIndex > 0 ? truncated.slice(0, lastSpaceIndex) : truncated) + "…";

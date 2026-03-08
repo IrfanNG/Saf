@@ -37,8 +37,8 @@ export function BottomNav() {
   }
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 pb-safe pointer-events-none drop-shadow-lg">
-      <div className="mx-auto flex h-[5.5rem] w-full max-w-md items-start pt-3 justify-around bg-white px-6 rounded-t-3xl border-t border-black/5 pointer-events-auto">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 pb-safe pointer-events-none drop-shadow-lg flex justify-center">
+      <div className="flex h-[5.5rem] w-full max-w-md items-start pt-3 justify-around bg-white px-6 rounded-t-3xl border-t border-black/5 pointer-events-auto">
         {tabs.map((tab) => {
           const isActive = pathname === tab.href;
           const isClicked = clickedTab === tab.name;

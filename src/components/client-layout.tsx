@@ -10,7 +10,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
     const hideNav = ["/login", "/register", "/pustaka-doa", "/profile/personal-info", "/profile/theme"].includes(pathname) || isDetailsPage || isQuranPage;
 
     return (
-        <div className={`mx-auto max-w-md min-h-screen relative overflow-x-clip ${hideNav ? "" : "pb-24"} touch-pan-y shadow-2xl bg-[#F5F2EA]`}>
+        <div className={`mx-auto max-w-md min-h-screen relative overflow-x-clip ${hideNav ? "pb-safe" : "pb-32"} pt-safe touch-pan-y shadow-2xl bg-[#F5F2EA]`}>
             {children}
             {!hideNav && <BottomNav />}
         </div>
