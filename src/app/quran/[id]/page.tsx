@@ -63,8 +63,8 @@ export default function SurahReadingScreen() {
         let isMounted = true;
         async function fetchSurah() {
             try {
-                // Fetch both Arabic Uthmani text and Malay translation
-                const res = await fetch(`https://api.alquran.cloud/v1/surah/${surahId}/editions/quran-uthmani,ms.melayu`);
+                // Fetch both Arabic Uthmani text and Malay translation (Basmeih)
+                const res = await fetch(`https://api.alquran.cloud/v1/surah/${surahId}/editions/quran-uthmani,ms.basmeih`);
                 const data = await res.json();
 
                 if (data.code === 200 && isMounted) {
@@ -128,18 +128,15 @@ export default function SurahReadingScreen() {
     }
 
     return (
-        <motion.main
+        <main
             className="flex flex-col bg-gray-50 min-h-screen font-sans pb-6"
-            variants={container}
-            initial="hidden"
-            animate="show"
         >
             {/* ── HEADER ── */}
             <div className="sticky top-0 z-40 bg-gray-50/95 backdrop-blur-md border-b border-black/[0.03]">
                 <div className="flex items-center justify-between px-5 py-4">
                     <button
                         onClick={() => router.push("/quran")}
-                        className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-sm border border-black/[0.03] text-[#1A2420] active:bg-gray-100 active:scale-90 transition-all touch-manipulation focus:outline-none"
+                        className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-sm border border-black/[0.03] text-[#1A2420] active:bg-gray-100 active:scale-90 transition-all touch-manipulation focus:outline-none z-10"
                     >
                         <ChevronLeft size={22} strokeWidth={2.5} />
                     </button>
@@ -176,8 +173,7 @@ export default function SurahReadingScreen() {
                     let cleanedArabic = ayah.arabicText;
 
                     return (
-                        <motion.div
-                            variants={item}
+                        <div
                             key={ayah.numberInSurah}
                             className="bg-white rounded-[1.5rem] p-5 shadow-sm border border-black/[0.02]"
                         >
@@ -217,11 +213,11 @@ export default function SurahReadingScreen() {
                                     {ayah.translationText}
                                 </p>
                             </div>
-                        </motion.div>
+                        </div>
                     );
                 })}
             </div>
 
-        </motion.main>
+        </main>
     );
 }

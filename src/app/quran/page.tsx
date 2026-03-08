@@ -19,7 +19,7 @@ const container = {
     hidden: { opacity: 0 },
     show: {
         opacity: 1,
-        transition: { staggerChildren: 0.03, delayChildren: 0.05 },
+        transition: { staggerChildren: 0.01, delayChildren: 0.05 },
     },
 };
 
@@ -86,7 +86,7 @@ export default function QuranScreen() {
                 <div className="flex items-center justify-between mb-4">
                     <button
                         onClick={() => router.push("/")}
-                        className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-sm border border-black/[0.03] text-[#1A2420] active:bg-gray-100 active:scale-90 transition-all touch-manipulation focus:outline-none"
+                        className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-sm border border-black/[0.03] text-[#1A2420] active:bg-gray-100 active:scale-90 transition-all touch-manipulation focus:outline-none z-10"
                     >
                         <ChevronLeft size={22} strokeWidth={2.5} />
                     </button>
@@ -147,7 +147,6 @@ export default function QuranScreen() {
                     </div>
                 ) : filteredSurahs.length > 0 ? (
                     <motion.div
-                        key={searchQuery === "" ? "all" : "filtered"}
                         className="flex flex-col gap-3 pb-8"
                         variants={container}
                         initial="hidden"
