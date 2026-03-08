@@ -17,6 +17,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useDailyHadiths } from "@/hooks/use-daily-hadiths";
 import { useUpcomingActivities } from "@/hooks/use-activities";
 import { toast } from "sonner";
+import { HadithDrawer } from "@/components/dashboard/hadith-drawer";
 
 
 const container = {
@@ -69,6 +70,7 @@ export default function Home() {
   const { hadiths, loading: hadithsLoading, error: hadithsError } = useDailyHadiths();
   const { activities: upcomingEvents, loading: eventsLoading } = useUpcomingActivities(3);
   const [copied, setCopied] = useState(false);
+  const [selectedHadith, setSelectedHadith] = useState<any>(null);
 
 
   useEffect(() => {
@@ -353,7 +355,7 @@ export default function Home() {
       <motion.div variants={item} className="mt-8">
         <div className="flex items-center justify-between mb-0 px-5">
           <h2 className="text-[1.25rem] font-bold text-[#1A2420] font-sans">
-            Daily Inspiration
+            Inspirasi Harian
           </h2>
           <button className="text-[12px] font-bold text-[#9AA5AB] uppercase tracking-wide">
           </button>
@@ -376,7 +378,7 @@ export default function Home() {
           ) : hadithsError || !hadiths ? (
             // Error state
             <div className="w-full bg-red-50 text-red-800 p-6 rounded-[2rem] text-sm border border-red-100 flex items-center justify-center min-h-[150px]">
-              Failed to load Daily Inspiration.
+              Gagal memuatkan Inspirasi Harian.
             </div>
           ) : (
             // Data state
@@ -403,9 +405,19 @@ export default function Home() {
                   </div>
 
                   {/* Quote text */}
-                  <p className="text-white text-[15px] font-medium font-sans italic leading-relaxed text-center px-1 flex-1 line-clamp-5 opacity-90">
-                    {quote.text}
-                  </p>
+                  <div className="flex-1 flex flex-col items-center justify-center overflow-hidden">
+                    <p className="text-white text-[15px] font-medium font-sans italic leading-relaxed text-center px-1 opacity-90 line-clamp-6">
+                      {quote.text}
+                    </p>
+                    {quote.isLong && (
+                      <button
+                        onClick={() => setSelectedHadith(quote)}
+                        className="mt-2 text-[10px] font-bold text-white/80 underline decoration-white/30 underline-offset-4 uppercase tracking-widest hover:text-white transition-colors"
+                      >
+                        Baca Lagi
+                      </button>
+                    )}
+                  </div>
 
                   {/* Source label */}
                   <div className="mt-6 flex flex-col items-center gap-1">
@@ -425,7 +437,7 @@ export default function Home() {
         <div className="flex items-center justify-between mb-5">
           <div className="flex flex-col mb-0">
             <h2 className="text-[1.25rem] font-bold text-[#1A2420] font-sans">
-              Mosque Events
+              Acara Masjid
             </h2>
           </div>
           <Link href="/calendar" className="text-[9px] font-medium text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1.5 rounded-full border border-slate-100 hover:bg-slate-100 transition-colors">
@@ -558,6 +570,7 @@ export default function Home() {
       </motion.div>
 
       <ZakatDrawer open={zakatOpen} onOpenChange={setZakatOpen} />
+      <HadithDrawer hadith={selectedHadith} open={!!selectedHadith} onOpenChange={(open) => !open && setSelectedHadith(null)} />
 
     </motion.main>
   );

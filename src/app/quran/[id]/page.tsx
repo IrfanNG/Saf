@@ -63,8 +63,8 @@ export default function SurahReadingScreen() {
         let isMounted = true;
         async function fetchSurah() {
             try {
-                // Fetch both Arabic Uthmani text and English translation
-                const res = await fetch(`https://api.alquran.cloud/v1/surah/${surahId}/editions/quran-uthmani,en.asad`);
+                // Fetch both Arabic Uthmani text and Malay translation
+                const res = await fetch(`https://api.alquran.cloud/v1/surah/${surahId}/editions/quran-uthmani,ms.melayu`);
                 const data = await res.json();
 
                 if (data.code === 200 && isMounted) {
@@ -149,7 +149,7 @@ export default function SurahReadingScreen() {
                             {surahData.englishName}
                         </h1>
                         <p className="text-[12px] font-bold text-[#9AA5AB] font-sans uppercase tracking-widest">
-                            {surahData.revelationType} • {surahData.numberOfAyahs} AYAHS
+                            {surahData.revelationType === "Meccan" ? "Makkiyah" : "Madaniyah"} • {surahData.numberOfAyahs} AYAT
                         </p>
                     </div>
 

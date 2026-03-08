@@ -114,7 +114,7 @@ export default function QuranScreen() {
                     </div>
                     <input
                         type="text"
-                        placeholder="Search Surah..."
+                        placeholder="Cari Surah..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full bg-white border border-black/[0.05] rounded-2xl py-3.5 pl-11 pr-4 text-[14px] font-semibold text-[#1A2420] placeholder:text-[#9AA5AB] focus:outline-none focus:ring-2 focus:ring-[#4D6A53]/30 shadow-sm transition-all"
@@ -127,7 +127,7 @@ export default function QuranScreen() {
                 {loading ? (
                     <div className="flex flex-col justify-center items-center py-24 gap-3">
                         <Loader2 className="animate-spin text-[#4D6A53] w-10 h-10" />
-                        <p className="text-[13px] font-bold text-[#4D6A53] animate-pulse">Loading Surahs...</p>
+                        <p className="text-[13px] font-bold text-[#4D6A53] animate-pulse">Memuatkan Surah...</p>
                     </div>
                 ) : error ? (
                     <div className="flex flex-col items-center justify-center py-20 text-center">
@@ -177,11 +177,11 @@ export default function QuranScreen() {
 
                                         <div className="flex items-center gap-2 mt-1">
                                             <span className="text-[11px] font-bold text-[#9AA5AB] uppercase tracking-[0.05em]">
-                                                {surah.revelationType}
+                                                {surah.revelationType === "Meccan" ? "Makkiyah" : "Madaniyah"}
                                             </span>
                                             <span className="w-1 h-1 rounded-full bg-[#E8E3DB]" />
                                             <span className="text-[11px] font-bold text-[#9AA5AB] uppercase tracking-[0.05em]">
-                                                {surah.numberOfAyahs} Ayahs
+                                                {surah.numberOfAyahs} Ayat
                                             </span>
                                         </div>
                                     </div>

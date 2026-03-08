@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 export interface Hadith {
     id: string;
     text: string;
+    fullText: string;
+    isLong: boolean;
     source: string;
     color: string;
 }
@@ -52,35 +54,39 @@ export function useDailyHadiths() {
 
                     const data = await response.json();
                     const hadithData = data.hadiths[0];
-                    let text = hadithData.text;
+                    let rawText = hadithData.text;
 
-                    // Cleaning Indonesian preambles and extracting quoted speech if possible
-                    // Often starts with "Telah menceritakan... bersabda: "
-                    if (text.includes('bersabda: "')) {
-                        const parts = text.split('bersabda: "');
+                    // Cleaning Indonesian preambles
+                    let cleanedText = rawText;
+                    if (cleanedText.includes('bersabda: "')) {
+                        const parts = cleanedText.split('bersabda: "');
                         if (parts.length > 1) {
-                            text = parts[1].replace(/"$/, '');
+                            cleanedText = parts[1].replace(/"$/, '');
                         }
-                    } else if (text.includes('berkata: "')) {
-                        const parts = text.split('berkata: "');
+                    } else if (cleanedText.includes('berkata: "')) {
+                        const parts = cleanedText.split('berkata: "');
                         if (parts.length > 1) {
-                            text = parts[1].replace(/"$/, '');
+                            cleanedText = parts[1].replace(/"$/, '');
                         }
                     }
 
-                    // Remove bracketed names if they clutter the start
-                    text = text.replace(/^\[.*?\]\s*/, "");
-                    text = text.replace(/^"|"$/g, "");
+                    cleanedText = cleanedText.replace(/^\[.*?\]\s*/, "");
+                    cleanedText = cleanedText.replace(/^"|"$/g, "").trim();
 
-                    if (text.length > MAX_LENGTH) {
-                        const truncated = text.slice(0, MAX_LENGTH);
+                    const isLong = cleanedText.length > MAX_LENGTH;
+                    let previewText = cleanedText;
+
+                    if (isLong) {
+                        const truncated = cleanedText.slice(0, MAX_LENGTH);
                         const lastSpaceIndex = truncated.lastIndexOf(" ");
-                        text = (lastSpaceIndex > 0 ? truncated.slice(0, lastSpaceIndex) : truncated) + "…";
+                        previewText = (lastSpaceIndex > 0 ? truncated.slice(0, lastSpaceIndex) : truncated) + "…";
                     }
 
                     fetchedHadiths.push({
                         id: `bukhari-${hadithNumber}`,
-                        text: text.trim(),
+                        text: previewText,
+                        fullText: cleanedText,
+                        isLong: isLong,
                         source: "SAHIH AL-BUKHARI",
                         color: COLORS[i % COLORS.length],
                     });
