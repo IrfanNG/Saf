@@ -84,12 +84,12 @@ export default function QuranScreen() {
             {/* Header Section */}
             <div className="px-5 pt-12 pb-4 sticky top-0 bg-gray-50/95 backdrop-blur-md z-30 border-b border-black/[0.03]">
                 <div className="flex items-center justify-between mb-4">
-                    <Link
-                        href="/"
-                        className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-sm border border-black/[0.03] text-[#1A2420] active:bg-gray-100 transition-colors"
+                    <button
+                        onClick={() => router.push("/")}
+                        className="w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-sm border border-black/[0.03] text-[#1A2420] active:bg-gray-100 active:scale-90 transition-all touch-manipulation focus:outline-none"
                     >
                         <ChevronLeft size={22} strokeWidth={2.5} />
-                    </Link>
+                    </button>
 
                     <motion.h1
                         initial={{ opacity: 0, y: -10 }}
@@ -155,9 +155,9 @@ export default function QuranScreen() {
                     >
                         {filteredSurahs.map((surah) => (
                             <motion.div variants={item} key={surah.number}>
-                                <Link
-                                    href={`/quran/${surah.number}`}
-                                    className="bg-white rounded-[1.25rem] p-4 flex items-center gap-4 shadow-[0_2px_12px_rgba(0,0,0,0.05)] active:bg-gray-50 transition-colors border border-black/[0.01] touch-manipulation"
+                                <button
+                                    onClick={() => router.push(`/quran/${surah.number}`)}
+                                    className="w-full text-left bg-white rounded-[1.25rem] p-4 flex items-center gap-4 shadow-[0_2px_12px_rgba(0,0,0,0.05)] active:bg-gray-100 active:scale-[0.98] transition-all border border-black/[0.01] touch-manipulation focus:outline-none"
                                 >
                                     {/* Number / Icon */}
                                     <div className="h-14 w-14 rounded-xl bg-[#F0EDE7] flex flex-col items-center justify-center shrink-0 border border-[#E8E3DB]">
@@ -187,7 +187,7 @@ export default function QuranScreen() {
                                     </div>
 
                                     <ChevronRight size={18} className="text-[#C8C4BE] shrink-0" strokeWidth={2.5} />
-                                </Link>
+                                </button>
                             </motion.div>
                         ))}
                     </motion.div>
