@@ -355,7 +355,7 @@ export default function Home() {
       <motion.div variants={item} className="mt-8">
         <div className="flex items-center justify-between mb-0 px-5">
           <h2 className="text-[1.25rem] font-bold text-[#1A2420] font-sans">
-            Inspirasi Harian
+            Daily Inspirational
           </h2>
           <button className="text-[12px] font-bold text-[#9AA5AB] uppercase tracking-wide">
           </button>
@@ -378,7 +378,7 @@ export default function Home() {
           ) : hadithsError || !hadiths ? (
             // Error state
             <div className="w-full bg-red-50 text-red-800 p-6 rounded-[2rem] text-sm border border-red-100 flex items-center justify-center min-h-[150px]">
-              Gagal memuatkan Inspirasi Harian.
+              Failed to load daily inspirational.
             </div>
           ) : (
             // Data state
@@ -414,7 +414,7 @@ export default function Home() {
                         onClick={() => setSelectedHadith(quote)}
                         className="mt-4 px-4 py-1.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-[10px] font-bold text-white uppercase tracking-widest transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
                       >
-                        Baca Lagi <ChevronRight size={12} strokeWidth={3} />
+                        Read More <ChevronRight size={12} strokeWidth={3} />
                       </button>
                     )}
                   </div>
@@ -437,7 +437,7 @@ export default function Home() {
         <div className="flex items-center justify-between mb-5">
           <div className="flex flex-col mb-0">
             <h2 className="text-[1.25rem] font-bold text-[#1A2420] font-sans">
-              Acara Masjid
+              Mosque Activities
             </h2>
           </div>
           <Link href="/calendar" className="text-[9px] font-medium text-slate-400 uppercase tracking-widest bg-slate-50 px-3 py-1.5 rounded-full border border-slate-100 hover:bg-slate-100 transition-colors">
