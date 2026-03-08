@@ -198,7 +198,7 @@ export default function Home() {
       <motion.div variants={item} className="-mt-14 z-20 relative w-full">
         <div className="flex gap-4 overflow-x-auto px-5 pb-4 pt-1 scrollbar-none snap-x snap-mandatory items-start">
           {/* Next Prayer Card */}
-          <div className="bg-white/95 backdrop-blur-sm rounded-[2rem] shadow-[0_12px_48px_rgba(0,0,0,0.08)] shrink-0 snap-center w-[85%] sm:w-[90%] overflow-hidden transition-all duration-300 border border-white/50">
+          <div className="bg-white/95 backdrop-blur-sm rounded-[2rem] shadow-[0_12px_48px_rgba(0,0,0,0.08)] shrink-0 snap-center w-full overflow-hidden transition-all duration-300 border border-white/50">
             <div
               className="p-5 flex items-center gap-5 cursor-pointer active:bg-black/5 transition-colors"
               onClick={() => setPrayersExpanded(!prayersExpanded)}
@@ -281,7 +281,7 @@ export default function Home() {
           </div>
 
           {/* Qiyamullail Card */}
-          <div className="bg-[#1A2B22] rounded-[2rem] shadow-[0_12px_48px_rgba(0,0,0,0.15)] shrink-0 snap-center w-[85%] sm:w-[90%] overflow-hidden transition-all duration-300 border border-white/5[fit-content] h-auto">
+          <div className="bg-[#1A2B22] rounded-[2rem] shadow-[0_12px_48px_rgba(0,0,0,0.15)] shrink-0 snap-center w-full overflow-hidden transition-all duration-300 border border-white/5 h-auto self-stretch">
             <div className="p-5 flex items-center gap-5">
               {/* Moon icon bubble with dark glow */}
               <div className="h-16 w-16 rounded-[1.25rem] bg-white/10 flex items-center justify-center shrink-0 border border-white/10 shadow-lg relative overflow-hidden group">

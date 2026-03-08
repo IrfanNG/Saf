@@ -18,8 +18,8 @@ export function DashboardSkeleton() {
 
             {/* Prayer Cards Overlap */}
             <div className="-mt-14 z-20 px-5 flex gap-4 overflow-hidden">
-                <Skeleton className="h-32 w-[85%] rounded-[2rem] bg-white border border-white shrink-0" />
-                <Skeleton className="h-32 w-[85%] rounded-[2rem] bg-emerald-900 border border-emerald-950 shrink-0" />
+                <Skeleton className="h-32 w-full rounded-[2rem] bg-white border border-white shrink-0" />
+                <Skeleton className="h-32 w-full rounded-[2rem] bg-emerald-900 border border-emerald-950 shrink-0" />
             </div>
 
             {/* Quick Tiles Row */}
