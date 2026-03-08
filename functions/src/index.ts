@@ -12,17 +12,30 @@ const LAT = 2.2173;
 const LNG = 102.2472;
 
 /**
- * Formats a Date object to OneSignal's preferred format: "YYYY-MM-DD HH:mm:ss GMT+0800"
+ * Formats a Date object specifically for Kuala Lumpur (GMT+0800)
+ * formatted as "YYYY-MM-DD HH:mm:ss GMT+0800"
  */
-function formatDateForOneSignal(date: Date) {
-    const pad = (n: number) => n.toString().padStart(2, "0");
-    const y = date.getFullYear();
-    const m = pad(date.getMonth() + 1);
-    const d = pad(date.getDate());
-    const h = pad(date.getHours());
-    const min = pad(date.getMinutes());
-    const s = pad(date.getSeconds());
-    return `${y}-${m}-${d} ${h}:${min}:${s} GMT+0800`;
+function formatDateForKL(tsSeconds: number) {
+    const date = new Date(tsSeconds * 1000);
+
+    // Use Intl to get parts in KL timezone
+    const formatter = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Asia/Kuala_Lumpur",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+    });
+
+    const parts = formatter.formatToParts(date);
+    const p: any = {};
+    parts.forEach(part => { p[part.type] = part.value; });
+
+    // OneSignal prefers "YYYY-MM-DD HH:mm:ss GMT+0800"
+    return `${p.year}-${p.month}-${p.day} ${p.hour}:${p.minute}:${p.second} GMT+0800`;
 }
 
 /**
@@ -34,18 +47,24 @@ async function performScheduling() {
         throw new Error("Missing OneSignal credentials");
     }
 
-    console.log(`Using App ID: ${ONESIGNAL_APP_ID}`);
-
-    // 1. Fetch Prayer Times from API
+    // 1. Fetch Prayer Times from API (Same as app)
     const url = `https://api.waktusolat.app/v2/solat/gps/${LAT}/${LNG}`;
     const res = await axios.get(url);
     const prayers = res.data.prayers;
 
-    // Determine today's date in Malaysia context
+    // Get current date in KL
     const now = new Date();
-    const KL_OFFSET = 8 * 60; // UTC+8 in minutes
-    const localNow = new Date(now.getTime() + (now.getTimezoneOffset() + KL_OFFSET) * 60000);
-    const todayNum = localNow.getDate();
+    const klParts = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Asia/Kuala_Lumpur",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+    }).formatToParts(now);
+
+    const kp: any = {};
+    klParts.forEach(part => { kp[part.type] = part.value; });
+
+    const todayNum = parseInt(kp.day);
 
     const todayEntry = prayers.find((p: any) => p.day === todayNum);
 
@@ -53,17 +72,18 @@ async function performScheduling() {
         throw new Error(`Could not find prayer times for day ${todayNum} in API response.`);
     }
 
-    // 2. Prepare Timings List
+    // 2. Build Timings List (using the seconds from API)
+    // Using names Subuh, Zuhur, Asar, Maghrib, Isyak as requested/displayed in app
     const timings = [
-        { name: "Fajr", time: todayEntry.fajr },
-        { name: "Dhuhr", time: todayEntry.dhuhr },
-        { name: "Asr", time: todayEntry.asr },
+        { name: "Subuh", time: todayEntry.fajr },
+        { name: "Zuhur", time: todayEntry.dhuhr },
+        { name: "Asar", time: todayEntry.asr },
         { name: "Maghrib", time: todayEntry.maghrib },
-        { name: "Isha", time: todayEntry.isha },
+        { name: "Isyak", time: todayEntry.isha },
     ];
 
-    // 3. Fetch Qiamullail from Firestore
-    let qiamTimeStr = "03:30"; // Default
+    // 3. Handle Qiamullail from Firestore
+    let qiamTimeStr = "03:30";
     try {
         const settingsDoc = await admin.firestore().doc("settings/mosque").get();
         if (settingsDoc.exists) {
@@ -77,20 +97,19 @@ async function performScheduling() {
     }
 
     const [qH, qM] = qiamTimeStr.split(":").map(Number);
-    const qiamDate = new Date(localNow);
-    qiamDate.setHours(qH, qM, 0, 0);
-    const qiamTimestamp = Math.floor(qiamDate.getTime() / 1000);
-
-    timings.push({ name: "Qiamullail", time: qiamTimestamp });
+    // Qiamullail SendAfter for today's date
+    const qiamSendAfter = `${kp.year}-${kp.month}-${kp.day} ${qH.toString().padStart(2, '0')}:${qM.toString().padStart(2, '0')}:00 GMT+0800`;
 
     // 4. Send to OneSignal
     const results = [];
-    for (const prayer of timings) {
-        const prayerDate = new Date(prayer.time * 1000);
-        const sendAfter = formatDateForOneSignal(prayerDate);
 
-        // Don't schedule if the time has already passed for today
-        if (prayerDate.getTime() < now.getTime()) {
+    // Process Prayer Times
+    for (const prayer of timings) {
+        const sendAfter = formatDateForKL(prayer.time);
+        const prayerTimestampMs = prayer.time * 1000;
+
+        // Skip if already passed (buffer of 1 minute to avoid race conditions if triggered exactly at time)
+        if (prayerTimestampMs < (Date.now() - 60000)) {
             console.log(`Skipping ${prayer.name} because it has already passed (${sendAfter})`);
             continue;
         }
@@ -100,8 +119,9 @@ async function performScheduling() {
                 app_id: ONESIGNAL_APP_ID,
                 headings: { en: "Waktu Solat" },
                 contents: { en: `Dah masuk waktu ${prayer.name}. Jom ke Masjid Al-Azim!` },
-                included_segments: ["All"],
+                included_segments: ["Subscribed Users", "Total Subscriptions"],
                 send_after: sendAfter,
+                priority: 10
             };
 
             const response = await axios.post("https://onesignal.com/api/v1/notifications", notification, {
@@ -114,11 +134,32 @@ async function performScheduling() {
             console.log(`✅ Scheduled ${prayer.name} for ${sendAfter}. ID: ${response.data.id}`);
             results.push({ prayer: prayer.name, status: "scheduled", id: response.data.id });
         } catch (err: any) {
-            const errorData = err.response?.data || err.message;
-            console.error(`❌ Failed to schedule ${prayer.name}:`, JSON.stringify(errorData));
-            results.push({ prayer: prayer.name, status: "failed", error: errorData });
+            console.error(`❌ Failed ${prayer.name}:`, JSON.stringify(err.response?.data || err.message));
+            results.push({ prayer: prayer.name, status: "failed", error: err.response?.data?.errors?.[0] || err.message });
         }
     }
+
+    // Process Qiamullail separately
+    try {
+        const notification = {
+            app_id: ONESIGNAL_APP_ID,
+            headings: { en: "Waktu Qiamullail" },
+            contents: { en: "Dah masuk waktu Qiamullail. Jom ke Masjid Al-Azim!" },
+            included_segments: ["Subscribed Users", "Total Subscriptions"],
+            send_after: qiamSendAfter,
+            priority: 10
+        };
+        const response = await axios.post("https://onesignal.com/api/v1/notifications", notification, {
+            headers: {
+                "Authorization": `Basic ${ONESIGNAL_REST_API_KEY}`,
+                "Content-Type": "application/json",
+            }
+        });
+        results.push({ prayer: "Qiamullail", status: "scheduled", id: response.data.id });
+    } catch (err: any) {
+        results.push({ prayer: "Qiamullail", status: "failed", error: err.message });
+    }
+
     return results;
 }
 
