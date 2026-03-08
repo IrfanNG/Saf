@@ -50,8 +50,8 @@ export function PrayerDrawer({ prayer, open, onOpenChange }: PrayerDrawerProps) 
 
                 <div className="px-8 py-6 space-y-8 overflow-y-auto max-h-[60vh] scrollbar-none">
                     {/* Arabic Text */}
-                    <div className="text-center">
-                        <p className="text-[2rem] font-sans leading-[1.6] text-[#1A2B22] dir-rtl">
+                    <div className="text-right">
+                        <p className="text-[1.85rem] font-sans leading-[1.8] text-[#1A2B22]" dir="rtl">
                             {prayer.arabic}
                         </p>
                     </div>

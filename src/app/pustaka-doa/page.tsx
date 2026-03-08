@@ -8,7 +8,7 @@ import { prayers, Prayer } from "@/data/prayers";
 import { Card, CardContent } from "@/components/ui/card";
 import { PrayerDrawer } from "@/components/pustaka-doa/prayer-drawer";
 
-const categories = ["Doa Harian", "Doa Ramadan", "Doa Solat", "Kesejahteraan", "Zikir", "Favorites"] as const;
+const categories = ["Doa Harian", "Doa Ramadan", "Doa Selepas Solat", "Kesejahteraan", "Zikir", "Favorites"] as const;
 type CategoryType = (typeof categories)[number];
 
 export default function PustakaDoaPage() {

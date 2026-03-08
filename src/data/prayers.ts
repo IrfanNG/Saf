@@ -1,7 +1,7 @@
 export interface Prayer {
     id: string;
     title: string;
-    category: "Doa Harian" | "Doa Ramadan" | "Doa Solat" | "Kesejahteraan" | "Zikir";
+    category: "Doa Harian" | "Doa Ramadan" | "Doa Selepas Solat" | "Kesejahteraan" | "Zikir";
     arabic: string;
     transliteration: string;
     translation: string;
@@ -76,41 +76,33 @@ export const prayers: Prayer[] = [
         translation: "O Allah, You are Most Forgiving and You love forgiveness, so forgive me.",
     },
 
-    // --- DOA SOLAT ---
+    // --- DOA SELEPAS SOLAT ---
     {
-        id: "doa-iftitah",
-        title: "Doa Iftitah",
-        category: "Doa Solat",
-        arabic: "اللَّهُ أَكْبَرُ كَبِيرًا وَالْحَمْدُ لِلَّهِ كَثِيرًا وَسُبْحَانَ اللَّهِ بُكْرَةً وَأَصِيلاً...",
-        transliteration: "Allahu Akbaru Kabira, walhamdu lillahi kathira...",
-        translation: "Allah is Great, Most Great, and praise be to Allah in abundance...",
+        id: "doa-selepas-solat-1",
+        title: "Doa Selepas Solat (Asas)",
+        category: "Doa Selepas Solat",
+        arabic: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ، حَمْدًا يُوَافِي نِعَمَهُ وَيُكَافِئُ مَزِيدَهُ. يَا رَبَّنَا لَكَ الْحَمْدُ كَمَا يَنْبَغِي لِجَلَالِ وَجْهِكَ وَعَظِيمِ سُلْطَانِكَ. اللَّهُمَّ صَلِّ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِ سَيِّدِنَا مُحَمَّدٍ",
+        transliteration: "Alhamdulillahi rabbil 'alamin... Ya Rabbana lakal hamdu kama yanbaghi lijalali wajhika wa 'azimi sultanik...",
+        translation: "Praise be to Allah, Lord of the worlds... O our Lord, to You is due all praise as is appropriate to the Majesty of Your Face and the Greatness of Your Authority...",
     },
     {
-        id: "doa-qunut",
-        title: "Doa Qunut",
-        category: "Doa Solat",
-        arabic: "اللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ وَعَافِنِي فِيمَنْ عَافَيْتَ...",
-        transliteration: "Allahumma-hdini fiman hadayt, wa 'afini fiman 'afayt...",
-        translation: "O Allah, guide me among those You have guided, and grant me wellbeing among those You have granted wellbeing...",
+        id: "doa-selepas-solat-2",
+        title: "Doa Memohon Petunjuk & Rahmat",
+        category: "Doa Selepas Solat",
+        arabic: "اللَّهُمَّ إِنَّا نَسْأَلُكَ رِضَاكَ وَالْجَنَّةَ، وَنَعُوذُ بِكَ مِنْ سَخَطِكَ وَالنَّارِ. اللَّهُمَّ إِنَّا نَسْأَلُكَ مُوجِبَاتِ رَحْمَتِكَ وَعَزَائِمَ مَغْفِرَتِكَ",
+        transliteration: "Allahumma inna nas'aluka ridhaka wal-jannah, wa na'udhu bika min sakhatika wan-nar...",
+        translation: "O Allah, we ask You for Your pleasure and Paradise, and we seek refuge in You from Your wrath and the Fire...",
     },
     {
-        id: "doa-solat-dhuha",
-        title: "Doa Solat Dhuha",
-        category: "Doa Solat",
-        arabic: "اللَّهُمَّ إِنَّ الضُّحَاءَ ضُحَاؤُكَ وَالْبَهَاءَ بَهَاؤُكَ...",
-        transliteration: "Allahumma inna-dduha'a duha'uk, wal-baha'a baha'uk...",
-        translation: "O Allah, the dawn is Your dawn, the radiance is Your radiance...",
-    },
-    {
-        id: "doa-solat-istikharah",
-        title: "Doa Solat Istikharah",
-        category: "Doa Solat",
-        arabic: "اللَّهُمَّ إِنِّي أَسْتَخِيرُكَ بِعِلْمِكَ وَأَسْتَقْدِرُكَ بِقُدْرَتِكَ...",
-        transliteration: "Allahumma inni astakhiruka bi'ilmika wa astaqdiruka biqudratika...",
-        translation: "O Allah, I seek Your guidance by virtue of Your knowledge, and I seek ability by virtue of Your power...",
+        id: "doa-selepas-solat-3",
+        title: "Doa Kebaikan Dunia Akhirat",
+        category: "Doa Selepas Solat",
+        arabic: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+        transliteration: "Rabbana atina fid-dunya hasanatan wa fil-akhirati hasanatan waqina 'adhaban-nar",
+        translation: "Our Lord, give us in this world [that which is] good and in the Hereafter [that which is] good and protect us from the punishment of the Fire.",
     },
 
-    // --- KESEJAHTERAAN (Suggestion 2) ---
+    // --- KESEJAHTERAAN ---
     {
         id: "doa-murah-rezeki",
         title: "Doa Murah Rezeki",
@@ -127,16 +119,16 @@ export const prayers: Prayer[] = [
         transliteration: "Rabbish-rahli sadri wa yassirli amri wahlul 'uqdatan min lisani yafqahu qauli",
         translation: "My Lord, expand for me my breast [with assurance] and ease for me my task and untie the knot from my tongue that they may understand my speech.",
     },
-    {
-        id: "doa-ketenangan",
-        title: "Doa Ketenangan Hati",
-        category: "Kesejahteraan",
-        arabic: "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ",
-        transliteration: "Ya Hayyu Ya Qayyum birahmatika astaghith",
-        translation: "O Ever Living One, O Self-Sustaining One, in Your mercy I seek relief.",
-    },
 
-    // --- ZIKIR (Suggestion 5) ---
+    // --- ZIKIR ---
+    {
+        id: "zikir-ayat-kursi",
+        title: "Ayat Kursi",
+        category: "Zikir",
+        arabic: "اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ وَلَا يَئُودُهُ حِفْظُهما وَهُوَ الْعَلِيُّ الْعَظِيمُ",
+        transliteration: "Allahu la ilaha illa Huwal-Hayyul-Qayyum, la ta'khudhuhu sinatun wa la nawm, lahu ma fis-samawati wa ma fil-ard...",
+        translation: "Allah - there is no deity except Him, the Ever-Living, the Sustainer of [all] existence. Neither drowsiness overtakes Him nor sleep. To Him belongs whatever is in the heavens and whatever is on the earth...",
+    },
     {
         id: "zikir-pagi-1",
         title: "Zikir Pagi (Tasbih)",
@@ -144,13 +136,5 @@ export const prayers: Prayer[] = [
         arabic: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ",
         transliteration: "Subhanallahi wa bihamdih, subhanallahil 'azim",
         translation: "Glory be to Allah and all praise is due to Him, Glory be to Allah the Supreme.",
-    },
-    {
-        id: "zikir-ayat-kursi",
-        title: "Ayat Kursi",
-        category: "Zikir",
-        arabic: "اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ...",
-        transliteration: "Allahu la ilaha illa Huwal-Hayyul-Qayyum...",
-        translation: "Allah - there is no deity except Him, the Ever-Living, the Sustainer of [all] existence...",
     },
 ];
