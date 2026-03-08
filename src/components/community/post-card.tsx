@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { CommunityPost } from "@/hooks/use-posts";
 import { useAuth } from "@/context/auth-context";
 import { motion } from "framer-motion";
 import { Heart, MessageSquare, Trash2, MoreVertical, Share2 } from "lucide-react";
+import { CommentsDialog } from "./comments-dialog";
 
 interface PostCardProps {
     post: CommunityPost;
@@ -14,6 +16,8 @@ interface PostCardProps {
 export function PostCard({ post, onLike, onDelete }: PostCardProps) {
     const { user } = useAuth();
     const isLiked = post.likedBy?.includes(user?.uid || "");
+
+    const [showComments, setShowComments] = useState(false);
 
     return (
         <motion.div
@@ -79,15 +83,21 @@ export function PostCard({ post, onLike, onDelete }: PostCardProps) {
                     <span className="text-[12px] font-bold">{post.likesCount || 0}</span>
                 </button>
 
-                <button className="flex items-center gap-2 text-[#9AA5AB] active:scale-95 transition-all">
+                <button
+                    onClick={() => setShowComments(true)}
+                    className="flex items-center gap-2 text-[#9AA5AB] active:scale-95 transition-all touch-manipulation"
+                >
                     <MessageSquare size={18} strokeWidth={2.5} />
                     <span className="text-[12px] font-bold">{post.commentsCount || 0}</span>
                 </button>
-
-                <button className="ml-auto text-[#9AA5AB] active:scale-95 transition-all">
-                    <Share2 size={18} strokeWidth={2.5} />
-                </button>
             </div>
+
+            <CommentsDialog
+                postId={post.id}
+                postAuthor={post.authorName}
+                open={showComments}
+                onOpenChange={setShowComments}
+            />
         </motion.div>
     );
 }
