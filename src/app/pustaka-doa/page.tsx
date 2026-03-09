@@ -33,20 +33,23 @@ export default function PustakaDoaPage() {
     };
 
     const filteredPrayers = useMemo(() => {
-        let base = prayers;
-        if (selectedCategory === "Favorites") {
-            base = prayers.filter(p => favorites.includes(p.id));
-        } else {
-            base = prayers.filter(p => p.category === selectedCategory);
+        const query = searchQuery.trim().toLowerCase();
+
+        // If there's a search query, search across ALL prayers
+        if (query) {
+            return prayers.filter(p =>
+                p.title.toLowerCase().includes(query) ||
+                p.transliteration.toLowerCase().includes(query) ||
+                p.category.toLowerCase().includes(query)
+            );
         }
 
-        const query = searchQuery.trim().toLowerCase();
-        if (!query) return base;
+        // If no search query, filter by category as usual
+        if (selectedCategory === "Favorites") {
+            return prayers.filter(p => favorites.includes(p.id));
+        }
 
-        return base.filter(p =>
-            p.title.toLowerCase().includes(query) ||
-            p.transliteration.toLowerCase().includes(query)
-        );
+        return prayers.filter(p => p.category === selectedCategory);
     }, [selectedCategory, searchQuery, favorites]);
 
     const handlePrayerClick = (prayer: Prayer) => {
