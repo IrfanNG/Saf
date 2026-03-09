@@ -48,7 +48,18 @@ export default function LoginPage() {
             }
             router.push("/");
         } catch (err: any) {
-            setError(err.message);
+            console.error("Auth Error:", err.code);
+            if (err.code === "auth/invalid-credential" || err.code === "auth/user-not-found") {
+                setError("Account not found. Please check your credentials or Sign Up to create an account.");
+            } else if (err.code === "auth/wrong-password") {
+                setError("Incorrect password. Please try again.");
+            } else if (err.code === "auth/email-already-in-use") {
+                setError("This email is already registered. Try signing in instead.");
+            } else if (err.code === "auth/weak-password") {
+                setError("Password is too weak. Please use at least 6 characters.");
+            } else {
+                setError("Authentication failed. Please try again.");
+            }
         } finally {
             setLoading(false);
         }
