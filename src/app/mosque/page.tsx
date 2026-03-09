@@ -76,7 +76,7 @@ export default function MosquePage() {
                 <motion.div variants={item} className="grid grid-cols-3 gap-3">
                     {/* Call Card */}
                     <button
-                        onClick={() => window.location.href = 'tel:+6062839166'}
+                        onClick={() => window.location.href = 'tel:+6062841142'}
                         className="bg-white rounded-2xl p-4 flex flex-col items-center gap-2.5 shadow-sm border border-black/[0.03] active:scale-95 transition-all"
                     >
                         <div className="w-12 h-12 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
@@ -87,7 +87,7 @@ export default function MosquePage() {
 
                     {/* Inquiry Card */}
                     <button
-                        onClick={() => window.open('https://wa.me/6062839166', '_blank')}
+                        onClick={() => window.open('https://wa.me/6062841142', '_blank')}
                         className="bg-white rounded-2xl p-4 flex flex-col items-center gap-2.5 shadow-sm border border-black/[0.03] active:scale-95 transition-all"
                     >
                         <div className="w-12 h-12 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">

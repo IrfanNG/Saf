@@ -212,7 +212,7 @@ export default function ItemDetailPage() {
                                 <Button
                                     variant="outline"
                                     className="w-full bg-white hover:bg-slate-50 text-[#4D6A53] border-[#4D6A53] font-bold h-12 rounded-xl transition-all active:scale-[0.98]"
-                                    onClick={() => window.location.href = 'tel:+6062839166'}
+                                    onClick={() => window.location.href = 'tel:+6062841142'}
                                 >
                                     <Phone size={18} className="mr-2" />
                                     Contact Mosque Office
