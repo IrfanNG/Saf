@@ -184,48 +184,48 @@ export default function MosquePage() {
                     <div className="grid grid-cols-2 gap-3">
                         {/* Main Hall */}
                         <div className="bg-white rounded-3xl p-4 shadow-sm border border-black/[0.02] flex flex-col gap-3">
-                            <div className="w-10 h-10 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
-                                <Users size={18} className="text-[#4D6A53]" strokeWidth={2} />
+                            <div className="w-10 h-10 rounded-2xl bg-[#EEE9DF] flex items-center justify-center text-[#4D6A53] shrink-0">
+                                <Users size={18} strokeWidth={2.5} />
                             </div>
                             <div>
                                 <h4 className="text-[14px] font-bold text-[#1A2B22] font-sans">Main Hall</h4>
-                                <p className="text-[12px] text-[#6B7280] font-medium font-sans mt-0.5">9.7k Capacity</p>
+                                <p className="text-[12px] text-[#6B7280] font-medium font-sans mt-0.5">10.4k Total Capacity</p>
                             </div>
                         </div>
 
                         {/* Museum */}
                         <div className="bg-white rounded-3xl p-4 shadow-sm border border-black/[0.02] flex flex-col gap-3">
-                            <div className="w-10 h-10 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
-                                <Library size={18} className="text-[#4D6A53]" strokeWidth={2} />
+                            <div className="w-10 h-10 rounded-2xl bg-[#EEE9DF] flex items-center justify-center text-[#4D6A53] shrink-0">
+                                <Library size={18} strokeWidth={2.5} />
                             </div>
                             <div>
-                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-sans">Al-Azim Museum</h4>
+                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-sans">State Museum</h4>
                                 <p className="text-[12px] text-[#6B7280] font-medium font-sans mt-0.5">Islamic Heritage</p>
                             </div>
                         </div>
 
                         {/* Auditorium */}
                         <div className="bg-white rounded-3xl p-4 shadow-sm border border-black/[0.02] flex flex-col gap-3">
-                            <div className="w-10 h-10 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
-                                <Mic size={18} className="text-[#4D6A53]" strokeWidth={2} />
+                            <div className="w-10 h-10 rounded-2xl bg-[#EEE9DF] flex items-center justify-center text-[#4D6A53] shrink-0">
+                                <Mic size={18} strokeWidth={2.5} />
                             </div>
                             <div>
-                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-sans">Auditorium</h4>
-                                <p className="text-[12px] text-[#6B7280] font-medium font-sans mt-0.5">Events & Lectures</p>
+                                <h4 className="text-[14px] font-bold text-[#1A2B22] font-sans">Lecture Hall</h4>
+                                <p className="text-[12px] text-[#6B7280] font-medium font-sans mt-0.5">Auditorium & Events</p>
                             </div>
                         </div>
 
                         {/* Accessibility */}
                         <div className="bg-white rounded-3xl p-4 shadow-sm border border-black/[0.02] flex flex-col gap-3">
-                            <div className="w-10 h-10 rounded-2xl bg-[#EEE9DF] flex items-center justify-center">
-                                <Accessibility size={18} className="text-[#4D6A53]" strokeWidth={2} />
+                            <div className="w-10 h-10 rounded-2xl bg-[#EEE9DF] flex items-center justify-center text-[#4D6A53] shrink-0">
+                                <Accessibility size={18} strokeWidth={2.5} />
                             </div>
                             <div>
                                 <h4 className="text-[14px] font-bold text-[#1A2B22] font-sans mb-1.5">Accessibility</h4>
                                 <div className="flex flex-wrap gap-1.5">
-                                    <span className="text-[10px] font-bold bg-slate-50 text-slate-500 px-2 py-0.5 rounded-full border border-slate-100">Ramp</span>
-                                    <span className="text-[10px] font-bold bg-slate-50 text-slate-500 px-2 py-0.5 rounded-full border border-slate-100">Lift</span>
-                                    <span className="text-[10px] font-bold bg-slate-50 text-slate-500 px-2 py-0.5 rounded-full border border-slate-100">OKU Toilet</span>
+                                    <span className="text-[10px] font-bold bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full border border-emerald-100">Ramps</span>
+                                    <span className="text-[10px] font-bold bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full border border-emerald-100">Elevator</span>
+                                    <span className="text-[10px] font-bold bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full border border-emerald-100">OKU Toilet</span>
                                 </div>
                             </div>
                         </div>
