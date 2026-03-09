@@ -48,9 +48,12 @@ export default function ItemDetailPage() {
         try {
             if (navigator.share) {
                 await navigator.share(shareData);
-            } else {
+            } else if (navigator.clipboard) {
                 await navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${shareData.url}`);
                 toast.success("Link copied to clipboard!");
+            } else {
+                // Fallback for environments where neither is available
+                throw new Error("Sharing not supported in this environment");
             }
         } catch (err) {
             console.error("Error sharing:", err);
