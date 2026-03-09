@@ -146,28 +146,36 @@ export default function MosquePage() {
                             </div>
                         </div>
                         <div className="text-right">
-                            <span className="text-[20px] font-bold text-[#0F172A] font-sans">1500+</span>
+                            <span className="text-[20px] font-bold text-[#0F172A] font-sans">450+</span>
                             <p className="text-[11px] font-bold text-[#94A3B8] uppercase tracking-wide font-sans">Capacity</p>
                         </div>
                     </div>
 
-                    {/* Logistics Alert */}
-                    <div className="bg-[#4D7C5F] rounded-3xl p-5 shadow-sm overflow-hidden relative">
-                        {/* Decorative Pattern */}
-                        <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/5 rounded-full blur-xl" />
-
-                        <div className="flex items-start gap-4 relative z-10">
-                            <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center shrink-0">
-                                <AlertTriangle size={20} className="text-white" />
-                            </div>
-                            <div>
-                                <h4 className="text-[14px] font-bold text-white mb-1 tracking-wide font-sans">Ramadan Traffic Alert</h4>
-                                <p className="text-[13px] text-white/85 leading-relaxed font-sans font-medium">
-                                    High traffic during Tarawih. Consider carpooling or arriving 30 mins early. Special wardens on duty.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    {/* Logistics Alert - Show only during Ramadan 2026 (Feb 18 - Mar 19 approx) */}
+                    {(() => {
+                        const now = new Date();
+                        const start = new Date("2026-02-18");
+                        const end = new Date("2026-03-20");
+                        if (now >= start && now <= end) {
+                            return (
+                                <div className="bg-[#4D7C5F] rounded-3xl p-5 shadow-sm overflow-hidden relative">
+                                    <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/5 rounded-full blur-xl" />
+                                    <div className="flex items-start gap-4 relative z-10">
+                                        <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center shrink-0">
+                                            <AlertTriangle size={20} className="text-white" />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-[14px] font-bold text-white mb-1 tracking-wide font-sans">Ramadan Traffic Alert</h4>
+                                            <p className="text-[13px] text-white/85 leading-relaxed font-sans font-medium">
+                                                High traffic during Tarawih. Consider carpooling or arriving 30 mins early. Special wardens on duty.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        }
+                        return null;
+                    })()}
                 </motion.div>
 
                 {/* ── FACILITY DIRECTORY ── */}

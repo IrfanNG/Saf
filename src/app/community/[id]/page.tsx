@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { useAdmin } from "@/hooks/use-admin";
 import { MapPin, LayoutList, Calendar, ChevronLeft, Share2, MessageSquare, Phone, Clock, Loader2, CheckCircle, Trash2 } from "lucide-react";
 import { DeleteConfirmDialog } from "@/components/ui/custom-delete-dialog";
+import { toast } from "sonner";
 
 
 export default function ItemDetailPage() {
@@ -33,6 +34,27 @@ export default function ItemDetailPage() {
     const handleDelete = async () => {
         if (!item) return;
         setIsDeleteDialogOpen(true);
+    };
+
+    const handleShare = async () => {
+        if (!item) return;
+
+        const shareData = {
+            title: `Saf | ${item.type === 'lost' ? 'Lost' : 'Found'}: ${item.title}`,
+            text: `${item.description}\n\nLocation: ${item.location || 'Masjid Al-Azim'}\nReported on Saf PWA.`,
+            url: window.location.href,
+        };
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                await navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}\n${shareData.url}`);
+                toast.success("Link copied to clipboard!");
+            }
+        } catch (err) {
+            console.error("Error sharing:", err);
+        }
     };
 
     const confirmDelete = async () => {
@@ -86,7 +108,10 @@ export default function ItemDetailPage() {
                     <ChevronLeft size={20} strokeWidth={2.5} />
                 </button>
                 <h2 className="text-[1.1rem] font-bold text-[#5A413A] font-sans">Item Details</h2>
-                <button className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#5A413A] shadow-sm">
+                <button
+                    onClick={handleShare}
+                    className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#5A413A] shadow-sm active:scale-95 transition-transform"
+                >
                     <Share2 size={18} strokeWidth={2} />
                 </button>
             </div>

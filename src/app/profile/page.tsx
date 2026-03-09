@@ -5,7 +5,6 @@ import { useAdmin } from "@/hooks/use-admin";
 import { usePrayerTimes } from "@/hooks/use-prayer-times";
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { sendTestNotification } from "@/app/actions/notifications";
 import {
     User as UserIcon,
     Shield,
@@ -16,14 +15,16 @@ import {
     Edit2,
     Calendar,
     Save,
-    Bell
+    Bell,
+    Users as UsersIcon
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, updateDoc, getCountFromServer } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { updateProfile } from "firebase/auth";
 import { toast } from "sonner";
+import { Users as UsersGroup } from "lucide-react";
 
 
 const container = {
@@ -94,23 +95,23 @@ export default function ProfilePage() {
         }
     };
 
-    const [sendingTest, setSendingTest] = useState(false);
+    const [userCount, setUserCount] = useState<number | null>(null);
 
-    const handleTestNotification = async () => {
-        setSendingTest(true);
-        try {
-            const result = await sendTestNotification();
-            if (result.success) {
-                toast.success("Notification sent! 🔔 Check your device.");
-            } else {
-                toast.error(`OneSignal: ${result.error}`);
+    useEffect(() => {
+        if (!isAdmin) return;
+
+        const fetchUserCount = async () => {
+            try {
+                const coll = collection(db, "users");
+                const snapshot = await getCountFromServer(coll);
+                setUserCount(snapshot.data().count);
+            } catch (e) {
+                console.error("Error fetching user count:", e);
             }
-        } catch (e: any) {
-            toast.error("Failed to trigger notification.");
-        } finally {
-            setSendingTest(false);
-        }
-    };
+        };
+
+        fetchUserCount();
+    }, [isAdmin]);
 
     return (
         <motion.main
@@ -246,26 +247,23 @@ export default function ProfilePage() {
 
             {/* ── ADMIN/DEVELOPER SECTION ── */}
             <motion.div variants={item} className="mx-5 mt-6 border-t border-slate-200 pt-6 space-y-4">
-                {(isAdmin || process.env.NODE_ENV === "development") && (
-                    <button
-                        onClick={handleTestNotification}
-                        disabled={sendingTest}
-                        className="w-full bg-white rounded-[1.25rem] px-4 py-3.5 flex items-center justify-between shadow-sm hover:shadow-md transition-all border border-slate-50 disabled:opacity-50"
-                    >
+                {isAdmin && (
+                    <div className="w-full bg-white rounded-[1.25rem] px-4 py-3.5 flex items-center justify-between shadow-sm border border-slate-50">
                         <div className="flex items-center gap-3.5">
-                            <div className="h-10 w-10 rounded-xl bg-orange-100 flex items-center justify-center shrink-0">
-                                <Bell size={20} strokeWidth={2} className="text-orange-600" />
+                            <div className="h-10 w-10 rounded-xl bg-blue-100 flex items-center justify-center shrink-0">
+                                <UsersIcon size={20} strokeWidth={2} className="text-blue-600" />
                             </div>
-                            <span className="font-semibold text-[15px] text-[#1A2420]">
-                                {sendingTest ? "Sending..." : "Test Notification"}
+                            <div className="flex flex-col">
+                                <span className="font-semibold text-[15px] text-[#1A2420]">Total Users Joined</span>
+                                <span className="text-[11px] text-[#9AA5AB] font-bold uppercase tracking-wide">Community Statistics</span>
+                            </div>
+                        </div>
+                        <div className="text-right">
+                            <span className="text-[20px] font-bold text-[#1A2420] font-sans">
+                                {userCount !== null ? userCount.toLocaleString() : "..."}
                             </span>
                         </div>
-                        {!sendingTest && (
-                            <div className="bg-orange-50 text-orange-600 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">
-                                Dev tool
-                            </div>
-                        )}
-                    </button>
+                    </div>
                 )}
 
                 {isAdmin && (
