@@ -22,8 +22,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Saf",
-  description: "Your daily companion for Ramadhan and beyond.",
+  title: "Saf - Your Modern Ramadhan Companion",
+  description: "A premium, daily companion app designed to elevate your Ramadhan experience and beyond. Track your progress, stay spiritual, and connect with your faith.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
@@ -33,6 +33,29 @@ export const metadata: Metadata = {
   icons: {
     icon: "/icon.png",
     apple: "/apple-touch-icon.png",
+  },
+  openGraph: {
+    title: "Saf - Your Modern Ramadhan Companion",
+    description: "Elevate your Ramadhan experience with Saf. Your premium, modern daily spiritual companion.",
+    url: "https://saf-app.vercel.app", // Adjust if needed, but Next.js usually appends full URLs based on site config
+    siteName: "Saf",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Saf - Your Ramadhan Companion",
+      },
+    ],
+    locale: "en_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Saf - Your Modern Ramadhan Companion",
+    description: "Elevate your Ramadhan experience with Saf. Your premium, modern daily spiritual companion.",
+    images: ["/twitter-image.png"],
+    creator: "@krackeddevs",
   },
 };
 
