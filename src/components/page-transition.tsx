@@ -9,20 +9,25 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
     const variants = {
         initial: {
             opacity: 0,
-            y: 8,
+            x: 20,
+            scale: 0.98,
         },
         animate: {
             opacity: 1,
-            y: 0,
+            x: 0,
+            scale: 1,
             transition: {
-                duration: 0.2,
-                ease: [0.33, 1, 0.68, 1] as any
+                duration: 0.45,
+                ease: [0.32, 0.72, 0, 1] as any // iOS signature easing
             }
         },
         exit: {
             opacity: 0,
+            x: -20,
+            scale: 1.02,
             transition: {
-                duration: 0.1
+                duration: 0.3,
+                ease: [0.32, 0, 0.67, 0] as any
             }
         }
     };
